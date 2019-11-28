@@ -20,7 +20,7 @@ fromEnsembl(species="Humo")
 ```
 ## Note
 The _bioAnno_ just a package for funs. _bioAnno_ provide wrap function which help me to easily build annotation package.
-The fromAnnotationHub function will come soon!!!
+The _fromAnnotationHub_ function will come soon!!!
 
 ## Contact information
 
