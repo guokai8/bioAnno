@@ -14,7 +14,7 @@ install_github("guokai8/bioAnno")
 library(bioAnno)
 ## build Annotation package by using fromKEGG
 fromKEGG(species="hsa")
-##which will build and install package "org.hsa.eg.db" which will include KEGG, GO annotation 
+## which will build and install package "org.hsa.eg.db" which will include KEGG, GO annotation 
 ## build Annotation package by using fromEnsembl 
 fromEnsembl(species="Homo")
 ```
