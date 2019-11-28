@@ -16,7 +16,7 @@ library(bioAnno)
 fromKEGG(species="hsa")
 ##which will build and install package "org.hsa.eg.db" which will include KEGG, GO annotation 
 ## build Annotation package by using fromEnsembl 
-fromEnsembl(species="Humo")
+fromEnsembl(species="Homo")
 ```
 ## Note
 The _bioAnno_ just a package for funs. _bioAnno_ provide wrap function which help me to easily build annotation package.
