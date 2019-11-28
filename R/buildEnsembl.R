@@ -45,6 +45,9 @@ fromEnsembl<-function(species="Arabidopsis t",host="uswest.ensembl.org",
  # geneinfo<-geneinfo[nchar(geneinfo[,2])>1,]
   colnames(geneinfo)<-c("GID","GENENAME")
   geneinfo<-na.omit(geneinfo)
+  gene2symbol<-getBM(attributes = c("ensembl_gene_id","external_gene_name"),filters ="chromosome_name",values = as.vector(dbinfo$chr_info$name),dataset)
+  gene2symbol<-gene2symbol[nchar(gene2symbol[,2])>1,]
+  colnames(gene2symbol)<-c("GID","SYMBOL")
   gene2entrezid<-getBM(attributes = c("ensembl_gene_id","entrezgene_id"),filters ="chromosome_name",values = as.vector(dbinfo$chr_info$name),dataset)
   gene2entrezid<-gene2entrezid[nchar(gene2entrezid[,2])>1,]
   colnames(gene2entrezid)<-c("GID","ENTREZID")
@@ -112,6 +115,7 @@ fromEnsembl<-function(species="Arabidopsis t",host="uswest.ensembl.org",
   }
   species=gsub(' .*','',species)
   package<-makeOrgPackage(gene_info=geneinfo,
+                          symbol=gene2symbol,
                  entrezid=gene2entrezid,
                  refseq=gene2ref,
                  go=gene2go,
