@@ -8,4 +8,20 @@ Description: This package provide functions to build annotation data (GO,KEGG,Re
 License: GPL-2
 Encoding: UTF-8
 LazyData: true
+Imports:
+      AnnotationForge,
+      AnnotationHub,
+      KEGGREST,
+      biomaRt,
+      data.table,
+      dplyr,
+      jsonlite,
+      R.utils,
+      magrittr
+Suggests:
+    biomaRt,
+    GO.db,
+    knitr,
+    rmarkdown
+biocViews: Annotation, Clustering, GO, KEGG,Pathways, Reactome
 RoxygenNote: 7.0.1
