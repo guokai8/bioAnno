@@ -1,19 +1,128 @@
 #' extract annotation database by using AnnotationHub
+#' @importFrom AnnotationHub AnnotationHub
 #' @importFrom AnnotationHub query
+#' @importFrom AnnotationDbi select
+#' @importFrom AnnotationForge makeOrgPackage
+#' @importFrom RSQLite dbGetQuery
+#' @param species species name(common name,kegg.species.code or scientifc name)
+#' @param usefirst choose the first annotation database or not
+#' @param author author for the annotation package
+#' @param maintainer maintainer
+#' @param tax_id taxonomy id for the species
+#' @param genus genus for the species
+#' @param version version
+#' @param install install the package or not(default: TRUE)
+#' @param outputDir temp file path
 #' @author Kai Guo
 #' @export
-fromAnnHub<-function(species,useEnsembl=FALSE,useNCBI=FALSE,useUCSC=FALSE){
+fromAnnHub<-function(species,usefirst=TRUE,author=NULL,
+                     maintainer=NULL,tax_id=NULL,genus=NULL,version=NULL,
+                     install=TRUE,outputDir=NULL){
   ah<-AnnotationHub()
-  if(isTRUE(useEnsembl)){
-    ah <- query(ah, "EnsDb")
+  dbi <- .getdbname(species)
+  if(is.null(dbi)){
+      dbi <- .get.species.info(species=species)
+      dbi <- dbi["scientific.name"]
   }
-  else if(isTRUE(useNCBI)){
-    ah <- query(ah,pattern = c(species,"NCBI"))
+  ah <- query(ah,dbi)
+  ahdb<-ah$title
+  names(ahdb)<-ah$ah_id
+  ### only need ors.xxx.eg.xxx
+  ahdb<-grep('org',grep('eg',ahdb,value=T),value=T)
+  idx <- grep(sub(' .*','',sub(' ','_',dbi)),ahdb,value=T)
+  if(length(idx)>1){
+    if(isTRUE(usefirst)){
+      idx <- idx[1]
+    }else{
+      cat("Please select which database you want use (1,2,3,...): \n")
+      cat(idx,"\n")
+      idd <- readidx()
+      idx <- idx[idd]
+    }
+  }
+  idn <- names(idx)
+  res <- ah[[idn]]
+  packinfo <- dbGetQuery(res$conn,"select * from metadata;")
+  geneinfo <- select(res,keys = keys(res),columns=c("GENENAME"))
+  geneinfo <- na.omit(geneinfo)
+  colnames(geneinfo)[1]<-"GID"
+  gene2refseq <- select(res, keys = keys(res), columns = c("REFSEQ"))
+  gene2refseq <- na.omit(gene2refseq)
+  colnames(gene2refseq)[1]<-"GID"
+  gene2symbol <- select(res, keys = keys(res), columns = c("SYMBOL"))
+  gene2symbol <- na.omit(gene2symbol)
+  colnames(gene2symbol)[1]<-"GID"
+  gene2go <- select(res, keys = keys(res), columns = c("GOALL","EVIDENCEALL"))
+  gene2go <- gene2go[, 1:3]
+  gene2go <- gene2go[!duplicated(gene2go),]
+  gene2go <- na.omit(gene2go)
+  colnames(gene2go)<-c("GID","GO","EVIDENCE")
+  pathway = FALSE
+  if("PATH"%in%columns(res)){
+    gene2path <- select(res, keys = keys(res), columns = c("PATH"))
+    colnames(gene2path) <- c("GID", "PATH")
+    gene2path <- gene2path[!duplicated(gene2path),]
+    gene2path <- na.omit(gene2path)
+    pathway=TRUE
+  }
+  if(is.null(version)){
+    version="0.0.1"
+  }
+  if(is.null(tax_id)){
+    tax_id=packinfo[6,2]
+  }
+  if(is.null(author)){
+    author="myself"
+  }
+  if(is.null(maintainer)){
+    maintainer="myself<myself@email.com>"
+  }
+  if(is.null(genus)){
+    genus=""
+  }
+  if(is.null(species)){
+    species=species
+  }
+  if(is.null(outputDir)){
+    outputDir<-tempdir()
+  }
+  if(isTRUE(install)){
+    if(isTRUE(pathway)){
+    package<-makeOrgPackage(
+      gene_info=geneinfo,
+      refseq=gene2refseq,
+      symbol=gene2symbol,
+      go=gene2go,
+      path=gene2path,
+      maintainer=maintainer,
+      author=author,
+      outputDir = outputDir,
+      tax_id="tax_id",
+      genus="",
+      species=species,
+      version=version,
+         goTable="go")
+    }else{
+      package<-makeOrgPackage(
+        gene_info=geneinfo,
+        refseq=gene2refseq,
+        symbol=gene2symbol,
+        go=gene2go,
+        maintainer=maintainer,
+        author=author,
+        outputDir = outputDir,
+        tax_id="tax_id",
+        genus="",
+        species=species,
+        version=version,
+        goTable="go")
+    }
+    install.packages(package,repos = NULL,type="source")
   }else{
-    ah <- query(ah,pattern = species)
+    return(res)
   }
-  #idx <- grep('*eg')
-}
+  }
+
 
 
 

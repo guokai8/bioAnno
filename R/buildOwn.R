@@ -101,7 +101,7 @@ fromOwn<-function(geneinfo=geneinfo,entrezid=NULL,refseq=NULL,gene2go=NULL,gene2
     species="species"
   }
   if(is.null(outputDir)){
-    outputDir="."
+    outputDir<-tempdir()
   }
   package<-makeOrgPackage(
   gene_info=geneinfo,
@@ -122,7 +122,6 @@ fromOwn<-function(geneinfo=geneinfo,entrezid=NULL,refseq=NULL,gene2go=NULL,gene2
   goTable="go"
   )
   if(isTRUE(install)){
-    package <- sub('.*\\/','',package)
     install.packages(package,repos = NULL,type="source")
   }
 }

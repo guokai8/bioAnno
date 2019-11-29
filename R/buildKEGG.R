@@ -57,7 +57,7 @@ fromKEGG<-function(species="ath",anntype=NULL,buildall=TRUE,author=NULL,
     species=species
   }
   if(is.null(outputDir)){
-    outputDir="."
+    outputDir<-tempdir()
   }
   package<-makeOrgPackage(
     gene_info=geneinfo,
@@ -75,7 +75,6 @@ fromKEGG<-function(species="ath",anntype=NULL,buildall=TRUE,author=NULL,
   )
   tmp <- NULL
   if(isTRUE(install)){
-    package=sub('.*\\/','',package)
     install.packages(package,repos = NULL,type="source")
   }
   }

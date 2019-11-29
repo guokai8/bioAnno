@@ -133,9 +133,7 @@ fromEnsembl<-function(species="Arabidopsis t",host="uswest.ensembl.org",
                  goTable="go"
   )
   if(isTRUE(install)){
-    package=sub('.*\\/','',package)
     install.packages(package,repos = NULL,type="source")
- # }
   }
 }
 ##' @title list species available in Ensembl

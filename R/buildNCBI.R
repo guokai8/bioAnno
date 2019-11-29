@@ -43,7 +43,7 @@ fromNCBI <- function(species="ath",author=NULL,
     species=species
   }
   if(is.null(outputDir)){
-    outputDir="."
+    outputDir<-tempdir()
   }
   package<-makeOrgPackage(
     gene_info=geneinfo,
@@ -60,7 +60,6 @@ fromNCBI <- function(species="ath",author=NULL,
   )
   tmp <- NULL
   if(isTRUE(install)){
-    package=sub('.*\\/','',package)
     install.packages(package,repos = NULL,type="source")
   }
 }
