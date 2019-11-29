@@ -20,7 +20,7 @@ fromEnsembl(
 )
 }
 \arguments{
-\item{species}{the sepcies you want to search, you can use showplant to get the species name}
+\item{species}{the sepcies you want to search, you can use listSpecies to get the species name}
 
 \item{host}{the ensemble API host,for plant you can use plants.ensembl.org and for human and other species you can use uswest.ensembl.org}
 
