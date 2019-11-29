@@ -4,7 +4,36 @@
 \alias{fromAnnHub}
 \title{extract annotation database by using AnnotationHub}
 \usage{
-fromAnnHub(species, useEnsembl = FALSE, useNCBI = FALSE, useUCSC = FALSE)
+fromAnnHub(
+  species,
+  usefirst = TRUE,
+  author = NULL,
+  maintainer = NULL,
+  tax_id = NULL,
+  genus = NULL,
+  version = NULL,
+  install = TRUE,
+  outputDir = NULL
+)
+}
+\arguments{
+\item{species}{species name(common name,kegg.species.code or scientifc name)}
+
+\item{usefirst}{choose the first annotation database or not}
+
+\item{author}{author for the annotation package}
+
+\item{maintainer}{maintainer}
+
+\item{tax_id}{taxonomy id for the species}
+
+\item{genus}{genus for the species}
+
+\item{version}{version}
+
+\item{install}{install the package or not(default: TRUE)}
+
+\item{outputDir}{temp file path}
 }
 \description{
 extract annotation database by using AnnotationHub
