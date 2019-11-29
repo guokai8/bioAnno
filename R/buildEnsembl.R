@@ -111,7 +111,7 @@ fromEnsembl<-function(species="Arabidopsis t",host="uswest.ensembl.org",
     genus=""
   }
   if(is.null(outputDir)){
-    outputDir<-"."
+    outputDir<-tempdir()
   }
   species=gsub(' .*','',species)
   package<-makeOrgPackage(gene_info=geneinfo,
@@ -138,7 +138,7 @@ fromEnsembl<-function(species="Arabidopsis t",host="uswest.ensembl.org",
  # }
   }
 }
-##'
+##' @title list species available in Ensembl
 ##' @importFrom  biomaRt useMart
 ##' @importFrom  biomaRt listDatasets
 ##' @param host Ensembl host site

@@ -121,6 +121,7 @@ simpleCap <- function(x) {
   return(species.info)
 }
 
+##' @title get species information in Ensembl
 ##' @importFrom dplyr select_
 ##' @importFrom dplyr collect
 ##' @importFrom dplyr pull
@@ -170,3 +171,48 @@ simpleCap <- function(x) {
   return(rhs)
 }
 
+#'
+#'
+#'
+.getdbname<-function(species=species){
+  species=tryCatch(match.arg(species,c("anopheles","arabidopsis","bovine","celegans","canine","fly","zebrafish",
+                                       "ecoli","ecsakai","chicken","human","mouse","rhesus","malaria","chipm","rat",
+                                       "toxoplasma","streptomyces","pig","yeast","xenopus","warm")),
+                   error=function(cond){return("unsupported")})
+  if (species == "anopheles") {
+    dbname <- "org.Ag.eg.db.sqlite"
+  } else if (species == "bovine") {
+    dbname <- "org.Bt.eg.db.sqlite"
+  } else if (species == "canine") {
+    dbname <- "org.Cf.eg.db.sqlite"
+  } else if (species == "worm" || species == "celegans") {
+    dbname <- "org.Ce.eg.db.sqlite"
+  } else if (species == "chicken") {
+    dbname <- "org.Gg.eg.db.sqlite"
+  } else if (species == "ecolik12") {
+    dbname <- "org.EcK12.eg.db.sqlite"
+  } else if (species == "ecsakai") {
+    dbname <- "org.EcSakai.eg.db.sqlite"
+  } else if (species == "fly") {
+    dbname <- "org.Dm.eg.db.sqlite"
+  } else if (species == "human") {
+    dbname <- "org.Hs.eg.db.sqlite"
+  } else if (species == "chipm") {
+    dbname <- "org.Pt.eg.db.sqlite"
+  }else if (species == "mouse") {
+    dbname <- "org.Mm.eg.db.sqlite"
+  } else if (species == "pig") {
+    dbname <- "org.Ss.eg.db.sqlite"
+  } else if (species == "rat") {
+    dbname <- "org.Rn.eg.db.sqlite"
+  } else if (species == "rhesus") {
+    dbname <- "org.Mmu.eg.db.sqlite"
+  } else if (species == "xenopus") {
+    dbname <- "org.Xl.eg.db.sqlite"
+  } else if (species == "zebrafish") {
+    dbname <- "org.Dr.eg.db.sqlite"
+  } else {
+    dbname <- NULL
+  }
+  return(dbname)
+}
