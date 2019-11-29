@@ -1,7 +1,7 @@
 # bioAnno
 Build Annotation package by using information from KEGG, NCBI, Ensembl
 ## Description
-_bioAnno_ provide wrap functions _fromKEGG_, _fromEnsembl_ and _fromNCBI_ to build annotation package.     
+_bioAnno_ provide wrap functions _fromKEGG_, _fromEnsembl_,_fromNCBI_ and _fromAnnoHub_ to build annotation package.     
 ## Installation
 ```
 library(devtools)
@@ -16,11 +16,13 @@ library(bioAnno)
 fromKEGG(species="hsa")
 ## which will build and install package "org.hsa.eg.db" which will include KEGG, GO annotation 
 ## build Annotation package by using fromEnsembl 
-fromEnsembl(species="Homo")
+fromEnsembl(species="Human")
+## build from AnnotationHub
+fromAnnoHub(species="human")
 ```
 ## Note
 The _bioAnno_ just a package for funs. _bioAnno_ provide wrap function which help me to easily build annotation package.
-The _fromAnnotationHub_ function will come soon!!!
+The _fromAnnoHub_ function is ready to use. 
 
 ## Contact information
 
