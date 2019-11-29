@@ -5,7 +5,7 @@
 #' @importFrom biomaRt getBM
 #' @importFrom AnnotationForge makeOrgPackage
 #' @param host the ensemble API host,for plant you can use plants.ensembl.org and for human and other species you can use uswest.ensembl.org
-#' @param species the sepcies you want to search, you can use showplant to get the species name
+#' @param species the sepcies you want to search, you can use listSpecies to get the species name
 #' @param anntype the type of function annotation(GO,KEGG,PFAM,InterPro) you want get from ensemble
 #' @param buildall include all prossbile annoation type listed in Ensembl
 #' @param author author for the annotation package
