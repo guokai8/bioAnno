@@ -1,5 +1,5 @@
 # bioAnno
-Build Annotation package by using information from KEGG, NCBI, Ensembl and return OrgDb object such as org.Hs.eg.db.
+Build Annotation package by using information from __KEGG__, __NCBI__, __Ensembl__ and return OrgDb object such as org.Hs.eg.db. The _bioAnno_ package support all organisms list in __Ensembl__, __KEGG__, __NCBI__.  
 ## Description
 _bioAnno_ provide wrap functions _fromKEGG_, _fromEnsembl_,_fromNCBI_ and _fromAnnoHub_ to build annotation package.     
 ## Installation
