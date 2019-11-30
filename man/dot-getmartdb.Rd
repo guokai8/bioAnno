@@ -14,3 +14,6 @@
 \description{
 get species information in Ensembl
 }
+\author{
+Kai Guo
+}

@@ -43,3 +43,6 @@ fromOwn(
 \description{
 build Own annotation database with user defined annotation file
 }
+\author{
+Kai Guo
+}

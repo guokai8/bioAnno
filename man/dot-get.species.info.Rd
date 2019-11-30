@@ -14,3 +14,6 @@
 \description{
 modified from pathview kegg.species.code
 }
+\author{
+Kai Guo
+}

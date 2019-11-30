@@ -9,3 +9,6 @@ simpleCap(x)
 \description{
 uppercase the first letters
 }
+\author{
+Kai Guo
+}

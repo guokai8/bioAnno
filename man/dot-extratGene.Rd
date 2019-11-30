@@ -9,3 +9,6 @@
 \description{
 extract gene information
 }
+\author{
+Kai Guo
+}

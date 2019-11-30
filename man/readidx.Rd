@@ -9,3 +9,6 @@ readidx()
 \description{
 get user input index
 }
+\author{
+Kai Guo
+}

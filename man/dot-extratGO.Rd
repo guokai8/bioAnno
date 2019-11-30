@@ -9,3 +9,6 @@
 \description{
 extract GO information from NCBI and filter by taxid
 }
+\author{
+Kai Guo
+}

@@ -45,6 +45,11 @@ fromEnsembl(
 \description{
 build annotation from ensembl
 }
+\examples{
+\dontrun{
+fromEnsembl(species="Human")
+}
+}
 \author{
 Kai Guo
 }

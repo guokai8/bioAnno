@@ -36,6 +36,11 @@ fromKEGG(
 \description{
 make annotation database from KEGG and GO from NCBI
 }
+\examples{
+\dontrun{
+fromKEGG(species="ath")
+}
+}
 \author{
 Kai Guo
 }

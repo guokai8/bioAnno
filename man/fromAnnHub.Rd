@@ -38,6 +38,11 @@ fromAnnHub(
 \description{
 extract annotation database by using AnnotationHub
 }
+\examples{
+\dontrun{
+fromAnnhub(species="human")
+}
+}
 \author{
 Kai Guo
 }
