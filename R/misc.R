@@ -216,3 +216,9 @@ simpleCap <- function(x) {
   }
   return(dbname)
 }
+##' @title get user input index
+readidx <- function()
+{
+  n <- readline(prompt="Enter an index: ")
+  return(as.integer(n))
+}

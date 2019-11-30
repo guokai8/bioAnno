@@ -59,6 +59,9 @@ fromEnsembl<-function(species="Arabidopsis t",host="uswest.ensembl.org",
     colnames(gene2go)<-c("GID","GO","EVIDENCE")
     gene2go<-na.omit(gene2go)
     gene2go<-gene2go[!duplicated(gene2go),]
+  }else{
+    gene2go <- data.frame("GID"=geneinfo$GID,"GO"="GO:0008150","EVIDENCE"="IEA")
+    cat("Gene Ontology are not list in your annotation database\n")
   }
   if("KEGG"%in%anntype){
     gene2path<-getBM(attributes = c("ensembl_gene_id","kegg_enzyme"),filters ="chromosome_name",values = as.vector(dbinfo$chr_info$name),dataset)
@@ -67,28 +70,40 @@ fromEnsembl<-function(species="Arabidopsis t",host="uswest.ensembl.org",
     colnames(gene2path)<-c("GID","PATH")
     gene2path<-na.omit(gene2path)
     gene2path<-gene2path[!duplicated(gene2path),]
+  }else{
+    gene2path <- data.frame("GID"=geneinfo$GID,"PATH"="01100")
+    cat("KEGG Pathway are not list in your annotation database\n")
   }
   if("PFAM"%in%anntype){
-    gene2pfam<-getBM(attributes = c("ensembl_gene_id","pfam"),filters ="chromosome_name",values = as.vector(dbinfo$chr_info$name),dataset)
-    gene2pfam<-gene2pfam[nchar(gene2pfam[,2])>1,]
+    gene2pfam <- getBM(attributes = c("ensembl_gene_id","pfam"),filters ="chromosome_name",values = as.vector(dbinfo$chr_info$name),dataset)
+    gene2pfam <- gene2pfam[nchar(gene2pfam[,2])>1,]
     colnames(gene2pfam)<-c("GID","PFAM")
     gene2pfam<-na.omit(gene2pfam)
+  }else{
+    gene2pfam <- data.frame("GID"=geneinfo$GID,"PFAM"="PF00001")
+    cat("Protein Family are not list in your annotation database\n")
   }
   if("InterPro"%in%anntype){
     gene2interpro<-getBM(attributes = c("ensembl_gene_id","interpro"),filters ="chromosome_name",values = as.vector(dbinfo$chr_info$name),dataset)
     gene2interpro<-gene2interpro[nchar(gene2interpro[,2])>1,]
     colnames(gene2interpro)<-c("GID","INTERPRO")
-    gene2interpro<-na.omit(gene2interpro)
+    gene2interpro <- na.omit(gene2interpro)
+  }else{
+    gene2intrepro <- data.frame("GID"=geneinfo$GID,"INTREPRO"="IPR000001")
+    cat("InterPro are not list in your annotation database\n")
   }
   if("Reactome"%in%anntype){
     if(isTRUE(plant)){
-      gene2reactome<-getBM(attributes = c("ensembl_gene_id","plant_reactome_pathway"),filters ="chromosome_name",values = as.vector(dbinfo$chr_info$name),dataset)
+      gene2reactome <- getBM(attributes = c("ensembl_gene_id","plant_reactome_pathway"),filters ="chromosome_name",values = as.vector(dbinfo$chr_info$name),dataset)
     }else{
-      gene2reactome<-getBM(attributes = c("ensembl_gene_id","reactome"),filters ="chromosome_name",values = as.vector(dbinfo$chr_info$name),dataset)
+      gene2reactome <- getBM(attributes = c("ensembl_gene_id","reactome"),filters ="chromosome_name",values = as.vector(dbinfo$chr_info$name),dataset)
     }
-    gene2reactome<-gene2reactome[nchar(gene2reactome[,2])>1,]
-    colnames(gene2reactome)<-c("GID","REACTOME")
-    gene2reactome<-na.omit(gene2reactome)
+    gene2reactome <- gene2reactome[nchar(gene2reactome[,2])>1,]
+    colnames(gene2reactome) <- c("GID","REACTOME")
+    gene2reactome <- na.omit(gene2reactome)
+  }else{
+    gene2reactome <- data.frame("GID"=geneinfo$GID,"REACTOME"="RSA0000000")
+    cat("Reactome Pathway are not list in your annotation database\n")
   }
   if(is.null(author)){
     author="myself"
