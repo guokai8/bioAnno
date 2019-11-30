@@ -8,6 +8,8 @@ Description: This package provide functions to build annotation data (GO,KEGG,Re
 License: GPL-2
 Encoding: UTF-8
 LazyData: true
+Depends:
+    R (>= 3.5.0)
 Imports:
       AnnotationForge,
       AnnotationHub,
