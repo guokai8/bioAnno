@@ -6,13 +6,8 @@
 \usage{
 fromOwn(
   geneinfo = geneinfo,
-  entrezid = NULL,
-  refseq = NULL,
   gene2go = NULL,
   gene2path = NULL,
-  pfam = NULL,
-  interpro = NULL,
-  reactome = NULL,
   version = NULL,
   maintainer = NULL,
   author = NULL,
@@ -25,11 +20,9 @@ fromOwn(
 \arguments{
 \item{geneinfo}{gene information table with two columns as default("GID","DESCRIPTION")}
 
-\item{entrezid}{gene information table with corresponding ENTREZID id}
+\item{gene2go}{Gene Onotoly information for  genes}
 
-\item{refseq}{gene information table with corresponding REFSEQ id}
-
-\item{gene2go}{Gene Onotoly information for each gene}
+\item{gene2path}{KEGG Pathway or KO information for genes}
 
 \item{version}{version}
 
@@ -40,6 +33,10 @@ fromOwn(
 \item{tax_id}{taxonomy id for the species}
 
 \item{genus}{genus for the species}
+
+\item{entrezid}{gene information table with corresponding ENTREZID id}
+
+\item{refseq}{gene information table with corresponding REFSEQ id}
 
 \item{install}{install the package or not(default: TRUE)}
 }
