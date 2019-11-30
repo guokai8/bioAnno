@@ -52,11 +52,6 @@ fromEnsembl<-function(species="Arabidopsis t",host="uswest.ensembl.org",
   gene2entrezid<-gene2entrezid[nchar(gene2entrezid[,2])>1,]
   colnames(gene2entrezid)<-c("GID","ENTREZID")
   gene2entrezid<-na.omit(gene2entrezid)
-  gene2entrezid[,2]<-as.character(gene2entrezid[,2])
-  gene2ref<-getBM(attributes = c("ensembl_gene_id","refseq_dna"),filters ="chromosome_name",values = as.vector(dbinfo$chr_info$name),dataset)
-  gene2ref<-gene2ref[nchar(gene2ref[,2])>1,]
-  colnames(gene2ref)<-c("GID","REFSEQ")
-  gene2ref<-na.omit(gene2ref)
   if("GO"%in%anntype){
     gene2go<-getBM(attributes = c("ensembl_gene_id","go_id","go_linkage_type"),filters ="chromosome_name",values = as.vector(dbinfo$chr_info$name),dataset)
     gene2go<-gene2go[nchar(gene2go[,2])>1,]
@@ -117,7 +112,6 @@ fromEnsembl<-function(species="Arabidopsis t",host="uswest.ensembl.org",
   package<-makeOrgPackage(gene_info=geneinfo,
                           symbol=gene2symbol,
                  entrezid=gene2entrezid,
-                 refseq=gene2ref,
                  go=gene2go,
                  path=gene2path,
                  pfam=gene2pfam,
