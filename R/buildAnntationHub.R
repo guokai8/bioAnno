@@ -13,6 +13,10 @@
 #' @param version version
 #' @param install install the package or not(default: TRUE)
 #' @param outputDir temp file path
+#' @examples
+#' \dontrun{
+#' fromAnnhub(species="human")
+#' }
 #' @author Kai Guo
 #' @export
 fromAnnHub<-function(species,usefirst=TRUE,author=NULL,

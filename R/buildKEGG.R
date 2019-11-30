@@ -9,6 +9,10 @@
 #' @param genus genus for the species
 #' @param version version
 #' @param install install the package or not(default: TRUE)
+#' @examples
+#' \dontrun{
+#' fromKEGG(species="ath")
+#' }
 #' @author Kai Guo
 #' @export
 #'

@@ -8,6 +8,10 @@
 #' @param version version
 #' @param plant plant or animal species (TRUE/FALSE)
 #' @param install install the package or not(default: TRUE)
+#' @examples
+#' \dontrun{
+#' fromKEGG(species="ath")
+#' }
 #' @author Kai Guo
 #' @export
 fromNCBI <- function(species="ath",author=NULL,

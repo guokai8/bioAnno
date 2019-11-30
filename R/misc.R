@@ -1,4 +1,5 @@
 ##' uppercase the first letters
+##' @author Kai Guo
 simpleCap <- function(x) {
   s <- strsplit(x, " ")[[1]]
   paste(toupper(substring(s, 1,1)), substring(s, 2),
@@ -8,6 +9,7 @@ simpleCap <- function(x) {
 #' extract GO information from NCBI and filter by taxid
 #' @importFrom data.table fread
 #' @importFrom R.utils gunzip
+#' @author Kai Guo
 .extratGO=function(taxid=NULL,sepecies=NULL){
   # temp file
   if(is.null(taxid)){
@@ -53,6 +55,7 @@ simpleCap <- function(x) {
 ##' extract gene information
 #' @importFrom data.table fread
 #' @importFrom R.utils gunzip
+#' @author Kai Guo
 .extratGene=function(taxid=NULL,species=NULL){
   if(is.null(taxid)){
     taxid <- .get.species.info(species)['tax.id']
@@ -98,6 +101,7 @@ simpleCap <- function(x) {
 #' @param species species name(common name,kegg.species.code or scientifc name)
 #' @param na.rm TRUE/FALSE
 #'
+#' @author Kai Guo
 .get.species.info<-function (species = "hsa", na.rm = FALSE)
 {
   nspec = length(species)
@@ -130,6 +134,7 @@ simpleCap <- function(x) {
 ##' @importFrom jsonlite fromJSON
 ##' @param spe species
 ##' @param mart biomaRt mart
+##' @author Kai Guo
 .getmartdb<-function(spe,mart){
   lhs<- listDatasets(mart)
   spe=simpleCap(spe);
@@ -171,9 +176,10 @@ simpleCap <- function(x) {
   return(rhs)
 }
 
+#'@title get database name by using species name
+#'@param species species name
 #'
-#'
-#'
+#' @author Kai Guo
 .getdbname<-function(species=species){
   species=tryCatch(match.arg(species,c("anopheles","arabidopsis","bovine","celegans","canine","fly","zebrafish",
                                        "ecoli","ecsakai","chicken","human","mouse","rhesus","malaria","chipm","rat",
@@ -217,6 +223,7 @@ simpleCap <- function(x) {
   return(dbname)
 }
 ##' @title get user input index
+##' @author Kai Guo
 readidx <- function()
 {
   n <- readline(prompt="Enter an index: ")

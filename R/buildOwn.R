@@ -11,6 +11,8 @@
 #' @param genus genus for the species
 #' @param version version
 #' @param install install the package or not(default: TRUE)
+#' @export
+#' @author Kai Guo
 fromOwn<-function(geneinfo=geneinfo,gene2go=NULL,gene2path=NULL,
                    version=NULL,maintainer=NULL,author=NULL, outputDir = NULL,tax_id=NULL,genus=NULL,species=NULL){
 

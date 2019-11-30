@@ -15,6 +15,10 @@
 #' @param version version number(xx.xx.xx)
 #' @param plant plant or animal species (TRUE/FALSE)
 #' @param install install the package or not(default: TRUE)
+#' @examples
+#' \dontrun{
+#' fromEnsembl(species="Human")
+#' }
 #' @author Kai Guo
 #' @export
 fromEnsembl<-function(species="Arabidopsis t",host="uswest.ensembl.org",
