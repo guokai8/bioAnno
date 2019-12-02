@@ -19,9 +19,9 @@ fromNCBI <- function(species="ath",author=NULL,
                                install=TRUE,outputDir=NULL){
   dbinfo <- .get.species.info(species=species)
   dbname <- paste0('org.',species,'.eg.db')
-  if (require(dbname,character.only=TRUE)){
-    suppressMessages(require(dbname,character.only = T,quietly = T))
-  }else{
+#  if (require(dbname,character.only=TRUE)){
+#    suppressMessages(require(dbname,character.only = T,quietly = T))
+#  }else{
   geneinfo <- .extratGene(taxid = dbinfo['tax.id'])
   gene2symbol<-geneinfo[,c("GID","SYMBOL")]
   gene2symbol[!duplicated(gene2symbol),]
@@ -66,5 +66,5 @@ fromNCBI <- function(species="ath",author=NULL,
   if(isTRUE(install)){
     install.packages(package,repos = NULL,type="source")
   }
-}
+#}
 }
