@@ -26,9 +26,9 @@ fromKEGG<-function(species="ath",anntype=NULL,buildall=TRUE,author=NULL,
   dbinfo <- .get.species.info(species)
   species <- dbinfo["kegg.code"]
   dbname <- paste0('org.',species,'.eg.db')
-  if (require(dbname,character.only=TRUE)&& !isTRUE(rebuild)){
-    suppressMessages(require(dbname,character.only = T,quietly = T))
-  }else{
+#  if (require(dbname,character.only=TRUE)&& !isTRUE(rebuild)){
+#    suppressMessages(require(dbname,character.only = T,quietly = T))
+#  }else{
   geneinfo <- data.frame()
   gene2path <- data.frame()
   gene2ko <- data.frame()
@@ -81,7 +81,7 @@ fromKEGG<-function(species="ath",anntype=NULL,buildall=TRUE,author=NULL,
   if(isTRUE(install)){
     install.packages(package,repos = NULL,type="source")
   }
-  }
+ # }
 }
 
 
