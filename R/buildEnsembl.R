@@ -15,6 +15,7 @@
 #' @param version version number(xx.xx.xx)
 #' @param plant plant or animal species (TRUE/FALSE)
 #' @param install install the package or not(default: TRUE)
+#' @param rebuild rebuild the package or not(default: FALSE)
 #' @examples
 #' \dontrun{
 #' fromEnsembl(species="Human")
@@ -24,7 +25,7 @@
 fromEnsembl<-function(species="Arabidopsis t",host="uswest.ensembl.org",
                        anntype=NULL,buildall=TRUE,author=NULL,
                        maintainer=NULL,tax_id=NULL,genus=NULL,version=NULL,plant=FALSE,
-                       install=TRUE,outputDir=NULL){
+                       install=TRUE,outputDir=NULL,rebuild=FALSE){
   if(isTRUE(plant)){
      host="plants.ensembl.org"
      mart=useMart("plants_mart",host=host)
@@ -32,11 +33,14 @@ fromEnsembl<-function(species="Arabidopsis t",host="uswest.ensembl.org",
      mart=useMart("ENSEMBL_MART_ENSEMBL",host=host)
   }
   dbinfo<-.getmartdb(species,mart)
-
- # dbname1 <- paste0('org.',strsplit(species," ")[[1]][1],'.eg.db')
- #  if (require(dbname1,character.only=TRUE)){
- #    suppressMessages(require(dbname1,character.only = T,quietly = T))
-#  }else{
+  dbname1 <- paste0('org.',strsplit(species," ")[[1]][1],'.eg.db')
+  if(isTRUE(rebuild)){
+    suppressMessages(remove.packages(dbname1))
+  }
+  if(is_installed(dbname1)){
+    suppressMessages(library(dbname1,character.only = T,quietly = T))
+    cat("You alreay had the annotation package: ",dbname1," \n")
+  }else{
   dbname=as.character(dbinfo$dbname)
   dataset<-useDataset(dbname,mart=mart)
   if(is.null(anntype)){
@@ -150,6 +154,7 @@ fromEnsembl<-function(species="Arabidopsis t",host="uswest.ensembl.org",
   if(isTRUE(install)){
     install.packages(package,repos = NULL,type="source")
     unlink(package,recursive = TRUE)
+  }
   }
 }
 ##' @title list species available in Ensembl

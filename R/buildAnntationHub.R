@@ -12,6 +12,7 @@
 #' @param version version
 #' @param install install the package or not(default: TRUE)
 #' @param outputDir temp file path
+#' @param rebuild rebuild the package or not(default: FALSE)
 #' @examples
 #' \dontrun{
 #' fromAnnhub(species="human")
@@ -20,14 +21,24 @@
 #' @export
 fromAnnHub<-function(species,author=NULL,
                      maintainer=NULL,tax_id=NULL,genus=NULL,version=NULL,
-                     install=TRUE,outputDir=NULL){
-  ah<-AnnotationHub()
+                     install=TRUE,outputDir=NULL,rebuild=FALSE){
   dbi <- .getdbname(species)
+
   if(is.null(dbi)){
       dbi <- .get.species.info(species=species)
       dbi <- dbi["scientific.name"]
       dbi <- paste0(unlist(strsplit(dbi,' '))[1:2],collapse=" ")
   }
+  species <- gsub(' .*','',species)
+  dbname <- paste0("org.",species,".eg.db")
+  if(isTRUE(rebuild)){
+    suppressMessages(remove.packages(dbname))
+  }
+  if(is_installed(dbname)){
+    suppressMessages(library(dbname,character.only = T,quietly = T))
+    cat("You alreay had the annotation package: ",dbname," \n")
+  }else{
+  ah<-AnnotationHub()
   ah <- query(ah,dbi)
   ahdb<-ah$title
   names(ahdb)<-ah$ah_id
@@ -125,6 +136,7 @@ fromAnnHub<-function(species,author=NULL,
     unlink(package,recursive = TRUE)
   }else{
     return(res)
+  }
   }
   }
 

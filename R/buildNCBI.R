@@ -8,6 +8,7 @@
 #' @param version version
 #' @param plant plant or animal species (TRUE/FALSE)
 #' @param install install the package or not(default: TRUE)
+#' @param rebuild rebuild the package or not(default: FALSE)
 #' @examples
 #' \dontrun{
 #' fromKEGG(species="ath")
@@ -16,7 +17,7 @@
 #' @export
 fromNCBI <- function(species="ath",author=NULL,
                                maintainer=NULL,tax_id=NULL,genus=NULL,version=NULL,
-                               install=TRUE,outputDir=NULL){
+                               install=TRUE,outputDir=NULL,rebuild=FALSE){
   dbinfo <- .get.species.info(species=species)
   dbname <- paste0('org.',species,'.eg.db')
   if(isTRUE(rebuild)){
