@@ -6,7 +6,6 @@
 \usage{
 fromAnnHub(
   species,
-  usefirst = TRUE,
   author = NULL,
   maintainer = NULL,
   tax_id = NULL,
@@ -18,8 +17,6 @@ fromAnnHub(
 }
 \arguments{
 \item{species}{species name(common name,kegg.species.code or scientifc name)}
-
-\item{usefirst}{choose the first annotation database or not}
 
 \item{author}{author for the annotation package}
 
