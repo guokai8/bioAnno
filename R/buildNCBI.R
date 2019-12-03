@@ -28,6 +28,10 @@ fromNCBI <- function(species="ath",author=NULL,
   geneinfo <- geneinfo[,c("GID","DESCRIPTION")]
   geneinfo <- geneinfo[!duplicated(geneinfo),]
   gene2go <- .extratGO(taxid = dbinfo['tax.id'])
+  if(nrow(gene2go)==0){
+    cat("No Gene Ontology information available !\n")
+    gene2go <- data.frame("GID"=geneinfo$GID,"GO"="GO:0008150","EVIDENCE"="IEA")
+  }
   if(is.null(version)){
     version="0.0.1"
   }
