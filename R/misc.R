@@ -48,8 +48,9 @@ simpleCap <- function(x) {
           )
           ]
   # filter with taxid
-  gene2go<-gene2go[taxid==taxid,2:4]
-  return(as.data.frame(gene2go))
+  gene2go<-as.data.frame(gene2go)
+  gene2go<-gene2go[gene2go$taxid==taxid,2:4]
+  return(gene2go)
 }
 
 ##' extract gene information

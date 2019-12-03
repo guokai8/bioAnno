@@ -5,7 +5,6 @@
 #' @importFrom AnnotationForge makeOrgPackage
 #' @importFrom RSQLite dbGetQuery
 #' @param species species name(common name,kegg.species.code or scientifc name)
-#' @param usefirst choose the first annotation database or not
 #' @param author author for the annotation package
 #' @param maintainer maintainer
 #' @param tax_id taxonomy id for the species
@@ -19,7 +18,7 @@
 #' }
 #' @author Kai Guo
 #' @export
-fromAnnHub<-function(species,usefirst=TRUE,author=NULL,
+fromAnnHub<-function(species,author=NULL,
                      maintainer=NULL,tax_id=NULL,genus=NULL,version=NULL,
                      install=TRUE,outputDir=NULL){
   ah<-AnnotationHub()
@@ -27,22 +26,19 @@ fromAnnHub<-function(species,usefirst=TRUE,author=NULL,
   if(is.null(dbi)){
       dbi <- .get.species.info(species=species)
       dbi <- dbi["scientific.name"]
+      dbi <- paste0(unlist(strsplit(dbi,' '))[1:2],collapse=" ")
   }
   ah <- query(ah,dbi)
   ahdb<-ah$title
   names(ahdb)<-ah$ah_id
-  ### only need ors.xxx.eg.xxx
-  ahdb<-grep('org',grep('eg',ahdb,value=T),value=T)
-  idx <- grep(sub(' .*','',sub(' ','_',dbi)),ahdb,value=T)
+  ### only need ors.xxx.eg.xxx or org.xxx.db.sqlite
+  idx<-grep('^org',grep('\\.[eg|db]',ahdb,value=T),value=T)
+  #idx <- grep(sub(' .*','',sub(' ','_',dbi)),ahdb,value=T)
   if(length(idx)>1){
-    if(isTRUE(usefirst)){
-      idx <- idx[1]
-    }else{
-      cat("Please select which database you want use (1,2,3,...): \n")
+      cat("Please select which database you want to use (1,2,3,...): \n")
       cat(idx,"\n")
       idd <- readidx()
       idx <- idx[idd]
-    }
   }
   idn <- names(idx)
   res <- ah[[idn]]

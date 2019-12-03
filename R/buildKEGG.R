@@ -26,7 +26,7 @@ fromKEGG<-function(species="ath",anntype=NULL,buildall=TRUE,author=NULL,
   dbinfo <- .get.species.info(species)
   species <- dbinfo["kegg.code"]
   dbname <- paste0('org.',species,'.eg.db')
-#  if (require(dbname,character.only=TRUE)&& !isTRUE(rebuild)){
+#  if (require(dbname,character.only=TRUE) & !isTRUE(rebuild)){
 #    suppressMessages(require(dbname,character.only = T,quietly = T))
 #  }else{
   geneinfo <- data.frame()
@@ -36,6 +36,15 @@ fromKEGG<-function(species="ath",anntype=NULL,buildall=TRUE,author=NULL,
   geneinfo <- data.frame("GID"=sub(paste0(species,":"),'',names(tmp)),"GENAME"= tmp)
   gene2go <- .extratGO(taxid=dbinfo["tax.id"])
   gene2go <- gene2go[!duplicated(gene2go),]
+  if(nrow(gene2go)==0){
+    cat("No Gene Ontology information available !\n")
+    gene2go <- data.frame("GID"=geneinfo$GID,"GO"="GO:0008150","EVIDENCE"="IEA")
+  }
+  if(species=="ath"){
+    data("ath",package="bioAnno")
+    gene2go$GID<-ath[gene2go$GID,1]
+    gene2go<-na.omit(gene2go)
+  }
   tmp <- keggLink('pathway', species)
   gene2path <- data.frame("GID"=sub(paste0(species,":"),'',names(tmp)),
                           "PATH"= sub(species,'',sub('path:','',tmp)))
