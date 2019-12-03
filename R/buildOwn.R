@@ -83,5 +83,6 @@ fromOwn<-function(geneinfo=geneinfo,gene2go=NULL,gene2path=NULL,
   )
   if(isTRUE(install)){
     install.packages(package,repos = NULL,type="source")
+    unlink(package,recursive = TRUE)
   }
 }

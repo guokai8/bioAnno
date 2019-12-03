@@ -19,6 +19,13 @@ fromNCBI <- function(species="ath",author=NULL,
                                install=TRUE,outputDir=NULL){
   dbinfo <- .get.species.info(species=species)
   dbname <- paste0('org.',species,'.eg.db')
+  if(isTRUE(rebuild)){
+    suppressMessages(remove.packages(dbname))
+  }
+  if(is_installed(dbname)){
+    suppressMessages(library(dbname,character.only = T,quietly = T))
+    cat("You alreay had the annotation package: ",dbname," \n")
+  }else{
 #  if (require(dbname,character.only=TRUE)){
 #    suppressMessages(require(dbname,character.only = T,quietly = T))
 #  }else{
@@ -64,11 +71,13 @@ fromNCBI <- function(species="ath",author=NULL,
     genus="",
     species=species,
     version=version,
+    verbose=FALSE,
     goTable="go"
   )
   tmp <- NULL
   if(isTRUE(install)){
     install.packages(package,repos = NULL,type="source")
+    unlink(package,recursive = TRUE)
   }
-#}
+}
 }

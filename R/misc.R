@@ -230,3 +230,9 @@ readidx <- function()
   n <- readline(prompt="Enter an index: ")
   return(as.integer(n))
 }
+##' @title check package installed or not
+##' @param pkg package name
+##' @author Kai Guo
+is_installed <- function(pkg) {
+  nzchar(system.file(package = pkg))
+}

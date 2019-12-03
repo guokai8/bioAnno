@@ -32,6 +32,7 @@ fromEnsembl<-function(species="Arabidopsis t",host="uswest.ensembl.org",
      mart=useMart("ENSEMBL_MART_ENSEMBL",host=host)
   }
   dbinfo<-.getmartdb(species,mart)
+
  # dbname1 <- paste0('org.',strsplit(species," ")[[1]][1],'.eg.db')
  #  if (require(dbname1,character.only=TRUE)){
  #    suppressMessages(require(dbname1,character.only = T,quietly = T))
@@ -143,10 +144,12 @@ fromEnsembl<-function(species="Arabidopsis t",host="uswest.ensembl.org",
                  tax_id=tax_id,
                  genus=genus,
                  species=species,
+                 verbose=FALSE,
                  goTable="go"
   )
   if(isTRUE(install)){
     install.packages(package,repos = NULL,type="source")
+    unlink(package,recursive = TRUE)
   }
 }
 ##' @title list species available in Ensembl

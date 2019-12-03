@@ -26,6 +26,13 @@ fromKEGG<-function(species="ath",anntype=NULL,buildall=TRUE,author=NULL,
   dbinfo <- .get.species.info(species)
   species <- dbinfo["kegg.code"]
   dbname <- paste0('org.',species,'.eg.db')
+  if(isTRUE(rebuild)){
+    suppressMessages(remove.packages(dbname))
+  }
+  if(is_installed(dbname)){
+    suppressMessages(library(dbname,character.only = T,quietly = T))
+    cat("You alreay had the annotation package: ",dbname," \n")
+  }else{
 #  if (require(dbname,character.only=TRUE) & !isTRUE(rebuild)){
 #    suppressMessages(require(dbname,character.only = T,quietly = T))
 #  }else{
@@ -34,6 +41,7 @@ fromKEGG<-function(species="ath",anntype=NULL,buildall=TRUE,author=NULL,
   gene2ko <- data.frame()
   tmp<-keggList(species)
   geneinfo <- data.frame("GID"=sub(paste0(species,":"),'',names(tmp)),"GENAME"= tmp)
+  rownames(geneinfo)<-NULL
   gene2go <- .extratGO(taxid=dbinfo["tax.id"])
   gene2go <- gene2go[!duplicated(gene2go),]
   if(nrow(gene2go)==0){
@@ -84,13 +92,15 @@ fromKEGG<-function(species="ath",anntype=NULL,buildall=TRUE,author=NULL,
     genus="",
     species=species,
     version=version,
+    verbose=FALSE,
     goTable="go"
   )
   tmp <- NULL
   if(isTRUE(install)){
     install.packages(package,repos = NULL,type="source")
+    unlink(package,recursive = TRUE)
   }
- # }
+  }
 }
 
 

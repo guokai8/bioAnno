@@ -103,6 +103,7 @@ fromAnnHub<-function(species,author=NULL,
       genus="",
       species=species,
       version=version,
+      verbose=FALSE,
          goTable="go")
     }else{
       package<-makeOrgPackage(
@@ -117,9 +118,11 @@ fromAnnHub<-function(species,author=NULL,
         genus="",
         species=species,
         version=version,
+        verbose=FALSE,
         goTable="go")
     }
     install.packages(package,repos = NULL,type="source")
+    unlink(package,recursive = TRUE)
   }else{
     return(res)
   }
