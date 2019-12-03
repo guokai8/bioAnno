@@ -19,6 +19,7 @@ fromNCBI <- function(species="ath",author=NULL,
                                maintainer=NULL,tax_id=NULL,genus=NULL,version=NULL,
                                install=TRUE,outputDir=NULL,rebuild=FALSE){
   dbinfo <- .get.species.info(species=species)
+  species <- dbinfo["kegg.code"]
   dbname <- paste0('org.',species,'.eg.db')
   if(isTRUE(rebuild)){
     suppressMessages(remove.packages(dbname))
