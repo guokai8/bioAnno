@@ -19,7 +19,7 @@ fromKEGG(species="hsa")
 ## build Annotation package by using fromEnsembl 
 fromEnsembl(species="Human")
 ## build from AnnotationHub
-fromAnnoHub(species="human")
+fromAnnHub(species="human")
 ```
 ## Note
 The _bioAnno_ just a package for funs. _bioAnno_ provide wrap function which help me to easily build annotation package.
