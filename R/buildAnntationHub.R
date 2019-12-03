@@ -36,7 +36,9 @@ fromAnnHub<-function(species,author=NULL,
   #idx <- grep(sub(' .*','',sub(' ','_',dbi)),ahdb,value=T)
   if(length(idx)>1){
       cat("Please select which database you want to use (1,2,3,...): \n")
-      cat(idx,"\n")
+      for(i in 1:length(idx)){
+       cat(i,":",idx[i],"\n")
+       }
       idd <- readidx()
       idx <- idx[idd]
   }
