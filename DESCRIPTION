@@ -1,7 +1,7 @@
 Package: bioAnno
 Type: Package
 Title: Build Annotation From Online Database
-Version: 0.0.5
+Version: 0.0.6
 Author: Kai Guo
 Maintainer: guokai8 <guokai8@gmail.com>
 Description: This package provide functions to build annotation data (GO,KEGG,Reactome,...) based online resource
@@ -23,9 +23,8 @@ Imports:
       R.utils,
       magrittr
 Suggests:
-    biomaRt,
     GO.db,
     knitr,
     rmarkdown
 biocViews: Annotation, Clustering, GO, KEGG,Pathways, Reactome
-RoxygenNote: 7.0.1
+RoxygenNote: 7.0.2
