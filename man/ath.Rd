@@ -17,6 +17,8 @@ korg include species information from KEGG database. korg data was modified from
              (https://pathview.uncc.edu/data/korg.tsv)
 }
 \examples{
+\dontrun{
 ath
+}
 }
 \keyword{datasets}
