@@ -33,5 +33,4 @@ matrix:
 addons:
   apt:
     update: true
-    packages:
 
