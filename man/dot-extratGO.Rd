@@ -4,7 +4,12 @@
 \alias{.extratGO}
 \title{extract GO information from NCBI and filter by taxid}
 \usage{
-.extratGO(taxid = NULL, sepecies = NULL)
+.extratGO(taxid = NULL, species = NULL)
+}
+\arguments{
+\item{taxid}{taxonomy id for the species}
+
+\item{species}{species name(common name,kegg.species.code or scientifc name)}
 }
 \description{
 extract GO information from NCBI and filter by taxid

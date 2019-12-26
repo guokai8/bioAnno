@@ -6,6 +6,9 @@
 \usage{
 simpleCap(x)
 }
+\arguments{
+\item{x}{string}
+}
 \description{
 uppercase the first letters
 }

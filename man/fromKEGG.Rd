@@ -6,8 +6,6 @@
 \usage{
 fromKEGG(
   species = "ath",
-  anntype = NULL,
-  buildall = TRUE,
   author = NULL,
   maintainer = NULL,
   tax_id = NULL,
@@ -32,6 +30,10 @@ fromKEGG(
 \item{version}{version}
 
 \item{install}{install the package or not(default: TRUE)}
+
+\item{outputDir}{temporary output path}
+
+\item{rebuild}{rebuild the package or not(default: FALSE)}
 }
 \description{
 make annotation database from KEGG and GO from NCBI

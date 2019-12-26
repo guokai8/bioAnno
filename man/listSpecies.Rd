@@ -8,6 +8,8 @@ listSpecies(host = "uswest.ensembl.org", plant = FALSE)
 }
 \arguments{
 \item{host}{Ensembl host site}
+
+\item{plant}{use plant database or not (default: FALSE)}
 }
 \description{
 list species available in Ensembl

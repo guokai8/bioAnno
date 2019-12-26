@@ -14,7 +14,8 @@ fromOwn(
   outputDir = NULL,
   tax_id = NULL,
   genus = NULL,
-  species = NULL
+  species = NULL,
+  install = TRUE
 )
 }
 \arguments{
@@ -30,13 +31,13 @@ fromOwn(
 
 \item{author}{author for the annotation package}
 
+\item{outputDir}{temporary output path}
+
 \item{tax_id}{taxonomy id for the species}
 
 \item{genus}{genus for the species}
 
-\item{entrezid}{gene information table with corresponding ENTREZID id}
-
-\item{refseq}{gene information table with corresponding REFSEQ id}
+\item{species}{species name(common name,kegg.species.code or scientifc name)}
 
 \item{install}{install the package or not(default: TRUE)}
 }

@@ -6,6 +6,11 @@
 \usage{
 .extratGene(taxid = NULL, species = NULL)
 }
+\arguments{
+\item{taxid}{taxonomy id for the species}
+
+\item{species}{species name(common name,kegg.species.code or scientifc name)}
+}
 \description{
 extract gene information
 }

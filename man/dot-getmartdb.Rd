@@ -4,10 +4,10 @@
 \alias{.getmartdb}
 \title{get species information in Ensembl}
 \usage{
-.getmartdb(spe, mart)
+.getmartdb(species, mart)
 }
 \arguments{
-\item{spe}{species}
+\item{species}{species}
 
 \item{mart}{biomaRt mart}
 }

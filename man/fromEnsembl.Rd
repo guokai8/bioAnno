@@ -16,7 +16,8 @@ fromEnsembl(
   version = NULL,
   plant = FALSE,
   install = TRUE,
-  outputDir = NULL
+  outputDir = NULL,
+  rebuild = FALSE
 )
 }
 \arguments{
@@ -41,6 +42,10 @@ fromEnsembl(
 \item{plant}{plant or animal species (TRUE/FALSE)}
 
 \item{install}{install the package or not(default: TRUE)}
+
+\item{outputDir}{temporary output path}
+
+\item{rebuild}{rebuild the package or not(default: FALSE)}
 }
 \description{
 build annotation from ensembl

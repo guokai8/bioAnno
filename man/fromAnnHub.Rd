@@ -12,7 +12,8 @@ fromAnnHub(
   genus = NULL,
   version = NULL,
   install = TRUE,
-  outputDir = NULL
+  outputDir = NULL,
+  rebuild = FALSE
 )
 }
 \arguments{
@@ -30,7 +31,9 @@ fromAnnHub(
 
 \item{install}{install the package or not(default: TRUE)}
 
-\item{outputDir}{temp file path}
+\item{outputDir}{temporary file path}
+
+\item{rebuild}{rebuild the package or not(default: FALSE)}
 }
 \description{
 extract annotation database by using AnnotationHub

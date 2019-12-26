@@ -12,7 +12,8 @@ fromNCBI(
   genus = NULL,
   version = NULL,
   install = TRUE,
-  outputDir = NULL
+  outputDir = NULL,
+  rebuild = FALSE
 )
 }
 \arguments{
@@ -30,7 +31,9 @@ fromNCBI(
 
 \item{install}{install the package or not(default: TRUE)}
 
-\item{plant}{plant or animal species (TRUE/FALSE)}
+\item{outputDir}{temporary output path}
+
+\item{rebuild}{rebuild the package or not(default: FALSE)}
 }
 \description{
 make annotation database from NCBI
