@@ -1,8 +1,8 @@
 #' build Own annotation database with user defined annotation file
 #' @importFrom AnnotationForge makeOrgPackage
+#' @importFrom utils install.packages
+#' @importFrom stats na.omit
 #' @param geneinfo gene information table with two columns as default("GID","DESCRIPTION")
-#' @param entrezid gene information table with corresponding ENTREZID id
-#' @param refseq gene information table with corresponding REFSEQ id
 #' @param gene2go Gene Onotoly information for  genes
 #' @param gene2path KEGG Pathway or KO information for genes
 #' @param author author for the annotation package
@@ -10,11 +10,13 @@
 #' @param tax_id taxonomy id for the species
 #' @param genus genus for the species
 #' @param version version
+#' @param species species name(common name,kegg.species.code or scientifc name)
 #' @param install install the package or not(default: TRUE)
+#' @param outputDir temporary output path
 #' @export
 #' @author Kai Guo
 fromOwn<-function(geneinfo=geneinfo,gene2go=NULL,gene2path=NULL,
-                   version=NULL,maintainer=NULL,author=NULL, outputDir = NULL,tax_id=NULL,genus=NULL,species=NULL){
+                   version=NULL,maintainer=NULL,author=NULL, outputDir = NULL,tax_id=NULL,genus=NULL,species=NULL,install=TRUE){
 
   cat("Please make sure you have Gene Ontology and KEGG pathway or KO data.frame ready.\n")
 

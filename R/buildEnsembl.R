@@ -4,6 +4,9 @@
 #' @importFrom biomaRt useDataset
 #' @importFrom biomaRt getBM
 #' @importFrom AnnotationForge makeOrgPackage
+#' @importFrom utils remove.packages
+#' @importFrom utils install.packages
+#' @importFrom stats na.omit
 #' @param host the ensemble API host,for plant you can use plants.ensembl.org and for human and other species you can use uswest.ensembl.org
 #' @param species the sepcies you want to search, you can use listSpecies to get the species name
 #' @param anntype the type of function annotation(GO,KEGG,PFAM,InterPro) you want get from ensemble
@@ -16,6 +19,7 @@
 #' @param plant plant or animal species (TRUE/FALSE)
 #' @param install install the package or not(default: TRUE)
 #' @param rebuild rebuild the package or not(default: FALSE)
+#' @param outputDir temporary output path
 #' @examples
 #' \dontrun{
 #' fromEnsembl(species="Human")
@@ -161,6 +165,7 @@ fromEnsembl<-function(species="Arabidopsis t",host="uswest.ensembl.org",
 ##' @importFrom  biomaRt useMart
 ##' @importFrom  biomaRt listDatasets
 ##' @param host Ensembl host site
+##' @param plant use plant database or not (default: FALSE)
 ##' @author Kai Guo
 ##' @export
 listSpecies<-function(host="uswest.ensembl.org",plant=FALSE){

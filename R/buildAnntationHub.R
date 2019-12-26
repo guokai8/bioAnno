@@ -2,8 +2,13 @@
 #' @importFrom AnnotationHub AnnotationHub
 #' @importFrom AnnotationHub query
 #' @importFrom AnnotationDbi select
+#' @importFrom AnnotationDbi keys
+#' @importFrom AnnotationDbi columns
 #' @importFrom AnnotationForge makeOrgPackage
 #' @importFrom RSQLite dbGetQuery
+#' @importFrom utils remove.packages
+#' @importFrom utils install.packages
+#' @importFrom stats na.omit
 #' @param species species name(common name,kegg.species.code or scientifc name)
 #' @param author author for the annotation package
 #' @param maintainer maintainer
@@ -11,7 +16,7 @@
 #' @param genus genus for the species
 #' @param version version
 #' @param install install the package or not(default: TRUE)
-#' @param outputDir temp file path
+#' @param outputDir temporary file path
 #' @param rebuild rebuild the package or not(default: FALSE)
 #' @examples
 #' \dontrun{

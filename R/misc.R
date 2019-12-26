@@ -1,4 +1,5 @@
 ##' uppercase the first letters
+##' @param x string
 ##' @author Kai Guo
 simpleCap <- function(x) {
   s <- strsplit(x, " ")[[1]]
@@ -9,8 +10,12 @@ simpleCap <- function(x) {
 #' extract GO information from NCBI and filter by taxid
 #' @importFrom data.table fread
 #' @importFrom R.utils gunzip
+#' @importFrom utils download.file
+#' @importFrom data.table ":="
+#' @param taxid taxonomy id for the species
+#' @param species species name(common name,kegg.species.code or scientifc name)
 #' @author Kai Guo
-.extratGO=function(taxid=NULL,sepecies=NULL){
+.extratGO=function(taxid=NULL,species=NULL){
   # temp file
   if(is.null(taxid)){
     taxid <- .get.species.info(species)['tax.id']
@@ -56,6 +61,10 @@ simpleCap <- function(x) {
 ##' extract gene information
 #' @importFrom data.table fread
 #' @importFrom R.utils gunzip
+#' @importFrom utils download.file
+#' @importFrom data.table ":="
+#' @param taxid taxonomy id for the species
+#' @param species species name(common name,kegg.species.code or scientifc name)
 #' @author Kai Guo
 .extratGene=function(taxid=NULL,species=NULL){
   if(is.null(taxid)){
@@ -99,14 +108,14 @@ simpleCap <- function(x) {
   return(as.data.frame(gene2info))
 }
 ##' modified from pathview kegg.species.code
+##' @importFrom utils data
 #' @param species species name(common name,kegg.species.code or scientifc name)
 #' @param na.rm TRUE/FALSE
-#'
 #' @author Kai Guo
 .get.species.info<-function (species = "hsa", na.rm = FALSE)
 {
   nspec = length(species)
-  data(korg, package = "bioAnno")
+  if(!exists("korg")) data(korg)
   ridx = match(species, korg[, 1:5])%%nrow(korg)
   nai = is.na(ridx)
   if (sum(nai) > 0) {
@@ -133,12 +142,12 @@ simpleCap <- function(x) {
 ##' @importFrom magrittr %>%
 ##' @importFrom biomaRt listDatasets
 ##' @importFrom jsonlite fromJSON
-##' @param spe species
+##' @param species species
 ##' @param mart biomaRt mart
 ##' @author Kai Guo
-.getmartdb<-function(spe,mart){
+.getmartdb<-function(species,mart){
   lhs<- listDatasets(mart)
-  spe=simpleCap(spe);
+  spe=simpleCap(species);
   spe<-gsub(' ','\\\\s',spe)
   sel<-grepl(spe,lhs$description,ignore.case = T)
   tmp<-lhs[sel,]

@@ -2,6 +2,10 @@
 #' @importFrom KEGGREST keggLink
 #' @importFrom KEGGREST keggList
 #' @importFrom AnnotationForge makeOrgPackage
+#' @importFrom utils remove.packages
+#' @importFrom utils install.packages
+#' @importFrom stats na.omit
+#' @importFrom utils data
 #' @param species species name(common name,kegg.species.code or scientifc name)
 #' @param author author for the annotation package
 #' @param maintainer maintainer
@@ -10,6 +14,7 @@
 #' @param version version
 #' @param install install the package or not(default: TRUE)
 #' @param rebuild rebuild the package or not(default: FALSE)
+#' @param outputDir temporary output path
 #' @examples
 #' \dontrun{
 #' fromKEGG(species="ath")
@@ -17,7 +22,7 @@
 #' @author Kai Guo
 #' @export
 #'
-fromKEGG<-function(species="ath",anntype=NULL,buildall=TRUE,author=NULL,
+fromKEGG<-function(species="ath",author=NULL,
                    maintainer=NULL,tax_id=NULL,genus=NULL,version=NULL,
                    install=TRUE,outputDir=NULL,rebuild=FALSE){
   cat("##############################################################################################\n")
@@ -50,7 +55,7 @@ fromKEGG<-function(species="ath",anntype=NULL,buildall=TRUE,author=NULL,
     gene2go <- data.frame("GID"=geneinfo$GID,"GO"="GO:0008150","EVIDENCE"="IEA")
   }
   if(species=="ath"){
-    data("ath",package="bioAnno")
+    if(!exists("ath")) data(ath)
     gene2go$GID<-ath[gene2go$GID,1]
     gene2go<-na.omit(gene2go)
   }

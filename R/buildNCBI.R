@@ -1,14 +1,15 @@
 #'make annotation database from NCBI
 #' @importFrom AnnotationForge makeOrgPackage
+#' @importFrom utils remove.packages
 #' @param species species name
 #' @param author author for the annotation package
 #' @param maintainer maintainer
 #' @param tax_id taxonomy id for the species
 #' @param genus genus for the species
 #' @param version version
-#' @param plant plant or animal species (TRUE/FALSE)
 #' @param install install the package or not(default: TRUE)
 #' @param rebuild rebuild the package or not(default: FALSE)
+#' @param outputDir temporary output path
 #' @examples
 #' \dontrun{
 #' fromKEGG(species="ath")
