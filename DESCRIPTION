@@ -25,6 +25,7 @@ Imports:
 Suggests:
     GO.db,
     knitr,
+    testthat,
     rmarkdown
 biocViews: Annotation, Clustering, GO, KEGG,Pathways, Reactome
 RoxygenNote: 7.0.2
