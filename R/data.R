@@ -11,7 +11,9 @@
 ##' \item{common.name}{common name of species}
 ##' }
 ##' @examples
+##' \dontrun{
 ##' korg
+##' }
 "korg"
 
 ##' @title TAIR10 geneid to ENTREZID
@@ -24,5 +26,7 @@
 ##' \item{ENTREZID}{NCBI ENTREZID ID}
 ##' }
 ##' @examples
+##' \dontrun{
 ##' ath
+##' }
 "ath"
