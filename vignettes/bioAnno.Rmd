@@ -1,0 +1,62 @@
+---
+title: "The bioAnno package"
+author:
+- name: Kai Guo
+  affiliation:
+  - Biomedical Sciences, University of North Dakota
+date: "`r Sys.Date()`"
+output:
+  html_document:
+  df_print: paged
+  word_document:
+    toc: yes
+    toc_depth: '6'
+  rmarkdown::html_vignette: default
+  pdf_document:
+    toc: yes
+    toc_depth: 6
+vignette: |
+  \usepackage[utf8]{inputenc}
+  %\VignetteIndexEntry{bioAnno}
+  %\VignetteEngine{knitr::knitr}
+---
+__bioAnno__ An R package for building annotation package by using
+information from __KEGG__, __NCBI__, __Ensembl__ and return OrgDb object
+such as org.Hs.eg.db.
+## 1. Introduction
+
+_bioAnno_ provide wrap functions _fromKEGG_, _fromEnsembl_,_fromNCBI_ and _fromAnnoHub_ to
+build annotation package. KEGG species code is suggested to use except _fromEnsembl_
+which require scientific name.
+
+## 2. Software Usage
+### 2.1 Installation
+The package can be installed as (preparing to submit to bioconductor)
+``` {r install,eval = FALSE}
+library(devtools)
+install_github("guokai8/bioAnno")
+```
+### 2.2 Load package
+```{r load, results = 'hide', message = FALSE}
+library(bioAnno)
+
+```
+
+### 2.3 Quick Tour
+``` {r quick, eval = FALSE}
+library(bioAnno)
+## build Annotation package by using fromKEGG
+fromKEGG(species="hsa")
+## which will build and install package "org.hsa.eg.db" which will include
+## KEGG, GO annotation
+## build from AnnotationHub
+fromAnnHub(species="human")
+```
+## Note
+The _bioAnno_  provide wrap function which help me to
+easily build annotation package.
+
+## 3 Contact information
+
+For any questions please contact guokai8@gmail.com
+
