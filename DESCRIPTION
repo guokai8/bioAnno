@@ -13,6 +13,8 @@ Depends:
 Imports:
       AnnotationForge,
       AnnotationHub,
+      AnnotationDbi,
+      RSQLite,
       KEGGREST,
       biomaRt,
       data.table,
