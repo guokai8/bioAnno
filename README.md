@@ -2,8 +2,13 @@
 
 Build Annotation package by using information from __KEGG__, __NCBI__, __Ensembl__ and return OrgDb object such as org.Hs.eg.db. The _bioAnno_ package support all organisms list in __Ensembl__, __KEGG__, __NCBI__.  
 ## Description
-_bioAnno_ provide wrap functions _fromKEGG_, _fromEnsembl_,_fromNCBI_ and _fromAnnoHub_ to build annotation package. 
-KEGG species code is suggested to use except _fromEnsembl_ which require scientific name.
+With the increasing of high throughput data generated, the requirement for
+having annotation package ready is necessary for people doing functional 
+enrichment analysis, id conversion and other type related analysis.
+_bioAnno_ provide wrap functions include _fromKEGG_, _fromEnsembl_, 
+_fromNCBI_ and _fromAnnoHub_ to build annotation package. 
+And you can easily to build annotation package with 
+the KEGG species code (except _fromEnsembl_ which require scientific name).
 ## Installation
 ```
 library(devtools)
@@ -22,8 +27,20 @@ fromEnsembl(species="Human")
 ## build from AnnotationHub
 fromAnnHub(species="human")
 ```
+### 2.4 Main Functions
+--  _fromKEGG_ build annotation package by extracting annotation information 
+    from Kyoto Encyclopedia of Genes and Genomes database (KEGG). 
+    You can use kegg species code as query species name.
+
+-- _fromNCBI_ build annotation package by extracting annotation information from
+    NCBI database.
+
+-- _fromENSEMBL_ build annotation package by extracting annotation information 
+    fromENSEMBL database. It includes function to build annotaion package for 
+    plant with parameter plant = TRUE
+-- _fromAnnhub_ build annotation package with the AnnotationHub package 
 ## Note
-The _bioAnno_ just a package for funs. _bioAnno_ provide wrap function which help me to easily build annotation package.
+The _bioAnno_ provide wrap function which help me to easily build annotation package.
 The _fromAnnoHub_ function is ready to use. 
 
 ## Contact information
