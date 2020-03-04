@@ -9,6 +9,9 @@ is_installed(pkg)
 \arguments{
 \item{pkg}{package name}
 }
+\value{
+TRUE/FALSE
+}
 \description{
 check package installed or not
 }

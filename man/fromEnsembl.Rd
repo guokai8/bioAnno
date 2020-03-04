@@ -5,7 +5,7 @@
 \title{build annotation from ensembl}
 \usage{
 fromEnsembl(
-  species = "Arabidopsis t",
+  species = "Arabidopsis thaliana",
   host = "uswest.ensembl.org",
   anntype = NULL,
   buildall = TRUE,
@@ -21,23 +21,27 @@ fromEnsembl(
 )
 }
 \arguments{
-\item{species}{the sepcies you want to search, you can use listSpecies to get the species name}
+\item{species}{the sepcies you want to search,
+you can use listSpecies to get the species name}
 
-\item{host}{the ensemble API host,for plant you can use plants.ensembl.org and for human and other species you can use uswest.ensembl.org}
+\item{host}{the ensemble API host,for plant you can use
+plants.ensembl.org and for human
+and other species you can use uswest.ensembl.org}
 
-\item{anntype}{the type of function annotation(GO,KEGG,PFAM,InterPro) you want get from ensemble}
+\item{anntype}{the type of function annotation(GO,KEGG,PFAM,InterPro)
+you want get from ensemble}
 
 \item{buildall}{include all prossbile annoation type listed in Ensembl}
 
 \item{author}{author for the annotation package}
 
-\item{maintainer}{maintainer}
+\item{maintainer}{maintainer for the annotation package}
 
 \item{tax_id}{taxonomy id for the species}
 
-\item{genus}{genus name}
+\item{genus}{genus name for the annotation package}
 
-\item{version}{version number(xx.xx.xx)}
+\item{version}{version number for the annotation package}
 
 \item{plant}{plant or animal species (TRUE/FALSE)}
 
@@ -47,12 +51,17 @@ fromEnsembl(
 
 \item{rebuild}{rebuild the package or not(default: FALSE)}
 }
+\value{
+annotation package
+}
 \description{
+build annotation from ensembl
+
 build annotation from ensembl
 }
 \examples{
-\dontrun{
-fromEnsembl(species="Human")
+\donttest{
+ fromEnsembl(species = "Arabidopsis thaliana", plant = TRUE)
 }
 }
 \author{

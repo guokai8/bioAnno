@@ -21,13 +21,13 @@ fromAnnHub(
 
 \item{author}{author for the annotation package}
 
-\item{maintainer}{maintainer}
+\item{maintainer}{maintainer for the annotation package}
 
 \item{tax_id}{taxonomy id for the species}
 
 \item{genus}{genus for the species}
 
-\item{version}{version}
+\item{version}{version for the annotation package}
 
 \item{install}{install the package or not(default: TRUE)}
 
@@ -35,13 +35,14 @@ fromAnnHub(
 
 \item{rebuild}{rebuild the package or not(default: FALSE)}
 }
+\value{
+annotation package
+}
 \description{
 extract annotation database by using AnnotationHub
 }
 \examples{
-\dontrun{
-fromAnnhub(species="human")
-}
+    fromAnnhub(species="ath")
 }
 \author{
 Kai Guo

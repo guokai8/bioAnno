@@ -19,15 +19,16 @@ fromOwn(
 )
 }
 \arguments{
-\item{geneinfo}{gene information table with two columns as default("GID","DESCRIPTION")}
+\item{geneinfo}{gene information table with two columns
+as default("GID","DESCRIPTION")}
 
 \item{gene2go}{Gene Onotoly information for  genes}
 
 \item{gene2path}{KEGG Pathway or KO information for genes}
 
-\item{version}{version}
+\item{version}{version for the annotation package}
 
-\item{maintainer}{maintainer}
+\item{maintainer}{maintainer for the annotation package}
 
 \item{author}{author for the annotation package}
 
@@ -41,8 +42,15 @@ fromOwn(
 
 \item{install}{install the package or not(default: TRUE)}
 }
+\value{
+annotation package
+}
 \description{
 build Own annotation database with user defined annotation file
+}
+\examples{
+data(ath)
+fromOwn(geneinfo = ath)
 }
 \author{
 Kai Guo

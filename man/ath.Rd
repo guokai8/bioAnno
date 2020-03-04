@@ -13,12 +13,12 @@
 ath
 }
 \description{
-korg include species information from KEGG database. korg data was modified from
-             (https://pathview.uncc.edu/data/korg.tsv)
+ath include TAIR10 ID with matched ENTREZID information
 }
 \examples{
 \dontrun{
 ath
 }
+
 }
 \keyword{datasets}

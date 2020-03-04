@@ -2,15 +2,18 @@
 % Please edit documentation in R/misc.R
 \name{simpleCap}
 \alias{simpleCap}
-\title{uppercase the first letters}
+\title{uppercase the first letter}
 \usage{
 simpleCap(x)
 }
 \arguments{
 \item{x}{string}
 }
+\value{
+character with first letter uppercase
+}
 \description{
-uppercase the first letters
+uppercase the first letter
 }
 \author{
 Kai Guo

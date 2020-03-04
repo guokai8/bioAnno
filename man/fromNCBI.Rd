@@ -2,7 +2,7 @@
 % Please edit documentation in R/buildNCBI.R
 \name{fromNCBI}
 \alias{fromNCBI}
-\title{make annotation database from NCBI}
+\title{build annotation database from NCBI}
 \usage{
 fromNCBI(
   species = "ath",
@@ -21,13 +21,13 @@ fromNCBI(
 
 \item{author}{author for the annotation package}
 
-\item{maintainer}{maintainer}
+\item{maintainer}{maintainer for the annotation package}
 
 \item{tax_id}{taxonomy id for the species}
 
 \item{genus}{genus for the species}
 
-\item{version}{version}
+\item{version}{version for the annotation package}
 
 \item{install}{install the package or not(default: TRUE)}
 
@@ -35,13 +35,14 @@ fromNCBI(
 
 \item{rebuild}{rebuild the package or not(default: FALSE)}
 }
+\value{
+annotation package
+}
 \description{
-make annotation database from NCBI
+build annotation database from NCBI
 }
 \examples{
-\dontrun{
-fromKEGG(species="ath")
-}
+fromNCBI(species="ath")
 }
 \author{
 Kai Guo

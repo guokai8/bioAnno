@@ -11,6 +11,9 @@
 
 \item{species}{species name(common name,kegg.species.code or scientifc name)}
 }
+\value{
+dataframe with gene2go information
+}
 \description{
 extract GO information from NCBI and filter by taxid
 }

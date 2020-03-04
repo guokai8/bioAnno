@@ -9,6 +9,9 @@
 \arguments{
 \item{species}{species name}
 }
+\value{
+character with database name
+}
 \description{
 get database name by using species name
 }

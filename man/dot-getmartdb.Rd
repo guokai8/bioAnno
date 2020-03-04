@@ -11,6 +11,9 @@
 
 \item{mart}{biomaRt mart}
 }
+\value{
+list with species information
+}
 \description{
 get species information in Ensembl
 }

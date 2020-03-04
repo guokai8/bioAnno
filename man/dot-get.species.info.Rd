@@ -11,6 +11,9 @@
 
 \item{na.rm}{TRUE/FALSE}
 }
+\value{
+character with species name
+}
 \description{
 modified from pathview kegg.species.code
 }

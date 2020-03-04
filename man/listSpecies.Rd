@@ -11,8 +11,14 @@ listSpecies(host = "uswest.ensembl.org", plant = FALSE)
 
 \item{plant}{use plant database or not (default: FALSE)}
 }
+\value{
+data.frame with species information
+}
 \description{
 list species available in Ensembl
+}
+\examples{
+listSpecies()
 }
 \author{
 Kai Guo
