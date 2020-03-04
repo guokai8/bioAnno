@@ -1,6 +1,7 @@
 ##' @title korg
 ##' @name korg
-##' @description korg include species information from KEGG database. korg data was modified from
+##' @description korg include species information from KEGG database.
+##'              korg data was modified from
 ##'              (https://pathview.uncc.edu/data/korg.tsv)
 ##' @format A matrix with five columns:
 ##' \describe{
@@ -14,12 +15,12 @@
 ##' \dontrun{
 ##' korg
 ##' }
+##'
 "korg"
 
 ##' @title TAIR10 geneid to ENTREZID
 ##' @name ath
-##' @description korg include species information from KEGG database. korg data was modified from
-##'              (https://pathview.uncc.edu/data/korg.tsv)
+##' @description ath include TAIR10 ID with matched ENTREZID information
 ##' @format A matrix with two columns:
 ##' \describe{
 ##' \item{GID}{TAIR GENE ID}
@@ -29,4 +30,5 @@
 ##' \dontrun{
 ##' ath
 ##' }
+##'
 "ath"
