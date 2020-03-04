@@ -1,15 +1,17 @@
 Package: bioAnno
 Type: Package
 Title: Build Annotation From Online Database
-Version: 0.0.6
+Version: 0.99.0
 Author: Kai Guo
 Maintainer: guokai8 <guokai8@gmail.com>
-Description: This package provide functions to build annotation data (GO,KEGG,Reactome,...) based online resource
+Description: This package provide function for building annotation package 
+            by using information from KEGG, NCBI, Ensembl and return OrgDb 
+            object such as org.Hs.eg.db.
 License: GPL-2
 Encoding: UTF-8
 LazyData: true
 Depends:
-    R (>= 3.5.0)
+    R (>= 3.6.0)
 Imports:
       AnnotationForge,
       AnnotationHub,
@@ -21,11 +23,14 @@ Imports:
       dplyr,
       jsonlite,
       R.utils,
+      utils,
+      stats,
       magrittr
 Suggests:
     GO.db,
     knitr,
     testthat,
     rmarkdown
-biocViews: Annotation, Clustering, GO, KEGG,Pathways, Reactome
+VignetteBuilder: knitr
+biocViews: Software, Annotation, Clustering, GO, KEGG,Pathways, Reactome
 RoxygenNote: 7.0.2
