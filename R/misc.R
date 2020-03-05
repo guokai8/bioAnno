@@ -29,7 +29,7 @@ simpleCap <- function(x) {
     )
     # import Gene to Gene Ontology from NCBI Gene database
     download.file(
-    "ftp://ftp.ncbi.nih.gov/gene/DATA/gene2go.gz",
+    "ftp://ftp.ncbi.nlm.nih.gov/gene/DATA/gene2go.gz",
     quiet = TRUE,
     destfile = tmp
     )
@@ -80,7 +80,7 @@ simpleCap <- function(x) {
     )
     # import Gene to Gene Ontology from NCBI Gene database
     download.file(
-    "ftp://ftp.ncbi.nih.gov/gene/DATA/gene_info.gz",
+    "ftp://ftp.ncbi.nlm.nih.gov/gene/DATA/gene_info.gz",
     quiet = TRUE,
     destfile = tmp
     )
