@@ -16,7 +16,9 @@
 #' @param rebuild rebuild the package or not(default: FALSE)
 #' @param outputDir temporary output path
 #' @examples
+#' donttest{
 #' fromKEGG(species="ath")
+#' }
 #' @author Kai Guo
 #' @return annotation package
 #' @export
