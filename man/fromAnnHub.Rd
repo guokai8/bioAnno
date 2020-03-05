@@ -42,8 +42,7 @@ annotation package
 extract annotation database by using AnnotationHub
 }
 \examples{
-require(bioAnno)
-fromAnnhub(species="ath")
+fromAnnHub(species="ath")
 }
 \author{
 Kai Guo

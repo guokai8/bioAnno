@@ -49,7 +49,6 @@ annotation package
 build Own annotation database with user defined annotation file
 }
 \examples{
-require(bioAnno)
 data(ath)
 fromOwn(geneinfo = ath)
 }

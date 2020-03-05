@@ -42,7 +42,6 @@ annotation package
 make annotation database from KEGG and GO from NCBI
 }
 \examples{
-require(bioAnno)
 fromKEGG(species="ath")
 }
 \author{
