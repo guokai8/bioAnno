@@ -11,7 +11,7 @@
 #' @param rebuild rebuild the package or not(default: FALSE)
 #' @param outputDir temporary output path
 #' @examples
-#' donttest{
+#' \donttest{
 #' fromNCBI(species="ath")
 #' }
 #' @author Kai Guo

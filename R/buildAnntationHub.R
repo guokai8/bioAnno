@@ -19,7 +19,7 @@
 #' @param outputDir temporary file path
 #' @param rebuild rebuild the package or not(default: FALSE)
 #' @examples
-#' donttest{
+#' \donttest{
 #' fromAnnHub(species="ath")
 #' }
 #' @author Kai Guo
