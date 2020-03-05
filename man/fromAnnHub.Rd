@@ -42,7 +42,9 @@ annotation package
 extract annotation database by using AnnotationHub
 }
 \examples{
+donttest{
 fromAnnHub(species="ath")
+}
 }
 \author{
 Kai Guo

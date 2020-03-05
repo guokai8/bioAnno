@@ -42,7 +42,9 @@ annotation package
 build annotation database from NCBI
 }
 \examples{
+donttest{
 fromNCBI(species="ath")
+}
 }
 \author{
 Kai Guo

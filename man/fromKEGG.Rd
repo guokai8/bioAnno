@@ -42,7 +42,9 @@ annotation package
 make annotation database from KEGG and GO from NCBI
 }
 \examples{
+donttest{
 fromKEGG(species="ath")
+}
 }
 \author{
 Kai Guo
