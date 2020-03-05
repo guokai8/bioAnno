@@ -60,7 +60,7 @@ fromAnnHub(species="ath")
 ### 2.4 Main Functions
 --  _fromKEGG_ build annotation package by extracting annotation information 
     from Kyoto Encyclopedia of Genes and Genomes database (KEGG). 
-    You can use kegg species code as query species name.
+    You can use KEGG species code as query species name.
 
 -- _fromNCBI_ build annotation package by extracting annotation information from
     NCBI database.
