@@ -42,7 +42,7 @@ annotation package
 extract annotation database by using AnnotationHub
 }
 \examples{
-donttest{
+\donttest{
 fromAnnHub(species="ath")
 }
 }

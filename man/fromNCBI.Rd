@@ -42,7 +42,7 @@ annotation package
 build annotation database from NCBI
 }
 \examples{
-donttest{
+\donttest{
 fromNCBI(species="ath")
 }
 }
