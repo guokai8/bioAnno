@@ -30,52 +30,53 @@ fromOwn <- function(geneinfo = geneinfo, gene2go = NULL, gene2path = NULL,
     if(is.null(geneinfo)){
         stop("You must have Gene information table")
     }
-    if(colnames(geneinfo)[1] != "GID"){
-    stop("The first column name must be GID")
-    }
+    colnames(geneinfo)[1] <- "GID"
     geneinfo <- geneinfo[!duplicated(geneinfo), ]
     geneinfo <- na.omit(geneinfo)
     if(!is.null(gene2go)){
         if(ncol(gene2go) == 2){
         gene2go$EVIDENCE <- "IEA"
         colnames(gene2go)[c(1,2)] <- c("GID", "GO")
-    }else{
+        }else{
         colnames(gene2go) <- c("GID", "GO", "EVIDENCE")
-    }
+        }
         gene2go <- gene2go[!duplicated(gene2go), ]
         gene2go <- na.omit(gene2go)
     }else{
-    gene2go <- data.frame("GID" = geneinfo$GID,
+         gene2go <- data.frame("GID" = geneinfo$GID,
         "GO" = "GO:0008150", "EVIDENCE" = "IEA")
     }
     if(!is.null(gene2path)){
         if(ncol(gene2path) != 2){
         stop("Pathway datafram must have only two columns")
-    }
-    colnames(gene2path) <- c("GID", "PATH")
-    gene2path <- gene2path[!duplicated(gene2path), ]
-    gene2path <- na.omit(gene2path)
+        }
+        colnames(gene2path) <- c("GID", "PATH")
+        gene2path <- gene2path[!duplicated(gene2path), ]
+        gene2path <- na.omit(gene2path)
+    }else{
+        gene2path <- data.frame("GID" = geneinfo$GID,
+                        "PATH" = "01100")
     }
     if(is.null(version)){
-    version <- "0.0.1"
+        version <- "0.0.1"
     }
     if(is.null(tax_id)){
-    tax_id <- "xxx"
+        tax_id <- "xxx"
     }
     if(is.null(author)){
-    author <- "myself"
+        author <- "myself"
     }
     if(is.null(maintainer)){
-    maintainer <- "myself<myself@email.com>"
+        maintainer <- "myself<myself@email.com>"
     }
     if(is.null(genus)){
-    genus <- ""
+        genus <- ""
     }
     if(is.null(species)){
-    species <- "species"
+        species <- "species"
     }
     if(is.null(outputDir)){
-    outputDir <- tempdir()
+        outputDir <- tempdir()
     }
     package <- makeOrgPackage(
     gene_info = geneinfo,
