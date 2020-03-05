@@ -19,7 +19,8 @@
 #' @param outputDir temporary file path
 #' @param rebuild rebuild the package or not(default: FALSE)
 #' @examples
-#'     fromAnnhub(species="ath")
+#' require(bioAnno)
+#' fromAnnhub(species="ath")
 #' @author Kai Guo
 #' @return annotation package
 #' @export

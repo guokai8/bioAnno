@@ -16,6 +16,7 @@
 #' @param rebuild rebuild the package or not(default: FALSE)
 #' @param outputDir temporary output path
 #' @examples
+#' require(bioAnno)
 #' fromKEGG(species="ath")
 #' @author Kai Guo
 #' @return annotation package
