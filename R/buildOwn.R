@@ -16,7 +16,6 @@
 #' @param outputDir temporary output path
 #' @export
 #' @examples
-#' require(bioAnno)
 #' data(ath)
 #' fromOwn(geneinfo = ath)
 #' @return annotation package
