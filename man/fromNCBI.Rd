@@ -42,6 +42,7 @@ annotation package
 build annotation database from NCBI
 }
 \examples{
+require(bioAnno)
 fromNCBI(species="ath")
 }
 \author{
