@@ -1,7 +1,7 @@
 Package: bioAnno
 Type: Package
 Title: Build Annotation From Online Database
-Version: 0.99.2
+Version: 0.99.3
 Author: Kai Guo
 Maintainer: guokai8 <guokai8@gmail.com>
 Description: This package provide function for building annotation package 
