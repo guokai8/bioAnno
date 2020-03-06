@@ -12,9 +12,7 @@
 ##' \item{common.name}{common name of species}
 ##' }
 ##' @examples
-##' \dontrun{
 ##' korg
-##' }
 ##'
 "korg"
 
@@ -27,8 +25,6 @@
 ##' \item{ENTREZID}{NCBI ENTREZID ID}
 ##' }
 ##' @examples
-##' \dontrun{
 ##' ath
-##' }
 ##'
 "ath"

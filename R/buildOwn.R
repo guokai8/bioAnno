@@ -16,8 +16,9 @@
 #' @param outputDir temporary output path
 #' @export
 #' @examples
+#' ## build your own annotation for Arabidopsis thaliana
 #' data(ath)
-#' fromOwn(geneinfo = ath)
+#' fromOwn(geneinfo = ath, install = FALSE)
 #' @return annotation package
 #' @author Kai Guo
 fromOwn <- function(geneinfo = geneinfo, gene2go = NULL, gene2path = NULL,

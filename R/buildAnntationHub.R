@@ -19,9 +19,8 @@
 #' @param outputDir temporary file path
 #' @param rebuild rebuild the package or not(default: FALSE)
 #' @examples
-#' \donttest{
-#' fromAnnHub(species="ath")
-#' }
+#' ## build annoataion package for yeast
+#' fromAnnHub(species = "sce", install = FALSE)
 #' @author Kai Guo
 #' @return annotation package
 #' @export
@@ -45,7 +44,7 @@ fromAnnHub<-function(species, author = NULL,
         suppressMessages(requireNamespace(dbname, quietly = TRUE))
         cat("You alreay had the annotation package: ", dbname, " \n")
     }else{
-    ah <- AnnotationHub()
+    ah <- AnnotationHub(localHub = TRUE)
     ah <- query(ah, dbi)
     ahdb <- ah$title
     names(ahdb) <- ah$ah_id

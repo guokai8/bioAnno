@@ -26,7 +26,7 @@
 #' @param outputDir temporary output path
 #' @examples
 #' \donttest{
-#'  fromEnsembl(species = "Arabidopsis thaliana", plant = TRUE)
+#' fromEnsembl(species = "Arabidopsis thaliana", plant = TRUE)
 #' }
 #' @author Kai Guo
 #' @return annotation package

@@ -11,9 +11,8 @@
 #' @param rebuild rebuild the package or not(default: FALSE)
 #' @param outputDir temporary output path
 #' @examples
-#' \donttest{
-#' fromNCBI(species="ath")
-#' }
+#' ## build annoataion package for Ecoli
+#' fromNCBI(species = "eco", install = FALSE)
 #' @author Kai Guo
 #' @return annotation package
 #' @export
