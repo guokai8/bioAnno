@@ -6,7 +6,7 @@
 \usage{
 fromEnsembl(
   species = "Arabidopsis thaliana",
-  host = "uswest.ensembl.org",
+  host = "useast.ensembl.org",
   anntype = NULL,
   buildall = TRUE,
   author = NULL,
@@ -60,9 +60,7 @@ build annotation from ensembl
 build annotation from ensembl
 }
 \examples{
-\donttest{
-fromEnsembl(species = "Arabidopsis thaliana", plant = TRUE)
-}
+fromEnsembl(species = "Caenorhabditis elegans",anntype="KEGG")
 }
 \author{
 Kai Guo
