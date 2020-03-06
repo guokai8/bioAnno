@@ -44,7 +44,7 @@ fromAnnHub<-function(species, author = NULL,
         suppressMessages(requireNamespace(dbname, quietly = TRUE))
         cat("You alreay had the annotation package: ", dbname, " \n")
     }else{
-    ah <- AnnotationHub(localHub = TRUE)
+    ah <- AnnotationHub()
     ah <- query(ah, dbi)
     ahdb <- ah$title
     names(ahdb) <- ah$ah_id
