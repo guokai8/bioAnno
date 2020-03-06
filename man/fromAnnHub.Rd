@@ -43,7 +43,7 @@ extract annotation database by using AnnotationHub
 }
 \examples{
 ## build annoataion package for yeast
-fromAnnHub(species = "sce", install = FALSE)
+fromAnnHub(species = "ecolik12", install = FALSE)
 }
 \author{
 Kai Guo
