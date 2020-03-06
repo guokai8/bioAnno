@@ -25,14 +25,12 @@
 #' @param rebuild rebuild the package or not(default: FALSE)
 #' @param outputDir temporary output path
 #' @examples
-#' \donttest{
-#' fromEnsembl(species = "Arabidopsis thaliana", plant = TRUE)
-#' }
+#' fromEnsembl(species = "Caenorhabditis elegans",anntype="KEGG")
 #' @author Kai Guo
 #' @return annotation package
 #' @export
 fromEnsembl <- function(species = "Arabidopsis thaliana",
-                    host = "uswest.ensembl.org",
+                    host = "useast.ensembl.org",
                     anntype = NULL, buildall = TRUE, author = NULL,
                     maintainer = NULL, tax_id = NULL, genus = NULL,
                     version = NULL, plant = FALSE,
@@ -125,7 +123,7 @@ fromEnsembl <- function(species = "Arabidopsis thaliana",
         colnames(gene2interpro) <- c("GID", "INTERPRO")
         gene2interpro <- na.omit(gene2interpro)
     }else{
-        gene2intrepro <- data.frame("GID" = geneinfo$GID,
+        gene2interpro <- data.frame("GID" = geneinfo$GID,
             "INTREPRO" = "IPR000001")
         cat("InterPro are not list in your annotation database\n")
     }
