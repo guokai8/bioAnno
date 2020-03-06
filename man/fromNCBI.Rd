@@ -42,8 +42,10 @@ annotation package
 build annotation database from NCBI
 }
 \examples{
+\donttest{
 ## build annoataion package for Ecoli
-fromNCBI(species = "eco", install = FALSE)
+fromNCBI(species = "ath", install = FALSE)
+}
 }
 \author{
 Kai Guo
