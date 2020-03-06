@@ -21,9 +21,7 @@ korg include species information from KEGG database.
              (https://pathview.uncc.edu/data/korg.tsv)
 }
 \examples{
-\dontrun{
 korg
-}
 
 }
 \keyword{datasets}

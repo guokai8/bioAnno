@@ -42,9 +42,8 @@ annotation package
 extract annotation database by using AnnotationHub
 }
 \examples{
-\donttest{
-fromAnnHub(species="ath")
-}
+## build annoataion package for yeast
+fromAnnHub(species = "sce", install = FALSE)
 }
 \author{
 Kai Guo

@@ -16,9 +16,7 @@ ath
 ath include TAIR10 ID with matched ENTREZID information
 }
 \examples{
-\dontrun{
 ath
-}
 
 }
 \keyword{datasets}

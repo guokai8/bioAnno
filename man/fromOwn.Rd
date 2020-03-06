@@ -49,8 +49,9 @@ annotation package
 build Own annotation database with user defined annotation file
 }
 \examples{
+## build your own annotation for Arabidopsis thaliana
 data(ath)
-fromOwn(geneinfo = ath)
+fromOwn(geneinfo = ath, install = FALSE)
 }
 \author{
 Kai Guo

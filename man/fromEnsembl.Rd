@@ -61,7 +61,7 @@ build annotation from ensembl
 }
 \examples{
 \donttest{
- fromEnsembl(species = "Arabidopsis thaliana", plant = TRUE)
+fromEnsembl(species = "Arabidopsis thaliana", plant = TRUE)
 }
 }
 \author{
