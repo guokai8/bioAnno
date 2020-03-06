@@ -20,7 +20,7 @@
 #' @param rebuild rebuild the package or not(default: FALSE)
 #' @examples
 #' ## build annoataion package for yeast
-#' fromAnnHub(species = "sce", install = FALSE)
+#' fromAnnHub(species = "ecolik12", install = FALSE)
 #' @author Kai Guo
 #' @return annotation package
 #' @export
