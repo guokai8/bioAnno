@@ -1,7 +1,7 @@
 Package: bioAnno
 Type: Package
 Title: Build Annotation From Online Database
-Version: 0.99.11
+Version: 0.99.12
 Author: Kai Guo
 Maintainer: guokai8 <guokai8@gmail.com>
 Description: This package provide function for building annotation package 
@@ -11,7 +11,7 @@ License: GPL-2
 Encoding: UTF-8
 LazyData: true
 Depends:
-    R (>= 3.6.0)
+    R (>= 4.0.0)
 Imports:
       AnnotationForge,
       AnnotationHub,
