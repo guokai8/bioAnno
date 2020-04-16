@@ -1,5 +1,11 @@
-Changes in version 0.99.7 (2020-4-16)
+Changes in version 0.99.15 (2020-4-16)
 + use suppressWarnings to shut down warnings
+Changes in version 0.99.9 (2020-3-6)
++ fix examples issues
+Changes in version 0.99.8 (2020-3-6)
++ fix examples issues
+Changes in version 0.99.7 (2020-3-6)
++ fix examples issues
 Changes in version 0.99.6 (2020-3-6)
 + fix examples issues
 Changes in version 0.99.2 (2020-3-5)
