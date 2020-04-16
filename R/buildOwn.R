@@ -79,7 +79,7 @@ fromOwn <- function(geneinfo = geneinfo, gene2go = NULL, gene2path = NULL,
     if(is.null(outputDir)){
         outputDir <- tempdir()
     }
-    package <- makeOrgPackage(
+    package <- suppressWarnings(makeOrgPackage(
     gene_info = geneinfo,
     go = gene2go,
     path = gene2path,
@@ -91,7 +91,7 @@ fromOwn <- function(geneinfo = geneinfo, gene2go = NULL, gene2path = NULL,
     genus = genus,
     species = species,
     goTable = "go"
-    )
+    ))
     if(isTRUE(install)){
     install.packages(package, repos = NULL, type = "source")
     unlink(package, recursive = TRUE)
