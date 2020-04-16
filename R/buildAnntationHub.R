@@ -107,7 +107,7 @@ fromAnnHub<-function(species, author = NULL,
     }
     if(isTRUE(install)){
         if(isTRUE(pathway)){
-        package<-makeOrgPackage(
+        package <- suppressWarnings(makeOrgPackage(
             gene_info = geneinfo,
             refseq = gene2refseq,
             symbol = gene2symbol,
@@ -121,9 +121,9 @@ fromAnnHub<-function(species, author = NULL,
             species = species,
             version = version,
             verbose = FALSE,
-            goTable = "go")
+            goTable = "go"))
     }else{
-        package<-makeOrgPackage(
+        package <- suppressWarnings(makeOrgPackage(
         gene_info = geneinfo,
         refseq = gene2refseq,
         symbol = gene2symbol,
@@ -136,7 +136,7 @@ fromAnnHub<-function(species, author = NULL,
         species = species,
         version = version,
         verbose = FALSE,
-        goTable = "go")
+        goTable = "go"))
     }
     install.packages(package, repos = NULL, type = "source")
     unlink(package, recursive = TRUE)
