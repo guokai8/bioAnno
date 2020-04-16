@@ -89,7 +89,7 @@ require a KEGG license agreement (details at http://www.kegg.jp/kegg/legal.html)
     if(is.null(outputDir)){
     outputDir <- tempdir()
     }
-    package <- makeOrgPackage(
+    package <- suppressWarnings(makeOrgPackage(
     gene_info = geneinfo,
     path = gene2path,
     ko = gene2ko,
@@ -103,7 +103,7 @@ require a KEGG license agreement (details at http://www.kegg.jp/kegg/legal.html)
     version = version,
     verbose = FALSE,
     goTable = "go"
-    )
+    ))
     tmp <- NULL
     if(isTRUE(install)){
     install.packages(package, repos = NULL, type="source")
