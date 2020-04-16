@@ -165,7 +165,7 @@ fromEnsembl <- function(species = "Arabidopsis thaliana",
         outputDir <- tempdir()
     }
     species <- gsub(' .*','',species)
-    package<-makeOrgPackage(gene_info=geneinfo,
+    package <- suppressWarnings(makeOrgPackage(gene_info=geneinfo,
         symbol = gene2symbol,
         entrezid = gene2entrezid,
         go = gene2go,
@@ -182,7 +182,7 @@ fromEnsembl <- function(species = "Arabidopsis thaliana",
         species = species,
         verbose = FALSE,
         goTable = "go"
-    )
+    ))
     if(isTRUE(install)){
         install.packages(package,repos = NULL,type="source")
         unlink(package,recursive = TRUE)
