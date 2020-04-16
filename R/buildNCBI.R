@@ -65,7 +65,7 @@ fromNCBI <- function(species = "ath", author = NULL,
     if(is.null(outputDir)){
     outputDir <- tempdir()
     }
-    package <- makeOrgPackage(
+    package <- suppressWarnings(makeOrgPackage(
     gene_info = geneinfo,
     gene2symbol = gene2symbol,
     go = gene2go,
@@ -78,7 +78,7 @@ fromNCBI <- function(species = "ath", author = NULL,
     version = version,
     verbose = FALSE,
     goTable = "go"
-    )
+    ))
     tmp <- NULL
     if(isTRUE(install)){
     install.packages(package,repos = NULL,type="source")
