@@ -13,7 +13,7 @@
 #' @examples
 #' \donttest{
 #' ## build annoataion package for Ecoli
-#' fromNCBI(species = "ath", install = FALSE)
+#' fromNCBI(species = "eco", install = FALSE)
 #' }
 #' @author Kai Guo
 #' @return annotation package
