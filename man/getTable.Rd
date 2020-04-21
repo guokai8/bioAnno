@@ -20,7 +20,7 @@ get annotataion table from temporary package
 \examples{
 data(ath)
 pack <- fromOwn(geneinfo = ath, install = FALSE, species ="test")
-head(getTable(path = pack, table = "gene_info"))
+# head(getTable(path = pack, table = "gene_info"))
 }
 \author{
 Kai Guo
