@@ -291,6 +291,10 @@ is_installed <- function(pkg) {
 ##' @importFrom dplyr left_join
 ##' @param path full path for the temporary package
 ##' @param table a character  indicate the table you want extract
+##' @examples
+##' data(ath)
+##' package <- fromOwn(geneinfo = ath, install = FALSE)
+##' head(getTable(path= package, table = "gene_info"))
 ##' @export
 ##' @return data.frame 
 ##' @author Kai Guo
