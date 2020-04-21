@@ -1,7 +1,7 @@
 Package: bioAnno
 Type: Package
 Title: Build Annotation From Online Database
-Version: 0.99.16
+Version: 0.99.17
 Author: Kai Guo
 Maintainer: guokai8 <guokai8@gmail.com>
 Description: This package provide function for building annotation package 
@@ -32,4 +32,4 @@ Suggests:
     rmarkdown
 VignetteBuilder: knitr
 biocViews: Software, Annotation, Clustering, GO, KEGG,Pathways, Reactome
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.0

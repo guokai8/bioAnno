@@ -23,8 +23,8 @@ library(bioAnno)
 fromKEGG(species="hsa")
 ## which will build and install package "org.hsa.eg.db" which will include KEGG, GO annotation 
 ## build Annotation package by using fromEnsembl 
-fromEnsembl(species="Human")
-## build from AnnotationHub
+fromEnsembl(species="Human")    
+## build from AnnotationHub   
 fromAnnHub(species="human")
 ```
 ### 2.4 Main Functions
@@ -37,11 +37,11 @@ fromAnnHub(species="human")
 
 -- _fromENSEMBL_ build annotation package by extracting annotation information 
     fromENSEMBL database. It includes function to build annotaion package for 
-    plant with parameter plant = TRUE
+    plant with parameter plant = TRUE   
+    
 -- _fromAnnhub_ build annotation package with the AnnotationHub package 
 ## Note
 The _bioAnno_ provide wrap function which help me to easily build annotation package.
-The _fromAnnoHub_ function is ready to use. 
 
 ## Contact information
 

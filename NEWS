@@ -1,3 +1,5 @@
+Changes in version 0.99.17 (2020-4-21)
++ fixed issues and added new function
 Changes in version 0.99.15 (2020-4-16)
 + use suppressWarnings to shut down warnings
 Changes in version 0.99.9 (2020-3-6)
