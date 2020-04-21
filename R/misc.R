@@ -294,7 +294,7 @@ is_installed <- function(pkg) {
 ##' @examples
 ##' data(ath)
 ##' pack <- fromOwn(geneinfo = ath, install = FALSE, species ="test")
-##' head(getTable(path = pack, table = "gene_info"))
+##' # head(getTable(path = pack, table = "gene_info"))
 ##' @export
 ##' @return data.frame 
 ##' @author Kai Guo
