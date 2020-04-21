@@ -19,7 +19,7 @@
 #' @param outputDir temporary file path
 #' @param rebuild rebuild the package or not(default: FALSE)
 #' @examples
-#' ## build annoataion package for yeast
+#' ## build annoataion package for c elegans
 #' fromAnnHub(species = "celegans", install = FALSE)
 #' @author Kai Guo
 #' @return annotation package
