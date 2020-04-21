@@ -4,11 +4,13 @@
 \name{ath}
 \alias{ath}
 \title{TAIR10 geneid to ENTREZID}
-\format{A matrix with two columns:
+\format{
+A matrix with two columns:
 \describe{
 \item{GID}{TAIR GENE ID}
 \item{ENTREZID}{NCBI ENTREZID ID}
-}}
+}
+}
 \usage{
 ath
 }

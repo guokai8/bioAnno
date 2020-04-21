@@ -4,14 +4,16 @@
 \name{korg}
 \alias{korg}
 \title{korg}
-\format{A matrix with five columns:
+\format{
+A matrix with five columns:
 \describe{
 \item{ktax.id}{KEGG taxonomy ID}
 \item{tax.id}{NCBI taxonomy ID}
 \item{kegg.code}{KEGG species code}
 \item{scientific.name}{Scientific name of species}
 \item{common.name}{common name of species}
-}}
+}
+}
 \usage{
 korg
 }
