@@ -19,8 +19,8 @@ get annotataion table from temporary package
 }
 \examples{
 data(ath)
-package <- fromOwn(geneinfo = ath, install = FALSE)
-head(getTable(path= package, table = "gene_info"))
+package <- fromOwn(geneinfo = ath, install = FALSE, species ="test")
+head(getTable(path = package, table = "gene_info"))
 }
 \author{
 Kai Guo
