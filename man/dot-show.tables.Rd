@@ -6,8 +6,11 @@
 \usage{
 .show.tables(package)
 }
+\arguments{
+\item{package}{the full path of the package}
+}
 \value{
-
+vector
 }
 \description{
 show the package content

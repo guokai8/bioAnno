@@ -6,6 +6,9 @@
 \usage{
 .show.path(package)
 }
+\arguments{
+\item{package}{the full path of the package}
+}
 \value{
 whole path for the package
 }
