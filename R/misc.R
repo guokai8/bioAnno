@@ -300,7 +300,7 @@ is_installed <- function(pkg) {
 ##' @author Kai Guo
 
 getTable <- function(path,table="go_all"){
-    pkg <- sub('.*\\/','',path)
+    pkg <- basename(path = path)
     path <- paste0(path,"/inst/extdata/",sub('.db','.sqlite',pkg))
     con <- dbConnect(SQLite(),path)
     gene_info <- dbReadTable(con,"gene_info")
