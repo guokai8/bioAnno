@@ -29,7 +29,7 @@ such as org.Hs.eg.db.
 With the increasing of high throughput data generated, the requirement for
 having annotation package is necessary for people who want to do functional 
 enrichment analysis, id conversion and other type related analysis.
-_bioAnno_ provide wrap functions include _fromKEGG_, _fromEnsembl_, 
+_bioAnno_ provides wrap functions include _fromKEGG_, _fromEnsembl_, 
 _fromNCBI_ and _fromAnnoHub_ to build annotation package. 
 
 
