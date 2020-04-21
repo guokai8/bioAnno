@@ -252,3 +252,56 @@ readidx <- function()
 is_installed <- function(pkg) {
     nzchar(system.file(package = pkg))
 }
+##' @title show the package path
+##' @return whole path for the package
+##' @author Kai Guo
+.show.path <- function(package){
+    cat("################################################################\n")
+    cat("Please find your annotation package in ...\n")
+    cat(package,"\n")
+    cat("You can install it by using\n")
+    cat(paste0("install.packages(\"",package,",repos = NULL,type='source')"),"\n")
+    cat("################################################################\n")
+}
+##' @title show the package content
+##' @importFrom RSQLite dbConnect
+##' @importFrom RSQLite SQLite
+##' @importFrom RSQLite dbListTables
+##' @importFrom RSQLite dbReadTable
+##' @importFrom RSQLite dbDisconnect
+##' @return vector 
+##' @author Kai Guo
+.show.tables <- function(package){
+    pkg <- basename(package)
+    path <- paste0(package,"/inst/extdata/",sub('.db','.sqlite',pkg))
+    con <- dbConnect(SQLite(),path)
+    cat("Here are the tables in the package",pkg,"...\n")
+    dblist<-dbListTables(con)
+    cat(dblist,"\n")
+    cat("################################################################\n")
+    dbDisconnect(con)
+}
+##' @title get annotataion table from temporary package
+##' @importFrom RSQLite dbConnect
+##' @importFrom RSQLite SQLite
+##' @importFrom RSQLite dbReadTable
+##' @importFrom RSQLite dbDisconnect
+##' @importFrom dplyr left_join
+##' @param path full path for the temporary package
+##' @param table a character  indicate the table you want extract
+##' @export
+##' @return data.frame 
+##' @author Kai Guo
+
+getTable <- function(path,table="go_all"){
+    pkg <- basename(path)
+    path <- paste0(path,"/inst/extdata/",sub('.db','.sqlite',pkg))
+    con <- dbConnect(SQLite(),path)
+    gene_info <- dbReadTable(con,"gene_info")
+    anno <- dbReadTable(con,table)
+    res <- left_join(gene_info, anno, by=c("X_id"="X_id"))
+    colnames(res)[1] <- "ID"
+    dbDisconnect(con)
+    return(res)
+}
+

@@ -106,8 +106,12 @@ require a KEGG license agreement (details at http://www.kegg.jp/kegg/legal.html)
     ))
     tmp <- NULL
     if(isTRUE(install)){
-    install.packages(package, repos = NULL, type="source")
-    unlink(package, recursive = TRUE)
+        install.packages(package, repos = NULL, type="source")
+        unlink(package, recursive = TRUE)
+    }else{
+        .show.path(package)
+        .show.tables(package)
+        return(package)
     }
     }
 }

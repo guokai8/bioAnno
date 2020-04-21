@@ -93,7 +93,11 @@ fromOwn <- function(geneinfo = geneinfo, gene2go = NULL, gene2path = NULL,
     goTable = "go"
     ))
     if(isTRUE(install)){
-    install.packages(package, repos = NULL, type = "source")
-    unlink(package, recursive = TRUE)
+        install.packages(package, repos = NULL, type = "source")
+        unlink(package, recursive = TRUE)
+    }else{
+        .show.path(package)
+        .show.tables(package)
+        #return(package)
     }
 }

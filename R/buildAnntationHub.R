@@ -105,8 +105,7 @@ fromAnnHub<-function(species, author = NULL,
     if(is.null(outputDir)){
         outputDir <- tempdir()
     }
-    if(isTRUE(install)){
-        if(isTRUE(pathway)){
+    if(isTRUE(pathway)){
         package <- suppressWarnings(makeOrgPackage(
             gene_info = geneinfo,
             refseq = gene2refseq,
@@ -138,10 +137,13 @@ fromAnnHub<-function(species, author = NULL,
         verbose = FALSE,
         goTable = "go"))
     }
-    install.packages(package, repos = NULL, type = "source")
-    unlink(package, recursive = TRUE)
+    if(isTRUE(install)){
+        install.packages(package, repos = NULL, type = "source")
+        unlink(package, recursive = TRUE)
     }else{
-        return(res)
+        .show.path(package)
+        .show.tables(package)
+        #return(package)
     }
     }
 }

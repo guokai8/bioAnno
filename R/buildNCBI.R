@@ -81,8 +81,12 @@ fromNCBI <- function(species = "ath", author = NULL,
     ))
     tmp <- NULL
     if(isTRUE(install)){
-    install.packages(package,repos = NULL,type="source")
-    unlink(package,recursive = TRUE)
+        install.packages(package,repos = NULL,type="source")
+        unlink(package,recursive = TRUE)
+    }else{
+        .show.path(package)
+        .show.tables(package)
+        #return(package)
     }
     }
 }

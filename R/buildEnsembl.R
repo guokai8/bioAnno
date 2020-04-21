@@ -184,8 +184,12 @@ fromEnsembl <- function(species = "Arabidopsis thaliana",
         goTable = "go"
     ))
     if(isTRUE(install)){
-        install.packages(package,repos = NULL,type="source")
-        unlink(package,recursive = TRUE)
+        install.packages(package, repos = NULL, type = "source")
+        unlink(package, recursive = TRUE)
+    }else{
+        .show.path(package)
+        .show.tables(package)
+        #return(package)
     }
     }
 }
