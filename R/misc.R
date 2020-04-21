@@ -253,6 +253,7 @@ is_installed <- function(pkg) {
     nzchar(system.file(package = pkg))
 }
 ##' @title show the package path
+##' @param package the full path of the package
 ##' @return whole path for the package
 ##' @author Kai Guo
 .show.path <- function(package){
@@ -269,6 +270,7 @@ is_installed <- function(pkg) {
 ##' @importFrom RSQLite dbListTables
 ##' @importFrom RSQLite dbReadTable
 ##' @importFrom RSQLite dbDisconnect
+##' @param package the full path of the package
 ##' @return vector 
 ##' @author Kai Guo
 .show.tables <- function(package){
