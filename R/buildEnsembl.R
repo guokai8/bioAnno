@@ -25,7 +25,7 @@
 #' @param rebuild rebuild the package or not(default: FALSE)
 #' @param outputDir temporary output path
 #' @examples
-#' fromEnsembl(species = "Caenorhabditis elegans",anntype="KEGG")
+#' fromEnsembl(species = "Caenorhabditis elegans", anntype="KEGG")
 #' @author Kai Guo
 #' @return annotation package
 #' @export
