@@ -50,9 +50,9 @@ library(bioAnno)
 ### 2.3 Quick Tour
 ``` {r quick}
 library(bioAnno)
-## build arabidopsis thaliana annotation package by using fromKEGG function from
+## build E.coli annotation package by using fromKEGG function from
 ## KEGG database.
-fromKEGG(species="ath", install = FALSE)
+fromKEGG(species="eco", install = FALSE)
 ## which will build "org.ath.eg.db" package. The package contains
 ## KEGG, GO annotation. You can use install = TRUE to direct 
 ## install the package. 
