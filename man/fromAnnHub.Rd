@@ -42,7 +42,7 @@ annotation package
 extract annotation database by using AnnotationHub
 }
 \examples{
-## build annoataion package for yeast
+## build annoataion package for c elegans
 fromAnnHub(species = "celegans", install = FALSE)
 }
 \author{
