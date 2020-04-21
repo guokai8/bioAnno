@@ -293,8 +293,8 @@ is_installed <- function(pkg) {
 ##' @param table a character  indicate the table you want extract
 ##' @examples
 ##' data(ath)
-##' package <- fromOwn(geneinfo = ath, install = FALSE)
-##' head(getTable(path= package, table = "gene_info"))
+##' package <- fromOwn(geneinfo = ath, install = FALSE, species ="test")
+##' head(getTable(path = package, table = "gene_info"))
 ##' @export
 ##' @return data.frame 
 ##' @author Kai Guo
