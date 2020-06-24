@@ -51,7 +51,7 @@ fromEnsembl <- function(species = "Arabidopsis thaliana",
         cat("You alreay had the annotation package: ", dbname1, " \n")
     }else{
     dbname <- as.character(dbinfo$dbname)
-    dataset <- useDataset(dbname,mart = mart)
+    dataset <- useDataset(dbname, mart = mart)
     if(is.null(anntype)){
         if(isTRUE(buildall)){
         anntype <- c("GO","KEGG","Reactome","PFAM","InterPro")
@@ -66,14 +66,14 @@ fromEnsembl <- function(species = "Arabidopsis thaliana",
     colnames(geneinfo) <- c("GID", "GENENAME")
     geneinfo <- na.omit(geneinfo)
     gene2symbol <- getBM(attributes = c("ensembl_gene_id","external_gene_name"),
-            filters = "chromosome_name",values =
+            filters = "chromosome_name", values =
             as.vector(dbinfo$chr_info$name), dataset)
     gene2symbol <- gene2symbol[nchar(gene2symbol[,2])>1,]
     colnames(gene2symbol) <- c("GID","SYMBOL")
     gene2entrezid <- getBM(attributes = c("ensembl_gene_id","entrezgene_id"),
-            filters ="chromosome_name",values =
-            as.vector(dbinfo$chr_info$name),dataset)
-    gene2entrezid <- gene2entrezid[nchar(gene2entrezid[,2])>1,]
+            filters ="chromosome_name", values =
+            as.vector(dbinfo$chr_info$name), dataset)
+    gene2entrezid <- gene2entrezid[nchar(gene2entrezid[,2])>1, ]
     colnames(gene2entrezid) <- c("GID","ENTREZID")
     gene2entrezid <- na.omit(gene2entrezid)
     if("GO" %in% anntype){
@@ -85,15 +85,15 @@ fromEnsembl <- function(species = "Arabidopsis thaliana",
         gene2go <- gene2go[nchar(gene2go[,3])>1, ]
         colnames(gene2go) <- c("GID", "GO", "EVIDENCE")
         gene2go <- na.omit(gene2go)
-        gene2go <- gene2go[!duplicated(gene2go),]
+        gene2go <- gene2go[!duplicated(gene2go), ]
     }else{
-        gene2go <- data.frame("GID"= geneinfo$GID,"GO" = "GO:0008150",
+        gene2go <- data.frame("GID" = geneinfo$GID,"GO" = "GO:0008150",
         "EVIDENCE" = "IEA")
         cat("Gene Ontology are not list in your annotation database\n")
     }
     if("KEGG" %in% anntype){
         gene2path <- getBM(attributes = c("ensembl_gene_id", "kegg_enzyme"),
-                    filters ="chromosome_name", values =
+                    filters = "chromosome_name", values =
                     as.vector(dbinfo$chr_info$name), dataset)
         gene2path[,2] <- sub('\\+.*', '', gene2path[,2])
         gene2path <- gene2path[nchar(gene2path[,2])>1, ]
@@ -106,18 +106,18 @@ fromEnsembl <- function(species = "Arabidopsis thaliana",
     }
     if("PFAM"%in%anntype){
         gene2pfam <- getBM(attributes = c("ensembl_gene_id","pfam"),
-                    filters ="chromosome_name",values =
+                    filters ="chromosome_name", values =
                     as.vector(dbinfo$chr_info$name), dataset)
         gene2pfam <- gene2pfam[nchar(gene2pfam[,2])>1, ]
         colnames(gene2pfam) <- c("GID", "PFAM")
         gene2pfam <- na.omit(gene2pfam)
     }else{
-        gene2pfam <- data.frame("GID" = geneinfo$GID,"PFAM" = "PF00001")
+        gene2pfam <- data.frame("GID" = geneinfo$GID, "PFAM" = "PF00001")
         cat("Protein Family are not list in your annotation database\n")
     }
     if("InterPro" %in% anntype){
         gene2interpro <- getBM(attributes = c("ensembl_gene_id", "interpro"),
-            filters ="chromosome_name", values =
+            filters = "chromosome_name", values =
             as.vector(dbinfo$chr_info$name), dataset)
         gene2interpro <- gene2interpro[nchar(gene2interpro[, 2])>1, ]
         colnames(gene2interpro) <- c("GID", "INTERPRO")
@@ -129,13 +129,12 @@ fromEnsembl <- function(species = "Arabidopsis thaliana",
     }
     if("Reactome"%in%anntype){
         if(isTRUE(plant)){
-        gene2reactome <- getBM(attributes = c("ensembl_gene_id",
-    "plant_reactome_pathway"),
-    filters = "chromosome_name",
-    values = as.vector(dbinfo$chr_info$name), dataset)
+            gene2reactome <- getBM(attributes = c("ensembl_gene_id",
+            "plant_reactome_pathway"), filters = "chromosome_name",
+            values = as.vector(dbinfo$chr_info$name), dataset)
     }else{
         gene2reactome <- getBM(attributes = c("ensembl_gene_id", "reactome"),
-        filters ="chromosome_name", values =
+        filters = "chromosome_name", values =
         as.vector(dbinfo$chr_info$name), dataset)
     }
         gene2reactome <- gene2reactome[nchar(gene2reactome[,2])>1,]
@@ -164,8 +163,8 @@ fromEnsembl <- function(species = "Arabidopsis thaliana",
     if(is.null(outputDir)){
         outputDir <- tempdir()
     }
-    species <- gsub(' .*','',species)
-    package <- suppressWarnings(makeOrgPackage(gene_info=geneinfo,
+    species <- gsub(' .*', '', species)
+    package <- suppressWarnings(makeOrgPackage(gene_info = geneinfo,
         symbol = gene2symbol,
         entrezid = gene2entrezid,
         go = gene2go,

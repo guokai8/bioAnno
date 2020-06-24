@@ -29,7 +29,6 @@ fromAnnHub<-function(species, author = NULL,
         version = NULL,
         install = TRUE, outputDir = NULL, rebuild = FALSE){
     dbi <- .getdbname(species)
-
     if(is.null(dbi)){
         dbi <- .get.species.info(species = species)
         dbi <- dbi["scientific.name"]
@@ -44,25 +43,25 @@ fromAnnHub<-function(species, author = NULL,
         suppressMessages(requireNamespace(dbname, quietly = TRUE))
         cat("You alreay had the annotation package: ", dbname, " \n")
     }else{
-    ah <- AnnotationHub()
-    ah <- query(ah, dbi)
-    ahdb <- ah$title
-    names(ahdb) <- ah$ah_id
-    ### only need ors.xxx.eg.xxx or org.xxx.db.sqlite
-    idx<-grep('^org', grep('\\.[eg|db]', ahdb,value = TRUE), value = TRUE)
-    #idx <- grep(sub(' .*','',sub(' ','_',dbi)),ahdb,value=T)
-    if(length(idx)>1){
-        cat("Please select which database you want to use (1,2,3,...): \n")
-        for(i in seq_len(length(idx))){
-        cat(i, ":", idx[i], "\n")
-    }
-    idd <- readidx()
-    idx <- idx[idd]
-    }
+        ah <- AnnotationHub()
+        ah <- query(ah, dbi)
+        ahdb <- ah$title
+        names(ahdb) <- ah$ah_id
+        ### only need ors.xxx.eg.xxx or org.xxx.db.sqlite
+        idx<-grep('^org', grep('\\.[eg|db]', ahdb, value = TRUE), value = TRUE)
+         #idx <- grep(sub(' .*','',sub(' ','_',dbi)),ahdb,value=T)
+        if(length(idx) > 1){
+            cat("Please select which database you want to use (1,2,3,...): \n")
+            for(i in seq_len(length(idx))){
+                cat(i, ":", idx[i], "\n")
+            }
+            idd <- readidx()
+            idx <- idx[idd]
+        }
     idn <- names(idx)
     res <- ah[[idn]]
     packinfo <- dbGetQuery(res$conn, "select * from metadata;")
-    geneinfo <- select(res,keys = keys(res), columns=c("GENENAME"))
+    geneinfo <- select(res,keys = keys(res), columns = c("GENENAME"))
     geneinfo <- na.omit(geneinfo)
     colnames(geneinfo)[1] <- "GID"
     gene2refseq <- select(res, keys = keys(res), columns = c("REFSEQ"))
@@ -71,9 +70,9 @@ fromAnnHub<-function(species, author = NULL,
     gene2symbol <- select(res, keys = keys(res), columns = c("SYMBOL"))
     gene2symbol <- na.omit(gene2symbol)
     colnames(gene2symbol)[1] <- "GID"
-    gene2go <- select(res, keys = keys(res), columns = c("GOALL","EVIDENCEALL"))
-    gene2go <- gene2go[, c(1,2,3)]
-    gene2go <- gene2go[!duplicated(gene2go),]
+    gene2go <- select(res, keys = keys(res), columns = c("GOALL", "EVIDENCEALL"))
+    gene2go <- gene2go[, c(1, 2, 3)]
+    gene2go <- gene2go[!duplicated(gene2go), ]
     gene2go <- na.omit(gene2go)
     colnames(gene2go) <- c("GID", "GO", "EVIDENCE")
     pathway = FALSE

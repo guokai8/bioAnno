@@ -87,7 +87,7 @@ require a KEGG license agreement (details at http://www.kegg.jp/kegg/legal.html)
         species <- species
     }
     if(is.null(outputDir)){
-    outputDir <- tempdir()
+        outputDir <- tempdir()
     }
     package <- suppressWarnings(makeOrgPackage(
     gene_info = geneinfo,

@@ -25,45 +25,46 @@ fromNCBI <- function(species = "ath", author = NULL,
     species <- dbinfo["kegg.code"]
     dbname <- paste0('org.',species,'.eg.db')
     if(isTRUE(rebuild)){
-    suppressMessages(remove.packages(dbname))
+        suppressMessages(remove.packages(dbname))
     }
     if(is_installed(dbname)){
-    suppressMessages(requireNamespace(dbname,quietly = TRUE))
-    cat("You alreay had the annotation package: ",dbname," \n")
+        suppressMessages(requireNamespace(dbname,quietly = TRUE))
+        cat("You alreay had the annotation package: ",dbname," \n")
     }else{
     #  if (require(dbname,character.only=TRUE)){
     #    suppressMessages(require(dbname,character.only = T,quietly = T))
     #  }else{
-    geneinfo <- .extratGene(taxid = dbinfo['tax.id'])
-    gene2symbol<-geneinfo[,c("GID","SYMBOL")]
-    gene2symbol[!duplicated(gene2symbol),]
-    geneinfo <- geneinfo[,c("GID","DESCRIPTION")]
-    geneinfo <- geneinfo[!duplicated(geneinfo),]
-    gene2go <- .extratGO(taxid = dbinfo['tax.id'])
+        geneinfo <- .extratGene(taxid = dbinfo['tax.id'])
+        gene2symbol<-geneinfo[,c("GID","SYMBOL")]
+        gene2symbol[!duplicated(gene2symbol),]
+        geneinfo <- geneinfo[,c("GID","DESCRIPTION")]
+        geneinfo <- geneinfo[!duplicated(geneinfo),]
+        gene2go <- .extratGO(taxid = dbinfo['tax.id'])
     if(nrow(gene2go)==0){
-    cat("No Gene Ontology information available !\n")
-    gene2go <- data.frame("GID"=geneinfo$GID,"GO"="GO:0008150","EVIDENCE"="IEA")
+        cat("No Gene Ontology information available !\n")
+        gene2go <- data.frame("GID" = geneinfo$GID, "GO" = "GO:0008150", 
+                    "EVIDENCE" = "IEA")
     }
     if(is.null(version)){
-    version <- "0.0.1"
+        version <- "0.0.1"
     }
     if(is.null(tax_id)){
-    tax_id <- dbinfo["tax.id"]
+        tax_id <- dbinfo["tax.id"]
     }
     if(is.null(author)){
-    author <- "myself"
+        author <- "myself"
     }
     if(is.null(maintainer)){
-    maintainer <- "myself<myself@email.com>"
+        maintainer <- "myself<myself@email.com>"
     }
     if(is.null(genus)){
-    genus <- dbinfo["scientific.name"]
+        genus <- dbinfo["scientific.name"]
     }
     if(is.null(species)){
-    species <- species
+        species <- species
     }
     if(is.null(outputDir)){
-    outputDir <- tempdir()
+        outputDir <- tempdir()
     }
     package <- suppressWarnings(makeOrgPackage(
     gene_info = geneinfo,
@@ -81,7 +82,7 @@ fromNCBI <- function(species = "ath", author = NULL,
     ))
     tmp <- NULL
     if(isTRUE(install)){
-        install.packages(package,repos = NULL,type="source")
+        install.packages(package, repos = NULL, type = "source")
         unlink(package,recursive = TRUE)
     }else{
         .show.path(package)
