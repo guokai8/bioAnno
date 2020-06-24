@@ -212,8 +212,17 @@ listSpecies <- function(host = "uswest.ensembl.org", plant = FALSE){
         East: useast.ensembl.org\nEnsembl Asia: asia.ensembl.org\n" )
         mart <- useMart("ENSEMBL_MART_ENSEMBL", host = host)
     }
-    res <- listDatasets(mart)
-    colnames(res)[2] <- "species"
+    res <- tryCatch(
+        expr = { 
+            listDatasets(mart)
+        },
+        error = function(e){
+            NULL
+        },
+        warning = function(w){
+            NULL
+        })
+    if(is.data.frame(res)) colnames(res)[2] <- "species"
     res
 }
 
