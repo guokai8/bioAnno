@@ -48,7 +48,7 @@ library(bioAnno)
 ```
 
 ### 2.3 Quick Tour
-``` {r quick}
+``` {r quick, message=FALSE}
 library(bioAnno)
 ## build E.coli annotation package by using fromKEGG function from
 ## KEGG database.
