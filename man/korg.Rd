@@ -7,9 +7,9 @@
 \format{
 A matrix with five columns:
 \describe{
-\item{ktax.id}{KEGG taxonomy ID}
-\item{tax.id}{NCBI taxonomy ID}
-\item{kegg.code}{KEGG species code}
+\item{ktax.id}{the KEGG taxonomy ID}
+\item{tax.id}{the NCBI taxonomy ID}
+\item{kegg.code}{the KEGG species code}
 \item{scientific.name}{Scientific name of species}
 \item{common.name}{common name of species}
 }
@@ -23,7 +23,7 @@ korg include species information from KEGG database.
              (https://pathview.uncc.edu/data/korg.tsv)
 }
 \examples{
-korg
+head(korg)
 
 }
 \keyword{datasets}

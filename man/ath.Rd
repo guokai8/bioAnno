@@ -5,20 +5,22 @@
 \alias{ath}
 \title{TAIR10 geneid to ENTREZID}
 \format{
-A matrix with two columns:
+A data.frame with two columns: 
 \describe{
-\item{GID}{TAIR GENE ID}
-\item{ENTREZID}{NCBI ENTREZID ID}
+\item{GID}{The arabidopsis GENE ID}
+\item{ENTREZID}{NCBI ENTREZID ID for the arabidopsis}
 }
 }
 \usage{
 ath
 }
 \description{
-ath include TAIR10 ID with matched ENTREZID information
+The 'ath' dataset include the annotation information collected
+form the TAIR10 database(htps://arabidopsis.org/download/index-auto.jsp
+%3Fdir%3D%252Fdownload_files%252FGenes%252FTAIR10_genome_release).
 }
 \examples{
-ath
+head(ath)
 
 }
 \keyword{datasets}

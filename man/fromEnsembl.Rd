@@ -60,7 +60,7 @@ build annotation from ensembl
 build annotation from ensembl
 }
 \examples{
-fromEnsembl(species = "Caenorhabditis elegans",anntype="KEGG")
+fromEnsembl(species = "Caenorhabditis elegans", anntype="KEGG")
 }
 \author{
 Kai Guo
