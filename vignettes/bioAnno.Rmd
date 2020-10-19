@@ -91,8 +91,8 @@ fromOwn(geneinfo = ath, install = TRUE)
 library(org.species.eg.db)
 ```
 There are 4 common methods that work together to allow a select interface. The
-1st one is _columns_, which tells you about what kinds of values you can retrieve as
-columns in the final result.
+1st one is _columns_, which help you to discover which sorts of annotations can be extracted
+from it.
 ```{r columns, message = FALSE }
 columns(org.species.eg.db)
 ```
@@ -104,15 +104,28 @@ keytypes(org.species.eg.db)
 The third method is _keys_ which is used to retrieve all the viable keys of a particular
 type.
 ```{r keys, message = FALSE}
-key <- keys(org.species.eg.db)
+key <- keys(org.species.eg.db,keytype="ENTREZID")
 ```
 And finally there is _select_, which extracts data by using values supplied by the other method
 ```{r select, messgae = FALSE}
 result <- select(org.species.eg.db, keys=key,
-columns=c("GO","PATH"),keytype="GID")
+columns=c("GID","GO","PATH"),keytype="ENTREZID")
 head(result)
 ```
-
+Users are also allowed to use mapIds extract gene identifiers
+KEGG pathway from the annotation package.
+```{r mapIds, message = FALSE}
+KEGG<-mapIds(org.species.eg.db,keys=key,column="PATH",keytype="ENTREZID")
+head(KEGG)
+```
+Or for id conversion
+```{r id, message = FALSE}
+mapIds(org.species.eg.db,keys=key[1:10],column="GID",keytype="ENTREZID")
+```
+The version number of R and packages loaded for generating the vignette were:
+```{r version, message = FALSE}
+sessionInfo()
+```
 
 
 
