@@ -5,26 +5,28 @@
 ##'              (https://pathview.uncc.edu/data/korg.tsv)
 ##' @format A matrix with five columns:
 ##' \describe{
-##' \item{ktax.id}{KEGG taxonomy ID}
-##' \item{tax.id}{NCBI taxonomy ID}
-##' \item{kegg.code}{KEGG species code}
+##' \item{ktax.id}{the KEGG taxonomy ID}
+##' \item{tax.id}{the NCBI taxonomy ID}
+##' \item{kegg.code}{the KEGG species code}
 ##' \item{scientific.name}{Scientific name of species}
 ##' \item{common.name}{common name of species}
 ##' }
 ##' @examples
-##' korg
+##' head(korg)
 ##'
 "korg"
 
 ##' @title TAIR10 geneid to ENTREZID
 ##' @name ath
-##' @description ath include TAIR10 ID with matched ENTREZID information
-##' @format A matrix with two columns:
+##' @description The 'ath' dataset include the annotation information collected
+##' form the TAIR10 database(htps://arabidopsis.org/download/index-auto.jsp
+##' %3Fdir%3D%252Fdownload_files%252FGenes%252FTAIR10_genome_release). 
+##' @format A data.frame with two columns: 
 ##' \describe{
-##' \item{GID}{TAIR GENE ID}
-##' \item{ENTREZID}{NCBI ENTREZID ID}
+##' \item{GID}{The arabidopsis GENE ID}
+##' \item{ENTREZID}{NCBI ENTREZID ID for the arabidopsis}
 ##' }
 ##' @examples
-##' ath
+##' head(ath)
 ##'
 "ath"

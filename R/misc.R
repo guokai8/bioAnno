@@ -219,7 +219,7 @@ is_installed <- function(pkg) {
     cat("Please find your annotation package in ...\n")
     cat(package, "\n")
     cat("You can install it by using\n")
-    cat(paste0("install.packages(\"", package, ",repos = NULL,type='source')"), "\n")
+    cat(paste0("install.packages(\"", package,'\"',",repos = NULL,type='source')"), "\n")
     cat("################################################################\n")
 }
 ##' @title show the package content

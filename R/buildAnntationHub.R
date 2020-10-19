@@ -43,7 +43,9 @@ fromAnnHub<-function(species, author = NULL,
         suppressMessages(requireNamespace(dbname, quietly = TRUE))
         cat("You alreay had the annotation package: ", dbname, " \n")
     }else{
-        ah <- AnnotationHub()
+        # create the temp cache for AnnotationHub
+        dir.create(paste0(tempdir(),"/AnnotationHub/"))
+        ah <- AnnotationHub(cache = paste0(tempdir(),"/AnnotationHub/"), ask = FALSE)
         ah <- query(ah, dbi)
         ahdb <- ah$title
         names(ahdb) <- ah$ah_id
