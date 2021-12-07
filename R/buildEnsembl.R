@@ -133,7 +133,7 @@ fromEnsembl <- function(species = "Arabidopsis thaliana",
             "plant_reactome_pathway"), filters = "chromosome_name",
             values = as.vector(dbinfo$chr_info$name), dataset)
     }else{
-        gene2reactome <- getBM(attributes = c("ensembl_gene_id", "reactome_gene"),
+        gene2reactome <- getBM(attributes = c("ensembl_gene_id", "reactome"),
         filters = "chromosome_name", values =
         as.vector(dbinfo$chr_info$name), dataset)
     }
