@@ -88,7 +88,7 @@ simpleCap <- function(x) {
     ridx <- match(species, korg[, seq_len(5)]) %% nrow(korg)
     nai <- is.na(ridx)
     if (sum(nai) > 0) {
-    na.msg <- sprintf("Unknown species '%s'!", paste(species[nai],
+    na.msg <- sprintf("Unknown species '%s'! in KEGG database, try others...", paste(species[nai],
         sep = "", collapse = "', '"))
     message("Note: ", na.msg)
     }
