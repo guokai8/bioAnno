@@ -30,9 +30,13 @@ fromAnnHub<-function(species, author = NULL,
         install = TRUE, outputDir = NULL, rebuild = FALSE){
     dbi <- .getdbname(species)
     if(is.null(dbi)){
-        dbi <- .get.species.info(species = species)
-        dbi <- dbi["scientific.name"]
-        dbi <- paste0(unlist(strsplit(dbi, ' '))[c(1,2)], collapse = " ")
+        dbi <- tryCatch({
+                .get.species.info(species = species);
+                dbi <- dbi["scientific.name"];
+                dbi <- paste0(unlist(strsplit(dbi, ' '))[c(1,2)], collapse = " ")},
+                        error = function(e){
+                                return(NA)
+                                })
     }
     species <- gsub(' .*', '', species)
     dbname <- paste0("org.", species, ".eg.db")
@@ -46,6 +50,9 @@ fromAnnHub<-function(species, author = NULL,
         # create the temp cache for AnnotationHub
         dir.create(paste0(tempdir(),"/AnnotationHub/"))
         ah <- AnnotationHub(cache = paste0(tempdir(),"/AnnotationHub/"), ask = FALSE)
+        if(is.na(dbi)){
+             dbi<-species   
+        }
         ah <- query(ah, dbi)
         ahdb <- ah$title
         names(ahdb) <- ah$ah_id
