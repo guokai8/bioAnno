@@ -1,7 +1,7 @@
 Package: bioAnno
 Type: Package
 Title: Build Annotation From Online Database
-Version: 0.99.36
+Version: 0.99.37
 Authors@R: person("Kai", "Guo", email = "guokai8@gmail.com",
                   role = c("aut", "cre"))
 Description: This package provide function for building annotation package 
