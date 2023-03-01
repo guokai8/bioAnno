@@ -30,7 +30,7 @@
 #' @return annotation package
 #' @export
 fromEnsembl <- function(species = "Arabidopsis thaliana",
-                    host = "https://useast.ensembl.org",
+                    host = "www",
                     anntype = NULL, buildall = TRUE, author = NULL,
                     maintainer = NULL, tax_id = NULL, genus = NULL,
                     version = NULL, plant = FALSE,
@@ -39,7 +39,7 @@ fromEnsembl <- function(species = "Arabidopsis thaliana",
         host = "https://plants.ensembl.org"
         mart = useEnsembl("plants_mart", host = host)
     }else{
-        mart = useEnsembl("ENSEMBL_MART_ENSEMBL", host = host)
+        mart = useEnsembl("ENSEMBL_MART_ENSEMBL", mirror = host)
     }
     dbinfo<-.getmartdb(species, mart)
     dbname1 <- paste0('org.', strsplit(species," ")[[1]][1], '.eg.db')
@@ -202,15 +202,14 @@ fromEnsembl <- function(species = "Arabidopsis thaliana",
 ##' @author Kai Guo
 ##' @return data.frame with species information
 ##' @export
-listSpecies <- function(host = "uswest.ensembl.org", plant = FALSE){
+listSpecies <- function(host = "www", plant = FALSE){
     cat("You could choose different host to get high speed!\n")
     if(isTRUE(plant)){
         host <- "https://plants.ensembl.org"
         mart <- useEnsembl("plants_mart", host = host)
     }else{
-        cat("Ensembl US West: https://uswest.ensembl.org\nEnsembl US
-        East: https://useast.ensembl.org\nEnsembl Asia: https://asia.ensembl.org\n" )
-        mart <- useEnsembl("ENSEMBL_MART_ENSEMBL", host = host)
+        cat("host: 'www', 'uswest', 'useast', 'asia'\n" )
+        mart <- useEnsembl("ENSEMBL_MART_ENSEMBL", mirror = host)
     }
     res <- tryCatch(
         expr = { 
