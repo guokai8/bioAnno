@@ -1,6 +1,6 @@
 #' @title build annotation from ensembl
 #' @title build annotation from ensembl
-#' @importFrom biomaRt useMart
+#' @importFrom biomaRt useEnsembl
 #' @importFrom biomaRt useDataset
 #' @importFrom biomaRt getBM
 #' @importFrom AnnotationForge makeOrgPackage
@@ -30,16 +30,16 @@
 #' @return annotation package
 #' @export
 fromEnsembl <- function(species = "Arabidopsis thaliana",
-                    host = "useast.ensembl.org",
+                    host = "https://useast.ensembl.org",
                     anntype = NULL, buildall = TRUE, author = NULL,
                     maintainer = NULL, tax_id = NULL, genus = NULL,
                     version = NULL, plant = FALSE,
                     install = TRUE, outputDir = NULL, rebuild = FALSE){
     if(isTRUE(plant)){
-        host = "plants.ensembl.org"
-        mart = useMart("plants_mart", host = host)
+        host = "https://plants.ensembl.org"
+        mart = useEnsembl("plants_mart", host = host)
     }else{
-        mart = useMart("ENSEMBL_MART_ENSEMBL", host = host)
+        mart = useEnsembl("ENSEMBL_MART_ENSEMBL", host = host)
     }
     dbinfo<-.getmartdb(species, mart)
     dbname1 <- paste0('org.', strsplit(species," ")[[1]][1], '.eg.db')
@@ -205,12 +205,12 @@ fromEnsembl <- function(species = "Arabidopsis thaliana",
 listSpecies <- function(host = "uswest.ensembl.org", plant = FALSE){
     cat("You could choose different host to get high speed!\n")
     if(isTRUE(plant)){
-        host <- "plants.ensembl.org"
-        mart <- useMart("plants_mart", host = host)
+        host <- "https://plants.ensembl.org"
+        mart <- useEnsembl("plants_mart", host = host)
     }else{
-        cat("Ensembl US West: uswest.ensembl.org\nEnsembl US
-        East: useast.ensembl.org\nEnsembl Asia: asia.ensembl.org\n" )
-        mart <- useMart("ENSEMBL_MART_ENSEMBL", host = host)
+        cat("Ensembl US West: https://uswest.ensembl.org\nEnsembl US
+        East: https://useast.ensembl.org\nEnsembl Asia: https://asia.ensembl.org\n" )
+        mart <- useEnsembl("ENSEMBL_MART_ENSEMBL", host = host)
     }
     res <- tryCatch(
         expr = { 
