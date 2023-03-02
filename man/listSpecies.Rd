@@ -4,7 +4,7 @@
 \alias{listSpecies}
 \title{list species available in Ensembl}
 \usage{
-listSpecies(host = "uswest.ensembl.org", plant = FALSE)
+listSpecies(host = "www", plant = FALSE)
 }
 \arguments{
 \item{host}{Ensembl host site}

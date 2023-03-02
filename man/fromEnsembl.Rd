@@ -5,8 +5,8 @@
 \title{build annotation from ensembl}
 \usage{
 fromEnsembl(
-  species = "Arabidopsis thaliana",
-  host = "useast.ensembl.org",
+  species = "Caenorhabditis elegans",
+  host = NULL,
   anntype = NULL,
   buildall = TRUE,
   author = NULL,
@@ -60,7 +60,7 @@ build annotation from ensembl
 build annotation from ensembl
 }
 \examples{
-fromEnsembl(species = "Caenorhabditis elegans", anntype="KEGG")
+fromEnsembl(species = "Caenorhabditis elegans", anntype="GO")
 }
 \author{
 Kai Guo
