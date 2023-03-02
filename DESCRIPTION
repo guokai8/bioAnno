@@ -1,7 +1,7 @@
 Package: bioAnno
 Type: Package
 Title: Build Annotation From Online Database
-Version: 0.99.37
+Version: 0.99.38
 Authors@R: person("Kai", "Guo", email = "guokai8@gmail.com",
                   role = c("aut", "cre"))
 Description: This package provide function for building annotation package 
@@ -32,4 +32,4 @@ Suggests:
     rmarkdown
 VignetteBuilder: knitr
 biocViews: Software, Annotation, Clustering, GO, KEGG,Pathways, Reactome
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.2
