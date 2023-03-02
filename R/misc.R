@@ -108,7 +108,8 @@ simpleCap <- function(x) {
 ##' @importFrom dplyr pull
 ##' @importFrom magrittr %>%
 ##' @importFrom biomaRt listDatasets
-##' @importFrom jsonlite fromJSON
+##' @importFrom jsonlite fromJSON toJSON 
+##' @importFrom httr content GET
 ##' @param species species
 ##' @param mart biomaRt mart
 ##' @return list with species information
@@ -117,15 +118,16 @@ simpleCap <- function(x) {
     lhs <- listDatasets(mart)
     spe <- simpleCap(species);
     spe <- gsub(' ', '\\\\s', spe)
-    sel <- grepl(spe, lhs$description, ignore.case = TRUE)
+    spe <- paste0(spe,'\\s','genes')
+    sel <- grepl(spe, lhs$description, ignore.case = FALSE)
     tmp <- lhs[sel, ]
     dataset <- tmp%>%select_(~dataset)%>%collect%>%pull(1)
     if((length(dataset) == 0) | (length(dataset) > 1)){
         stop("Maybe you need first check the avaliable database by
             using listSpecies()\n")
     }
-    chr <- tmp%>%select_(~description)%>%collect%>%pull(1)
-    organism <- gsub(' ', '_', sub(' genes.*', '', chr))
+    chr <- tmp%>%select_(~dataset)%>%collect%>%pull(1)
+    organism <- gsub(' ', '_', sub('(_gene|_eg).*', '', chr))
     if(organism == "Oryza_sativa_Japonica"){
         organism = "Oryza_sativa"
     }
@@ -135,8 +137,8 @@ simpleCap <- function(x) {
         pre_site <- "http://rest.ensembl.org/info/assembly/"
     }
     tryCatch({
-    chr_d <- fromJSON(paste0(pre_site, organism, 
-            "?content-type=application/json"))}, error = function(e)
+    chr_d <- fromJSON(toJSON(content(GET(paste0(pre_site, organism,"?"), 
+            content_type("application/json")))))}, error = function(e)
     stop(
     "The API 'http://rest.ensembl.org' does not seem to work properly.
     Are you connected to the internet? Is the homepage
@@ -268,4 +270,6 @@ getTable <- function(path, table = "go_all"){
     dbDisconnect(con)
     return(res)
 }
+
+### from biomaRt
 
