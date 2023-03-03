@@ -117,6 +117,20 @@ mergeDB<-function(dbleft,dbright,keyleft="GID",keyright="GID",keytype=NULL,
   gene2symbol<-na.omit(gene2symbol)
   gene2symbol<-distinct(gene2symbol)
   colnames(gene2symbol)<-c('GID','SYMBOL')
+  #
+  gene2ensembll <- data.frame("GID" = geneinfo$GID[1], "ENSEMBL" = "")
+  gene2ensemblr <- data.frame("GID" = geneinfo$GID[1], "ENSEMBL" = "")
+  if("ENSEMBL" %in% ksleft){
+    gene2ensembll <- AnnotationDbi::select(dbleft,keys=keys_left,keytype=keyleft,columns=c("ENSEMBL"))
+  }
+  if("ENSEMBL" %in% ksright){
+    gene2ensemblr <- AnnotationDbi::select(dbright,keys=keys_right,keytype=keyright,columns=c("ENSEMBL"))
+  }
+  gene2ensembl<-rbind(gene2ensembll,gene2ensemblr)
+  gene2ensembl<-na.omit(gene2ensembl)
+  gene2ensembl<-distinct(gene2ensembl)
+  colnames(gene2ensembl)<-c('GID','ENSEMBL')
+  #
   gene2entrezidl <- data.frame("GID" = geneinfo$GID[1], "ENTREZID" = "")
   gene2entrezidr <- data.frame("GID" = geneinfo$GID[1], "ENTREZID" = "")
   if("ENTREZID" %in% ksleft){
@@ -193,6 +207,7 @@ mergeDB<-function(dbleft,dbright,keyleft="GID",keyright="GID",keytype=NULL,
                                              pfam = gene2pfam,
                                              interpro = gene2interpro,
                                              reactome = gene2react,
+                                             ensembl = gene2ensembl,
                                              version = version,
                                              maintainer = maintainer,
                                              author = author,
