@@ -47,6 +47,7 @@ require a KEGG license agreement (details at http://www.kegg.jp/kegg/legal.html)
     geneinfo <- data.frame()
     gene2path <- data.frame()
     gene2ko <- data.frame()
+    gene2go <- data.frame()
     tmp <- keggList(species)
     geneinfo <- data.frame("GID" = sub(paste0(species,":"), '',
         names(tmp)), "GENENAME" = tmp)
