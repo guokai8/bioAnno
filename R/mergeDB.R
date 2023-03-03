@@ -21,9 +21,9 @@
 #' @param rebuild rebuild the package or not(default: FALSE)
 #' @param outputDir temporary output path
 #' @examples
-#' fromKEGG(species = "eco")
-#' fromAnnHub(species = "celegans")
-#' mergeDB(org.eco.eg.db,org.celegans.eg.db,species="ecoa")
+#' fromKEGG(species = "hsa", anntype="KEGG")
+#' fromAnnHub(species="human")
+#' mergeDB(org.hsa.eg.db,org.human.eg.db,species="merge")
 #' @export
 #' @author Kai Guo
 mergeDB<-function(dbleft,dbright,keyleft="GID",keyright="GID",keytype=NULL,
@@ -65,10 +65,10 @@ mergeDB<-function(dbleft,dbright,keyleft="GID",keyright="GID",keytype=NULL,
   gene2gor <- data.frame("GID" = geneinfo$GID[1], "GO" = "GO:0008150", 
                          "EVIDENCE" = "IEA")
   if("GO" %in% ksleft){
-    gene2gol <- AnnotationDbi::select(dbleft,keys=keys_left,keytype=keyleft,columns=c("GOALL","ONTOLOGYALL"))
+    gene2gol <- AnnotationDbi::select(dbleft,keys=keys_left,keytype=keyleft,columns=c("GOALL","EVIDENCE"))
   }
   if("GO" %in% ksright){
-    gene2gor <- AnnotationDbi::select(dbright,keys=keys_right,keytype=keyright,columns=c("GOALL","ONTOLOGYALL"))
+    gene2gor <- AnnotationDbi::select(dbright,keys=keys_right,keytype=keyright,columns=c("GOALL","EVIDENCE"))
   }
   gene2go<-rbind(gene2gol,gene2gor)
   gene2go<-na.omit(gene2go)
