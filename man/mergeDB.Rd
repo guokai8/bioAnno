@@ -54,9 +54,9 @@ mergeDB(
 merge two orgDB with keys
 }
 \examples{
-fromKEGG(species = "eco")
-fromAnnHub(species = "celegans")
-mergeDB(org.eco.eg.db,org.celegans.eg.db,species="ecoa")
+fromKEGG(species = "hsa", anntype="KEGG")
+fromAnnHub(species="human")
+mergeDB(org.hsa.eg.db,org.human.eg.db,species="merge")
 }
 \author{
 Kai Guo

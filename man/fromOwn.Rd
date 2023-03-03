@@ -23,7 +23,8 @@ fromOwn(
   tax_id = NULL,
   genus = NULL,
   species = NULL,
-  install = TRUE
+  install = TRUE,
+  pkgname = NULL
 )
 }
 \arguments{
@@ -65,6 +66,8 @@ as default("GID","DESCRIPTION")}
 \item{species}{species name(common name,kegg.species.code or scientifc name)}
 
 \item{install}{install the package or not(default: TRUE)}
+
+\item{pkgname}{package name you want to choose}
 }
 \value{
 annotation package

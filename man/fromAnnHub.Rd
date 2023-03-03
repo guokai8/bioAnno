@@ -12,6 +12,7 @@ fromAnnHub(
   genus = NULL,
   version = NULL,
   install = TRUE,
+  pkgname = NULL,
   outputDir = NULL,
   rebuild = FALSE
 )
@@ -29,7 +30,9 @@ fromAnnHub(
 
 \item{version}{version for the annotation package}
 
-\item{install}{install the package or not(default: TRUE)}
+\item{install}{install the package or not}
+
+\item{pkgname}{package name you want to choose}
 
 \item{outputDir}{temporary file path}
 

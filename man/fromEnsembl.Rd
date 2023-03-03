@@ -16,6 +16,7 @@ fromEnsembl(
   version = NULL,
   plant = FALSE,
   install = TRUE,
+  pkgname = NULL,
   outputDir = NULL,
   rebuild = FALSE
 )
@@ -46,6 +47,8 @@ you want get from ensemble}
 \item{plant}{plant or animal species (TRUE/FALSE)}
 
 \item{install}{install the package or not(default: TRUE)}
+
+\item{pkgname}{package name you want to choose}
 
 \item{outputDir}{temporary output path}
 

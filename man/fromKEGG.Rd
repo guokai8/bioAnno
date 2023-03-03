@@ -6,12 +6,13 @@
 \usage{
 fromKEGG(
   species = "ath",
-  anntype = c("KEGG", "GO"),
+  anntype = c("KEGG"),
   author = NULL,
   maintainer = NULL,
   tax_id = NULL,
   genus = NULL,
   version = NULL,
+  pkgname = NULL,
   install = TRUE,
   outputDir = NULL,
   rebuild = FALSE
@@ -32,6 +33,8 @@ you want get from ensemble}
 \item{genus}{genus for the species}
 
 \item{version}{version for the annotation package}
+
+\item{pkgname}{package name you want to choose}
 
 \item{install}{install the package or not(default: TRUE)}
 

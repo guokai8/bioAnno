@@ -12,6 +12,7 @@ fromNCBI(
   genus = NULL,
   version = NULL,
   install = TRUE,
+  pkgname = NULL,
   outputDir = NULL,
   rebuild = FALSE
 )
@@ -30,6 +31,8 @@ fromNCBI(
 \item{version}{version for the annotation package}
 
 \item{install}{install the package or not(default: TRUE)}
+
+\item{pkgname}{package name you want to choose}
 
 \item{outputDir}{temporary output path}
 
