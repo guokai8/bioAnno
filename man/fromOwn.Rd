@@ -8,6 +8,14 @@ fromOwn(
   geneinfo = geneinfo,
   gene2go = NULL,
   gene2path = NULL,
+  gene2symbol = NULL,
+  gene2refseq = NULL,
+  gene2ensembl = NULL,
+  gene2pfam = NULL,
+  gene2reactome = NULL,
+  gene2ko = NULL,
+  gene2interpro = NULL,
+  gene2entrezid = NULL,
   version = NULL,
   maintainer = NULL,
   author = NULL,
@@ -24,7 +32,23 @@ as default("GID","DESCRIPTION")}
 
 \item{gene2go}{Gene Onotoly information for  genes}
 
-\item{gene2path}{KEGG Pathway or KO information for genes}
+\item{gene2path}{KEGG Pathway information for genes}
+
+\item{gene2symbol}{SYMBOL information for genes}
+
+\item{gene2refseq}{REFSEQ or KO information for genes}
+
+\item{gene2ensembl}{ENSEMBL or KO information for genes}
+
+\item{gene2pfam}{PFAM information for genes}
+
+\item{gene2reactome}{REACTOME Pathway or KO information for genes}
+
+\item{gene2ko}{KO information for genes}
+
+\item{gene2interpro}{INTERPRO information for genes}
+
+\item{gene2entrezid}{ENTREZID information for genes}
 
 \item{version}{version for the annotation package}
 
