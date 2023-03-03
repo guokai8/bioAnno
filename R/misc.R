@@ -44,7 +44,7 @@ simpleCap <- function(x) {
     return(gene2go)
 }
 
-
+#' extract gene information from NCBI
 #' @importFrom data.table fread
 #' @importFrom R.utils gunzip
 #' @importFrom utils download.file

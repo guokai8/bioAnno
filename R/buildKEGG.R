@@ -7,6 +7,8 @@
 #' @importFrom stats na.omit
 #' @importFrom utils data
 #' @param species species name(common name,kegg.species.code or scientifc name)
+#' @param anntype the type of function annotation(GO,KEGG,PFAM,InterPro)
+#'             you want get from ensemble
 #' @param author author for the annotation package
 #' @param maintainer maintainer for the annotation package
 #' @param tax_id taxonomy id for the species
@@ -21,7 +23,7 @@
 #' @return annotation package
 #' @export
 #'
-fromKEGG <- function(species="ath",author=NULL,
+fromKEGG <- function(species="ath", anntype=c("KEGG","GO"), author=NULL,
                 maintainer=NULL,tax_id=NULL,genus=NULL,version=NULL,
                 install=TRUE,outputDir=NULL,rebuild=FALSE){
     cat("#########################################################################\n")
@@ -47,10 +49,12 @@ require a KEGG license agreement (details at http://www.kegg.jp/kegg/legal.html)
     gene2ko <- data.frame()
     tmp <- keggList(species)
     geneinfo <- data.frame("GID" = sub(paste0(species,":"), '',
-        names(tmp)), "GENAME" = tmp)
+        names(tmp)), "GENENAME" = tmp)
     rownames(geneinfo) <- NULL
-    gene2go <- .extratGO(taxid = dbinfo["tax.id"])
-    gene2go <- gene2go[!duplicated(gene2go), ]
+    if("GO" %in% anntype){
+      gene2go <- .extratGO(taxid = dbinfo["tax.id"])
+      gene2go <- gene2go[!duplicated(gene2go), ]
+    }
     if(nrow(gene2go) == 0){
         cat("No Gene Ontology information available !\n")
         gene2go <- data.frame("GID" = geneinfo$GID,
