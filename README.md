@@ -41,6 +41,8 @@ fromAnnHub(species="human")
     plant with parameter plant = TRUE   
     
 -- _fromAnnhub_ build annotation package with the AnnotationHub package 
+-- _mergeDB_ merge two annotation packages
+
 ## Note
 The _bioAnno_ provide wrap function which help me to easily build annotation package.
 
