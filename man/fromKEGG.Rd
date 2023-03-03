@@ -6,6 +6,7 @@
 \usage{
 fromKEGG(
   species = "ath",
+  anntype = c("KEGG", "GO"),
   author = NULL,
   maintainer = NULL,
   tax_id = NULL,
@@ -18,6 +19,9 @@ fromKEGG(
 }
 \arguments{
 \item{species}{species name(common name,kegg.species.code or scientifc name)}
+
+\item{anntype}{the type of function annotation(GO,KEGG,PFAM,InterPro)
+you want get from ensemble}
 
 \item{author}{author for the annotation package}
 
