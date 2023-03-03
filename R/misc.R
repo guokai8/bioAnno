@@ -271,5 +271,4 @@ getTable <- function(path, table = "go_all"){
     return(res)
 }
 
-### from biomaRt
 

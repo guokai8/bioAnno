@@ -15,7 +15,8 @@
 #' @param tax_id taxonomy id for the species
 #' @param genus genus for the species
 #' @param version version for the annotation package
-#' @param install install the package or not(default: TRUE)
+#' @param install install the package or not
+#' @param pkgname package name you want to choose
 #' @param outputDir temporary file path
 #' @param rebuild rebuild the package or not(default: FALSE)
 #' @examples
@@ -26,8 +27,8 @@
 #' @export
 fromAnnHub<-function(species, author = NULL,
         maintainer = NULL, tax_id = NULL, genus = NULL,
-        version = NULL,
-        install = TRUE, outputDir = NULL, rebuild = FALSE){
+        version = NULL,install = TRUE, pkgname=NULL, outputDir = NULL, 
+        rebuild = FALSE){
     dbi <- .getdbname(species)
     if(is.null(dbi)){
         dbi <- tryCatch({
@@ -116,6 +117,9 @@ fromAnnHub<-function(species, author = NULL,
     }
     if(is.null(species)){
         species <- species
+    }
+    if(!is.null(pkgname)){
+      species <- pkgname
     }
     if(is.null(outputDir)){
         outputDir <- tempdir()

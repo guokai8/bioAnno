@@ -8,6 +8,7 @@
 #' @param genus genus for the species
 #' @param version version for the annotation package
 #' @param install install the package or not(default: TRUE)
+#' @param pkgname package name you want to choose
 #' @param rebuild rebuild the package or not(default: FALSE)
 #' @param outputDir temporary output path
 #' @examples
@@ -20,7 +21,7 @@
 #' @export
 fromNCBI <- function(species = "ath", author = NULL,
         maintainer = NULL, tax_id = NULL, genus=NULL, version = NULL,
-        install = TRUE, outputDir=NULL, rebuild = FALSE){
+        install = TRUE, pkgname = NULL, outputDir=NULL, rebuild = FALSE){
     dbinfo <- .get.species.info(species=species)
     species <- dbinfo["kegg.code"]
     dbname <- paste0('org.',species,'.eg.db')
@@ -62,6 +63,9 @@ fromNCBI <- function(species = "ath", author = NULL,
     }
     if(is.null(species)){
         species <- species
+    }
+    if(!is.null(pkgname)){
+        species <- pkgname
     }
     if(is.null(outputDir)){
         outputDir <- tempdir()

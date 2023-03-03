@@ -22,6 +22,7 @@
 #' @param version version number for the annotation package
 #' @param plant plant or animal species (TRUE/FALSE)
 #' @param install install the package or not(default: TRUE)
+#' @param pkgname package name you want to choose
 #' @param rebuild rebuild the package or not(default: FALSE)
 #' @param outputDir temporary output path
 #' @examples
@@ -34,7 +35,7 @@ fromEnsembl <- function(species = "Caenorhabditis elegans",
                     anntype = NULL, buildall = TRUE, author = NULL,
                     maintainer = NULL, tax_id = NULL, genus = NULL,
                     version = NULL, plant = FALSE,
-                    install = TRUE, outputDir = NULL, rebuild = FALSE){
+                    install = TRUE, pkgname=NULL,outputDir = NULL, rebuild = FALSE){
     if(isTRUE(plant)){
         host = "https://plants.ensembl.org"
         mart = useEnsembl("plants_mart", host = host)
@@ -160,6 +161,9 @@ fromEnsembl <- function(species = "Caenorhabditis elegans",
         outputDir <- tempdir()
     }
     species <- gsub(' .*', '', species)
+    if(!is.null(pkgname)){
+      species <- pkgname
+    }
     package <- suppressWarnings(makeOrgPackage(gene_info = geneinfo,
         symbol = gene2symbol,
         entrezid = gene2entrezid,

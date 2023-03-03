@@ -21,6 +21,7 @@
 #' @param version version for the annotation package
 #' @param species species name(common name,kegg.species.code or scientifc name)
 #' @param install install the package or not(default: TRUE)
+#' @param pkgname package name you want to choose
 #' @param outputDir temporary output path
 #' @export
 #' @examples
@@ -34,7 +35,7 @@ fromOwn <- function(geneinfo = geneinfo, gene2go = NULL, gene2path = NULL,
                     gene2pfam = NULL, gene2reactome= NULL, gene2ko = NULL,
                     gene2interpro = NULL, gene2entrezid= NULL,
         version = NULL, maintainer = NULL, author = NULL, outputDir = NULL,
-        tax_id = NULL, genus = NULL, species = NULL, install = TRUE){
+        tax_id = NULL, genus = NULL, species = NULL, install = TRUE, pkgname=NULL){
 
     cat("Please make sure you have Gene Ontology and KEGG pathway
         or KO data.frame ready.\n")
@@ -185,6 +186,9 @@ fromOwn <- function(geneinfo = geneinfo, gene2go = NULL, gene2path = NULL,
     }
     if(is.null(species)){
         species <- "species"
+    }
+    if(!is.null(pkgname)){
+      species <- pkgname
     }
     if(is.null(outputDir)){
         outputDir <- tempdir()

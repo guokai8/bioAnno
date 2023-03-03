@@ -14,6 +14,7 @@
 #' @param tax_id taxonomy id for the species
 #' @param genus genus for the species
 #' @param version version for the annotation package
+#' @param pkgname package name you want to choose
 #' @param install install the package or not(default: TRUE)
 #' @param rebuild rebuild the package or not(default: FALSE)
 #' @param outputDir temporary output path
@@ -23,8 +24,8 @@
 #' @return annotation package
 #' @export
 #'
-fromKEGG <- function(species="ath", anntype=c("KEGG","GO"), author=NULL,
-                maintainer=NULL,tax_id=NULL,genus=NULL,version=NULL,
+fromKEGG <- function(species="ath", anntype=c("KEGG"), author=NULL,
+                maintainer=NULL,tax_id=NULL,genus=NULL,version=NULL,pkgname=NULL,
                 install=TRUE,outputDir=NULL,rebuild=FALSE){
     cat("#########################################################################\n")
     cat("The bioAnno package downloads and uses KEGG data.Non-academic uses may
@@ -50,7 +51,8 @@ require a KEGG license agreement (details at http://www.kegg.jp/kegg/legal.html)
     gene2go <- data.frame()
     tmp <- keggList(species)
     geneinfo <- data.frame("GID" = sub(paste0(species,":"), '',
-        names(tmp)), "GENENAME" = tmp)
+        names(tmp)), "GENENAME" = sub(paste0(species,":"), '',
+                                      names(tmp)))
     rownames(geneinfo) <- NULL
     if("GO" %in% anntype){
       gene2go <- .extratGO(taxid = dbinfo["tax.id"])
@@ -90,6 +92,9 @@ require a KEGG license agreement (details at http://www.kegg.jp/kegg/legal.html)
     }
     if(is.null(species)){
         species <- species
+    }
+    if(!is.null(pkgname)){
+      species <- pkgname
     }
     if(is.null(outputDir)){
         outputDir <- tempdir()
