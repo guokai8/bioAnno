@@ -92,6 +92,13 @@ fromAnnHub<-function(species, author = NULL,
         gene2path <- na.omit(gene2path)
         pathway <- TRUE
     }
+    gene2ensembl <- data.frame("GID"=keys(res)[1],"ENSEMBL"="")
+    if("ENSEMBL" %in% columns(res)){
+      gene2ensembl <- select(res, keys = keys(res), columns = c("ENSEMBL"))
+      colnames(gene2ensembl) <- c("GID", "ENSEMBL")
+      gene2ensembl <- gene2ensembl[!duplicated(gene2ensembl), ]
+      gene2ensembl <- na.omit(gene2ensembl)
+    }
     if(is.null(version)){
         version <- "0.0.1"
     }
@@ -118,6 +125,7 @@ fromAnnHub<-function(species, author = NULL,
             gene_info = geneinfo,
             refseq = gene2refseq,
             symbol = gene2symbol,
+            ensembl = gene2ensembl,
             go = gene2go,
             path = gene2path,
             maintainer = maintainer,
@@ -134,6 +142,7 @@ fromAnnHub<-function(species, author = NULL,
         gene_info = geneinfo,
         refseq = gene2refseq,
         symbol = gene2symbol,
+        ensembl = gene2ensembl,
         go = gene2go,
         maintainer = maintainer,
         author = author,
