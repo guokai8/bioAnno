@@ -20,6 +20,10 @@
 #' @param install install the package or not(default: TRUE)
 #' @param rebuild rebuild the package or not(default: FALSE)
 #' @param outputDir temporary output path
+#' @examples
+#' fromKEGG(species = "eco")
+#' fromAnnHub(species = "celegans")
+#' mergeDB(org.eco.eg.db,org.celegans.eg.db,species="ecoa")
 #' @export
 #' @author Kai Guo
 mergeDB<-function(dbleft,dbright,keyleft="GID",keyright="GID",keytype=NULL,
