@@ -53,6 +53,11 @@ mergeDB(
 \description{
 merge two orgDB with keys
 }
+\examples{
+fromKEGG(species = "eco")
+fromAnnHub(species = "celegans")
+mergeDB(org.eco.eg.db,org.celegans.eg.db,species="ecoa")
+}
 \author{
 Kai Guo
 }
