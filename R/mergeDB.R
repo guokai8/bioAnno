@@ -51,161 +51,172 @@ mergeDB<-function(dbleft,dbright,keyleft="GID",keyright="GID",keytype=NULL,
   gene2namer <- data.frame("GID" = keys_right, "GENENAME" = "")
   gene2name <- data.frame("GID" = keys_right, "GENENAME" = "")
   if("GENENAME" %in% ksleft){
-    gene2namel <- NULL
     gene2namel <- AnnotationDbi::select(dbleft,keys=keys_left,keytype=keyleft,columns=c("GENENAME"))
   }
   if("GENENAME" %in% ksright){
-    gene2namer <- NULL
     gene2namer <- AnnotationDbi::select(dbright,keys=keys_right,keytype=keyright,columns=c("GENENAME"))
   }
   geneinfo<-rbind(gene2namel,gene2namer)
   geneinfo<-na.omit(geneinfo)
   geneinfo<-distinct(geneinfo)
   colnames(geneinfo)<-c('GID','GENENAME')
-  gene2gol <- data.frame("GID" = geneinfo$GID[1], "GO" = "GO:0008150", 
+  if(nrow(geneinfo)>1){
+    geneinfo <- geneinfo[geneinfo$GENENAME!="",]
+  }
+  gene2gol <- data.frame("GID" = geneinfo$GID[1], "GO" = "", 
                         "EVIDENCE" = "IEA")
-  gene2gor <- data.frame("GID" = geneinfo$GID[1], "GO" = "GO:0008150", 
+  gene2gor <- data.frame("GID" = geneinfo$GID[1], "GO" = "", 
                          "EVIDENCE" = "IEA")
   if("GO" %in% ksleft){
-    gene2gol <- NULL
     gene2gol <- AnnotationDbi::select(dbleft,keys=keys_left,keytype=keyleft,columns=c("GOALL","EVIDENCE"))
   }
   if("GO" %in% ksright){
-    gene2gor <- NULL
     gene2gor <- AnnotationDbi::select(dbright,keys=keys_right,keytype=keyright,columns=c("GOALL","EVIDENCE"))
   }
   gene2go<-rbind(gene2gol,gene2gor)
   gene2go<-na.omit(gene2go)
   gene2go<-distinct(gene2go)
   colnames(gene2go)<-c('GID','GO','EVIDENCE')
+  if(nrow(gene2go)>1){
+    gene2go<-gene2go[gene2go$GO!="",]
+  }
   gene2pathl <- data.frame("GID" = geneinfo$GID[1],"PATH" = "01100")
   gene2pathr <- data.frame("GID" = geneinfo$GID[1],"PATH" = "01100")
   if("PATH" %in% ksleft){
-    gene2pathl <- NULL
     gene2pathl <- AnnotationDbi::select(dbleft,keys=keys_left,keytype=keyleft,columns=c("PATH"))
   }
   if("PATH" %in% ksright){
-    gene2pathr <- NULL
     gene2pathr <- AnnotationDbi::select(dbright,keys=keys_right,keytype=keyright,columns=c("PATH"))
   }
   gene2path<-rbind(gene2pathl,gene2pathr)
   gene2path<-na.omit(gene2path)
   gene2path<-distinct(gene2path)
   colnames(gene2path)<-c('GID','PATH')
+  if(nrow(gene2path)>1){
+    gene2path<-gene2path[gene2path$PATH!="",]
+  }
   gene2kol <- data.frame("GID" = geneinfo$GID[1],"KO" = "")
   gene2kor <- data.frame("GID" = geneinfo$GID[1],"KO" = "")
   if("KO" %in% ksleft){
-    gene2kol <- NULL
     gene2kol <- AnnotationDbi::select(dbleft,keys=keys_left,keytype=keyleft,columns=c("KO"))
   }
   if("KO" %in% ksright){
-    gene2kor <- NULL
     gene2kor <- AnnotationDbi::select(dbright,keys=keys_right,keytype=keyright,columns=c("KO"))
   }
   gene2ko<-rbind(gene2kol,gene2kor)
   gene2ko<-na.omit(gene2ko)
   gene2ko<-distinct(gene2ko)
   colnames(gene2ko)<-c('GID','KO')
+  if(nrow(gene2path)>1){
+    gene2ko<-gene2ko[gene2ko$KO!="",]
+  }
   gene2refseql <- data.frame("GID" = geneinfo$GID[1], "REFSEQ" = "")
   gene2refseqr <- data.frame("GID" = geneinfo$GID[1], "REFSEQ" = "")
   if("REFSEQ" %in% ksleft){
-    gene2refseql <- NULL
     gene2refseql <- AnnotationDbi::select(dbleft,keys=keys_left,keytype=keyleft,columns=c("REFSEQ"))
   }
   if("REFSEQ" %in% ksright){
-    gene2refseqr <- NULL
     gene2refseqr <- AnnotationDbi::select(dbright,keys=keys_right,keytype=keyright,columns=c("REFSEQ"))
   }
   gene2refseq<-rbind(gene2refseql,gene2refseqr)
   gene2refseq<-na.omit(gene2refseq)
   gene2refseq<-distinct(gene2refseq)
   colnames(gene2refseq)<-c('GID','REFSEQ')
+  if(nrow(gene2refseq)>1){
+    gene2refseq<-gene2refseq[gene2refseq$REFSEQ!="",]
+  }
   gene2symboll <- data.frame("GID" = geneinfo$GID[1], "SYMBOL" = "")
   gene2symbolr <- data.frame("GID" = geneinfo$GID[1], "SYMBOL" = "")
   if("SYMBOL" %in% ksleft){
-    gene2symboll <- NULL
     gene2symboll <- AnnotationDbi::select(dbleft,keys=keys_left,keytype=keyleft,columns=c("SYMBOL"))
   }
   if("SYMBOL" %in% ksright){
-    gene2symbolr <- NULL
     gene2symbolr <- AnnotationDbi::select(dbright,keys=keys_right,keytype=keyright,columns=c("SYMBOL"))
   }
   gene2symbol<-rbind(gene2symboll,gene2symbolr)
   gene2symbol<-na.omit(gene2symbol)
   gene2symbol<-distinct(gene2symbol)
   colnames(gene2symbol)<-c('GID','SYMBOL')
+  if(nrow(gene2symbol)>1){
+    gene2symbol<-gene2symbol[gene2symbol$SYMBOL!="",]
+  }
   #
   gene2ensembll <- data.frame("GID" = geneinfo$GID[1], "ENSEMBL" = "")
   gene2ensemblr <- data.frame("GID" = geneinfo$GID[1], "ENSEMBL" = "")
   if("ENSEMBL" %in% ksleft){
-    gene2ensembll <- NULL
     gene2ensembll <- AnnotationDbi::select(dbleft,keys=keys_left,keytype=keyleft,columns=c("ENSEMBL"))
   }
   if("ENSEMBL" %in% ksright){
-    gene2ensemblr <- NULL
     gene2ensemblr <- AnnotationDbi::select(dbright,keys=keys_right,keytype=keyright,columns=c("ENSEMBL"))
   }
   gene2ensembl<-rbind(gene2ensembll,gene2ensemblr)
   gene2ensembl<-na.omit(gene2ensembl)
   gene2ensembl<-distinct(gene2ensembl)
   colnames(gene2ensembl)<-c('GID','ENSEMBL')
+  if(nrow(gene2ensembl)>1){
+    gene2ensembl<-gene2ensembl[gene2ensembl$ENSEMBL!="",]
+  }
   #
   gene2entrezidl <- data.frame("GID" = geneinfo$GID[1], "ENTREZID" = "")
   gene2entrezidr <- data.frame("GID" = geneinfo$GID[1], "ENTREZID" = "")
   if("ENTREZID" %in% ksleft){
-    gene2entrezidl <- NULL
     gene2entrezidl <- AnnotationDbi::select(dbleft,keys=keys_left,keytype=keyleft,columns=c("ENTREZID"))
   }
   if("ENTREZID" %in% ksright){
-    gene2entrezidr <- NULL
     gene2entrezidr <- AnnotationDbi::select(dbright,keys=keys_right,keytype=keyright,columns=c("ENTREZID"))
   }
   gene2entrezid<-rbind(gene2entrezidl,gene2entrezidr)
   gene2entrezid<-na.omit(gene2entrezid)
   gene2entrezid<-distinct(gene2entrezid)
   colnames(gene2entrezid)<-c('GID','ENTREZID')
+  if(nrow(gene2entrezid)>1){
+    gene2entrezid<-gene2entrezid[gene2entrezid$ENTREZID!="",]
+  }
   gene2pfaml <- data.frame("GID" = geneinfo$GID[1], "PFAM" = "")
   gene2pfamr <- data.frame("GID" = geneinfo$GID[1], "PFAM" = "")
   if("PFAM" %in% ksleft){
-    gene2pfaml <- NULL
     gene2pfaml <- AnnotationDbi::select(dbleft,keys=keys_left,keytype=keyleft,columns=c("PFAM"))
   }
   if("PFAM" %in% ksright){
-    gene2pfamr <- NULL
     gene2pfamr <- AnnotationDbi::select(dbright,keys=keys_right,keytype=keyright,columns=c("PFAM"))
   }
   gene2pfam<-rbind(gene2pfaml,gene2pfamr)
   gene2pfam<-na.omit(gene2pfam)
   gene2pfam<-distinct(gene2pfam)
   colnames(gene2pfam)<-c('GID','PFAM')
+  if(nrow(gene2pfam)>1){
+    gene2pfam<-gene2pfam[gene2pfam$PFAM!="",]
+  }
   gene2interprol <- data.frame("GID" = geneinfo$GID[1], "INTERPRO" = "")
   gene2interpror <- data.frame("GID" = geneinfo$GID[1], "INTERPRO" = "")
   if("INTERPRO" %in% ksleft){
-    gene2interprol <- NULL
     gene2interprol <- AnnotationDbi::select(dbleft,keys=keys_left,keytype=keyleft,columns=c("INTERPRO"))
   }
   if("INTERPRO" %in% ksright){
-    gene2interpror <- NULL
     gene2interpror <- AnnotationDbi::select(dbright,keys=keys_right,keytype=keyright,columns=c("INTERPRO"))
   }
   gene2interpro<-rbind(gene2interprol,gene2interpror)
   gene2interpro<-na.omit(gene2interpro)
   gene2interpro<-distinct(gene2interpro)
   colnames(gene2interpro)<-c('GID','INTERPRO')
+  if(nrow(gene2interpro)>1){
+    gene2interpro<-gene2interpro[gene2interpro$INTERPRO!="",]
+  }
   gene2reactl <- data.frame("GID" = geneinfo$GID[1], "REACTOME" = "")
   gene2reactr <- data.frame("GID" = geneinfo$GID[1], "REACTOME" = "")
   if("REACTOME" %in% ksleft){
-    gene2reactl <- NULL
     gene2reactl <- AnnotationDbi::select(dbleft,keys=keys_left,keytype=keyleft,columns=c("REACTOME"))
   }
   if("REACTOME" %in% ksright){
-    gene2reactr <- NULL
     gene2reactr <- AnnotationDbi::select(dbright,keys=keys_right,keytype=keyright,columns=c("REACTOME"))
   }
   gene2react<-rbind(gene2reactl,gene2reactr)
   gene2react<-na.omit(gene2react)
   gene2react<-distinct(gene2react)
   colnames(gene2react)<-c('GID','REACTOME')
+  if(nrow(gene2react)>1){
+    gene2react<-gene2react[gene2react$REACTOME!="",]
+  }
   if(is.null(author)){
     author <-"myself"
   }
