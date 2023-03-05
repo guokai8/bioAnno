@@ -73,6 +73,7 @@ mergeDB<-function(dbleft,dbright,keyleft="GID",keyright="GID",keytype=NULL,
   gene2go<-rbind(gene2gol,gene2gor)
   gene2go<-na.omit(gene2go)
   gene2go<-distinct(gene2go)
+  colnames(gene2go)<-c('GID','GO','EVIDENCE')
   gene2pathl <- data.frame("GID" = geneinfo$GID[1],"PATH" = "01100")
   gene2pathr <- data.frame("GID" = geneinfo$GID[1],"PATH" = "01100")
   if("PATH" %in% ksleft){
