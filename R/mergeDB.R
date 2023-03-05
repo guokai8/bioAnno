@@ -37,7 +37,7 @@ mergeDB<-function(dbleft,dbright,keyleft="GID",keyright="GID",keytype=NULL,
     suppressMessages(remove.packages(dbname))
   }
   if(is.null(keytype)){
-    keytype=c("GID","GENENAME")
+    keytype=c("GID","GENENAME","SYMBOL")
   }
   keytype <-setdiff(keytype,c(keyleft,keyright))
   ktleft <- keytypes(dbleft)
