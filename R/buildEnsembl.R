@@ -45,7 +45,11 @@ fromEnsembl <- function(species = "Caenorhabditis elegans",
         
     }
     dbinfo<-.getmartdb(species, mart)
-    dbname1 <- paste0('org.', strsplit(species," ")[[1]][1], '.eg.db')
+    if(!is.null(pkgname)){
+      dbname1 <- paste0('org.', pkgname, '.eg.db')
+    }else{
+      dbname1 <- paste0('org.', strsplit(species," ")[[1]][1], '.eg.db')
+    }
     if(isTRUE(rebuild)){
         suppressMessages(remove.packages(dbname1))
     }

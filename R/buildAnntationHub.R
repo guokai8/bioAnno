@@ -40,7 +40,11 @@ fromAnnHub<-function(species, author = NULL,
                                 })
     }
     species <- gsub(' .*', '', species)
-    dbname <- paste0("org.", species, ".eg.db")
+    if(!is.null(pkgname)){
+      dbname <- paste0('org.', pkgname, '.eg.db')
+    }else{
+      dbname <- paste0('org.', species, '.eg.db')
+    }
     if(isTRUE(rebuild)){
         suppressMessages(remove.packages(dbname))
     }

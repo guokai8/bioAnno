@@ -34,7 +34,11 @@ require a KEGG license agreement (details at http://www.kegg.jp/kegg/legal.html)
     cat("#########################################################################\n")
     dbinfo <- .get.species.info(species)
     species <- dbinfo["kegg.code"]
-    dbname <- paste0('org.', species, '.eg.db')
+    if(!is.null(pkgname)){
+      dbname <- paste0('org.', pkgname, '.eg.db')
+    }else{
+      dbname <- paste0('org.', species, '.eg.db')
+    }
     if(isTRUE(rebuild)){
         suppressMessages(remove.packages(dbname))
     }

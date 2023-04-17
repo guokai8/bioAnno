@@ -14,6 +14,10 @@
 #' @param gene2ko KO information for genes
 #' @param gene2interpro INTERPRO information for genes
 #' @param gene2entrezid ENTREZID information for genes
+#' @param gene2biocyc BIOCYC information for genes
+#' @param gene2kd KEGG DISEASE information for genes
+#' @param gene2gad GAD information for genes
+#' @param gene2fundo FunDO information for genes
 #' @param author author for the annotation package
 #' @param maintainer maintainer for the annotation package
 #' @param tax_id taxonomy id for the species
@@ -33,13 +37,17 @@
 fromOwn <- function(geneinfo = geneinfo, gene2go = NULL, gene2path = NULL, 
                     gene2symbol = NULL, gene2refseq = NULL,  gene2ensembl = NULL,
                     gene2pfam = NULL, gene2reactome= NULL, gene2ko = NULL,
-                    gene2interpro = NULL, gene2entrezid= NULL,
+                    gene2interpro = NULL, gene2entrezid= NULL, gene2biocyc = NULL,
+                    gene2kd = NULL,gene2fundo =NULL, gene2gad = NULL,
         version = NULL, maintainer = NULL, author = NULL, outputDir = NULL,
-        tax_id = NULL, genus = NULL, species = NULL, install = TRUE, pkgname=NULL){
+        tax_id = NULL, genus = NULL, species = NULL, install = TRUE, pkgname=NULL,rebuild=FALSE){
 
     cat("Please make sure you have Gene Ontology and KEGG pathway
         or KO data.frame ready.\n")
-
+  dbname1 <- paste0('org.', pkgname, '.eg.db')
+  if(isTRUE(rebuild)){
+    suppressMessages(remove.packages(dbname1))
+  }
     if(is.null(geneinfo)){
         stop("You must have Gene information table")
     }
@@ -169,6 +177,56 @@ fromOwn <- function(geneinfo = geneinfo, gene2go = NULL, gene2path = NULL,
       gene2entrezid <- data.frame("GID" = geneinfo$GID[1],
                             "ENTREZID" = "")
     }
+    #12
+    if(!is.null(gene2biocyc)){
+      if(ncol(gene2biocyc) != 2){
+        stop("Dataframe must have only two columns")
+      }
+      colnames(gene2biocyc) <- c("GID", "BIOCYC")
+      gene2biocyc <- gene2biocyc[!duplicated(gene2biocyc), ]
+      gene2biocyc <- na.omit(gene2biocyc)
+    }else{
+      gene2biocyc <- data.frame("GID" = geneinfo$GID[1],
+                                "BIOCYC" = "")
+    }
+    #13
+    if(!is.null(gene2kd)){
+      if(ncol(gene2kd) != 2){
+        stop("Dataframe must have only two columns")
+      }
+      colnames(gene2kd) <- c("GID", "KEGGDISEASE")
+      gene2kd <- gene2kd[!duplicated(gene2kd), ]
+      gene2kd <- na.omit(gene2kd)
+    }else{
+      gene2kd <- data.frame("GID" = geneinfo$GID[1],
+                            "KEGGDISEASE" = "")
+    }
+    #14
+    if(!is.null(gene2gad)){
+      if(ncol(gene2gad) != 2){
+        stop("Dataframe must have only two columns")
+      }
+      colnames(gene2gad) <- c("GID", "GAD")
+      gene2gad <- gene2gad[!duplicated(gene2gad), ]
+      gene2gad <- na.omit(gene2gad)
+    }else{
+      gene2gad <- data.frame("GID" = geneinfo$GID[1],
+                             "GAD" = "")
+    }
+    ##
+    #15
+    if(!is.null(gene2fundo)){
+      if(ncol(gene2fundo) != 2){
+        stop("Dataframe must have only two columns")
+      }
+      colnames(gene2fundo) <- c("GID", "FUNDO")
+      gene2fundo <- gene2fundo[!duplicated(gene2fundo), ]
+      gene2fundo <- na.omit(gene2fundo)
+    }else{
+      gene2fundo <- data.frame("GID" = geneinfo$GID[1],
+                               "FUNDO" = "")
+    }
+    ##
     if(is.null(version)){
         version <- "0.0.1"
     }
@@ -205,6 +263,10 @@ fromOwn <- function(geneinfo = geneinfo, gene2go = NULL, gene2path = NULL,
     interpro = gene2interpro,
     reactome = gene2reactome,
     ensembl = gene2ensembl,
+    biocyc = gene2biocyc,
+    disease = gene2kd,
+    gad = gene2gad,
+    fundo = gene2fundo,
     version = version,
     maintainer = maintainer,
     author = author,

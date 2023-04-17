@@ -222,6 +222,7 @@ mergeDB<-function(dbleft,dbright,keyleft="GID",keyright="GID",keytype=NULL,
   if(nrow(gene2interpro)>1){
     gene2interpro<-gene2interpro[gene2interpro$INTERPRO!="",]
   }
+  #
   gene2reactl <- data.frame("GID" = geneinfo$GID[1], "REACTOME" = "")
   gene2reactr <- data.frame("GID" = geneinfo$GID[1], "REACTOME" = "")
   if("REACTOME" %in% ksleft){
@@ -239,6 +240,79 @@ mergeDB<-function(dbleft,dbright,keyleft="GID",keyright="GID",keytype=NULL,
   if(nrow(gene2react)>1){
     gene2react<-gene2react[gene2react$REACTOME!="",]
   }
+  #
+  gene2biocycl <- data.frame("GID" = geneinfo$GID[1], "BIOCYC" = "")
+  gene2biocycr <- data.frame("GID" = geneinfo$GID[1], "BIOCYC" = "")
+  if("BIOCYC" %in% ksleft){
+    gene2biocycl <- NULL
+    gene2biocycl <- AnnotationDbi::select(dbleft,keys=keys_left,keytype=keyleft,columns=c("BIOCYC"))
+  }
+  if("BIOCYC" %in% ksright){
+    gene2biocycr <- NULL
+    gene2biocycr <- AnnotationDbi::select(dbright,keys=keys_right,keytype=keyright,columns=c("BIOCYC"))
+  }
+  gene2biocyc<-rbind(gene2biocycl,gene2biocycr)
+  gene2biocyc<-na.omit(gene2biocyc)
+  gene2biocyc<-distinct(gene2biocyc)
+  colnames(gene2biocyc)<-c('GID','BIOCYC')
+  if(nrow(gene2biocyc)>1){
+    gene2biocyc<-gene2biocyc[gene2biocyc$BIOCYC!="",]
+  }
+  ###
+  gene2kdl <- data.frame("GID" = geneinfo$GID[1], "KEGGDISEASE" = "")
+  gene2kdr <- data.frame("GID" = geneinfo$GID[1], "KEGGDISEASE" = "")
+  if("KEGGDISEASE" %in% ksleft){
+    gene2kdl <- NULL
+    gene2kdl <- AnnotationDbi::select(dbleft,keys=keys_left,keytype=keyleft,columns=c("KEGGDISEASE"))
+  }
+  if("KEGGDISEASE" %in% ksright){
+    gene2kdr <- NULL
+    gene2kdr <- AnnotationDbi::select(dbright,keys=keys_right,keytype=keyright,columns=c("KEGGDISEASE"))
+  }
+  gene2kd<-rbind(gene2kdl,gene2kdr)
+  gene2kd<-na.omit(gene2kd)
+  gene2kd<-distinct(gene2kd)
+  colnames(gene2kd)<-c('GID','KEGGDISEASE')
+  if(nrow(gene2kd)>1){
+    gene2kd<-gene2kd[gene2kd$KEGGDISEASE!="",]
+  }
+  ####
+  gene2gadl <- data.frame("GID" = geneinfo$GID[1], "GAD" = "")
+  gene2gadr <- data.frame("GID" = geneinfo$GID[1], "GAD" = "")
+  if("GAD" %in% ksleft){
+    gene2gadl <- NULL
+    gene2gadl <- AnnotationDbi::select(dbleft,keys=keys_left,keytype=keyleft,columns=c("GAD"))
+  }
+  if("GAD" %in% ksright){
+    gene2gadr <- NULL
+    gene2gadr <- AnnotationDbi::select(dbright,keys=keys_right,keytype=keyright,columns=c("GAD"))
+  }
+  gene2gad<-rbind(gene2gadl,gene2gadr)
+  gene2gad<-na.omit(gene2gad)
+  gene2gad<-distinct(gene2gad)
+  colnames(gene2gad)<-c('GID','GAD')
+  if(nrow(gene2gad)>1){
+    gene2gad<-gene2gad[gene2gad$GAD!="",]
+  }
+  ###
+  gene2fundol <- data.frame("GID" = geneinfo$GID[1], "FUNDO" = "")
+  gene2fundor <- data.frame("GID" = geneinfo$GID[1], "FUNDO" = "")
+  if("FUNDO" %in% ksleft){
+    gene2fundol <- NULL
+    gene2fundol <- AnnotationDbi::select(dbleft,keys=keys_left,keytype=keyleft,columns=c("FUNDO"))
+  }
+  if("FUNDO" %in% ksright){
+    gene2fundor <- NULL
+    gene2fundor <- AnnotationDbi::select(dbright,keys=keys_right,keytype=keyright,columns=c("FUNDO"))
+  }
+  gene2fundo<-rbind(gene2fundol,gene2fundor)
+  gene2fundo<-na.omit(gene2fundo)
+  gene2fundo<-distinct(gene2fundo)
+  colnames(gene2fundo)<-c('GID','FUNDO')
+  if(nrow(gene2fundo)>1){
+    gene2fundo<-gene2fundo[gene2fundo$FUNDO!="",]
+  }
+  ###
   if(is.null(author)){
     author <-"myself"
   }
@@ -268,6 +342,10 @@ mergeDB<-function(dbleft,dbright,keyleft="GID",keyright="GID",keytype=NULL,
                                              pfam = gene2pfam,
                                              interpro = gene2interpro,
                                              reactome = gene2react,
+                                             biocyc = gene2biocyc,
+                                             disease = gene2kd,
+                                             gad = gene2gad,
+                                             fundo = gene2fundo,
                                              ensembl = gene2ensembl,
                                              version = version,
                                              maintainer = maintainer,
