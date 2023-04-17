@@ -16,6 +16,10 @@ fromOwn(
   gene2ko = NULL,
   gene2interpro = NULL,
   gene2entrezid = NULL,
+  gene2biocyc = NULL,
+  gene2kd = NULL,
+  gene2fundo = NULL,
+  gene2gad = NULL,
   version = NULL,
   maintainer = NULL,
   author = NULL,
@@ -24,7 +28,8 @@ fromOwn(
   genus = NULL,
   species = NULL,
   install = TRUE,
-  pkgname = NULL
+  pkgname = NULL,
+  rebuild = FALSE
 )
 }
 \arguments{
@@ -50,6 +55,14 @@ as default("GID","DESCRIPTION")}
 \item{gene2interpro}{INTERPRO information for genes}
 
 \item{gene2entrezid}{ENTREZID information for genes}
+
+\item{gene2biocyc}{BIOCYC information for genes}
+
+\item{gene2kd}{KEGG DISEASE information for genes}
+
+\item{gene2fundo}{FunDO information for genes}
+
+\item{gene2gad}{GAD information for genes}
 
 \item{version}{version for the annotation package}
 
