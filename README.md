@@ -1,4 +1,4 @@
-# bioAnno <a href="https://travis-ci.org/guokai8/bioAnno"><img src="https://travis-ci.org/guokai8/bioAnno.svg" alt="Build status"></a>  [![Project Status:](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active) [![](https://img.shields.io/badge/devel%20version-0.99.42-green.svg)](https://github.com/guokai8/bioAnno)  [![DOI](https://zenodo.org/badge/224717599.svg)](https://zenodo.org/badge/latestdoi/224717599)
+# bioAnno <a href="https://travis-ci.org/guokai8/bioAnno"><img src="https://travis-ci.org/guokai8/bioAnno.svg" alt="Build status"></a>  [![Project Status:](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active) [![](https://img.shields.io/badge/devel%20version-0.99.43-green.svg)](https://github.com/guokai8/bioAnno)  [![DOI](https://zenodo.org/badge/224717599.svg)](https://zenodo.org/badge/latestdoi/224717599)
   
 
 Build Annotation package by using information from __KEGG__, __NCBI__, __Ensembl__ and return OrgDb object such as org.Hs.eg.db. The _bioAnno_ package support all organisms list in __Ensembl__, __KEGG__, __NCBI__.  
