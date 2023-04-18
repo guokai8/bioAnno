@@ -1,13 +1,15 @@
 #' merge two orgDB with keys
 #' @importFrom dplyr distinct
 #' @importFrom AnnotationDbi keytypes keys 
+#' @importFrom RSQLite dbGetQuery
 #' @importFrom AnnotationForge makeOrgPackage
 #' @importFrom utils remove.packages
 #' @importFrom utils install.packages
 #' @importFrom stats na.omit
 #' @importFrom utils remove.packages
-#' @param dbleft the left orgDB
-#' @param dbright the right orgDB
+#' @importFrom stringr str_trim
+#' @param dbleft a charater indicate the left orgDB
+#' @param dbright a character indicate the right orgDB
 #' @param keyleft the keytype use for merging in left orgDB
 #' @param keyright the keytype use for merging in the right orgDB 
 #' @param keytype the keytypes to be included in the merged orgDB ("GID","GENENAME")
@@ -40,28 +42,40 @@ mergeDB<-function(dbleft,dbright,keyleft="GID",keyright="GID",keytype=NULL,
     keytype=c("GID","GENENAME","SYMBOL")
   }
   keytype <-setdiff(keytype,c(keyleft,keyright))
-  ktleft <- keytypes(dbleft)
-  ktright <- keytypes(dbright)
+  keyleftl<-tolower(keyleft)
+  keyrightl<-tolower(keyright)
+  dbleft_name <- eval(parse(text=paste0(sub('\\.db','_dbconn()',dbleft))))
+  dbright_name <- eval(parse(text=paste0(sub('\\.db','_dbconn()',dbright))))
+  dbl <-dbGetQuery(dbleft_name,paste0("SELECT * from"," ",keyleftl))
+  dbr <-dbGetQuery(dbright_name,paste0("SELECT * from"," ",keyrightl))
+  ktleft <- keytypes(eval(parse(text=dbleft)))
+  ktright <- keytypes(eval(parse(text=dbright)))
   ### match the keytype in the left and right orgDB
   ksleft <- intersect(ktleft,keytype)
   ksright <- intersect(ktright,keytype)
-  keys_left <- keys(dbright,keytype=keyleft)
-  keys_right <- keys(dbright,keytype=keyright)
+  keys_left <- keys(eval(parse(text=dbleft)),keytype = keyleft )
+  keys_right <- keys(eval(parse(text=dbleft)),keytype = keyright)
   gene2namel <- data.frame("GID" = keys_left, "GENENAME" = "")
   gene2namer <- data.frame("GID" = keys_right, "GENENAME" = "")
-  gene2name <- data.frame("GID" = keys_right, "GENENAME" = "")
+  gene2name <- rbind(gene2namel,gene2namer)
   if("GENENAME" %in% ksleft){
     gene2namel <- NULL
-    gene2namel <- AnnotationDbi::select(dbleft,keys=keys_left,keytype=keyleft,columns=c("GENENAME"))
+    gene2namel <- dbGetQuery(dbleft_name,"SELECT * from gene_info")
+    gene2namel <- merge(dbl,gene2namel)
+    gene2namel <- gene2namel[,2:3]
   }
   if("GENENAME" %in% ksright){
     gene2namer <- NULL
-    gene2namer <- AnnotationDbi::select(dbright,keys=keys_right,keytype=keyright,columns=c("GENENAME"))
+    gene2namer <- dbGetQuery(dbright_name,"SELECT * from gene_info")
+    gene2namer <- merge(dbr,gene2namer)
+    gene2namer <- gene2namer[,2:3]
   }
   geneinfo<-rbind(gene2namel,gene2namer)
   geneinfo<-na.omit(geneinfo)
   geneinfo<-distinct(geneinfo)
   colnames(geneinfo)<-c('GID','GENENAME')
+  geneinfo$GID<-str_trim(geneinfo$GID,side = "both")
+  geneinfo$GENENAME<-str_trim(geneinfo$GENENAME,side = "both")
   if(nrow(geneinfo)>1){
     geneinfo <- geneinfo[geneinfo$GENENAME!="",]
   }
@@ -71,11 +85,16 @@ mergeDB<-function(dbleft,dbright,keyleft="GID",keyright="GID",keytype=NULL,
                          "EVIDENCE" = "IEA")
   if("GO" %in% ksleft){
     gene2gol <- NULL
-    gene2gol <- AnnotationDbi::select(dbleft,keys=keys_left,keytype=keyleft,columns=c("GOALL","EVIDENCE"))
+    ####eval(parse(text=paste0("dbListTables(org.mac.eg","_dbconn())")))
+    gene2gol <- dbGetQuery(dbleft_name,"SELECT * from go_all")
+    gene2gol <- merge(dbl,gene2gol)
+    gene2gol <- gene2gol[,2:4]
   }
   if("GO" %in% ksright){
     gene2gor <- NULL
-    gene2gor <- AnnotationDbi::select(dbright,keys=keys_right,keytype=keyright,columns=c("GOALL","EVIDENCE"))
+    gene2gor <- dbGetQuery(dbright_name,"SELECT * from go_all")
+    gene2gor <- merge(dbr,gene2gor)
+    gene2gor <- gene2gor[,2:4]
   }
   gene2go<-rbind(gene2gol,gene2gor)
   gene2go<-na.omit(gene2go)
@@ -88,11 +107,16 @@ mergeDB<-function(dbleft,dbright,keyleft="GID",keyright="GID",keytype=NULL,
   gene2pathr <- data.frame("GID" = geneinfo$GID[1],"PATH" = "01100")
   if("PATH" %in% ksleft){
     gene2pathl <- NULL
-    gene2pathl <- AnnotationDbi::select(dbleft,keys=keys_left,keytype=keyleft,columns=c("PATH"))
+    gene2pathl <- dbGetQuery(dbleft_name,"SELECT * from path")
+    gene2pathl <- merge(dbl,gene2pathl)
+    gene2pathl <- gene2pathl[,2:3]
   }
   if("PATH" %in% ksright){
     gene2pathr <- NULL
-    gene2pathr <- AnnotationDbi::select(dbright,keys=keys_right,keytype=keyright,columns=c("PATH"))
+    gene2pathr <- dbGetQuery(dbright_name,"SELECT * from path")
+    gene2pathr <- merge(dbl,gene2pathr)
+    gene2pathr <- gene2pathr[,2:3]
+    
   }
   gene2path<-rbind(gene2pathl,gene2pathr)
   gene2path<-na.omit(gene2path)
@@ -105,11 +129,15 @@ mergeDB<-function(dbleft,dbright,keyleft="GID",keyright="GID",keytype=NULL,
   gene2kor <- data.frame("GID" = geneinfo$GID[1],"KO" = "")
   if("KO" %in% ksleft){
     gene2kol <- NULL
-    gene2kol <- AnnotationDbi::select(dbleft,keys=keys_left,keytype=keyleft,columns=c("KO"))
+    gene2kol <- dbGetQuery(dbleft_name,"SELECT * from ko")
+    gene2kol <- merge(dbl,gene2kol)
+    gene2kol <- gene2kol[,2:3]
   }
   if("KO" %in% ksright){
     gene2kor <- NULL
-    gene2kor <- AnnotationDbi::select(dbright,keys=keys_right,keytype=keyright,columns=c("KO"))
+    gene2kor <- dbGetQuery(dbright_name,"SELECT * from ko")
+    gene2kor <- merge(dbl,gene2kor)
+    gene2kor <- gene2kor[,2:3]
   }
   gene2ko<-rbind(gene2kol,gene2kor)
   gene2ko<-na.omit(gene2ko)
@@ -122,11 +150,15 @@ mergeDB<-function(dbleft,dbright,keyleft="GID",keyright="GID",keytype=NULL,
   gene2refseqr <- data.frame("GID" = geneinfo$GID[1], "REFSEQ" = "")
   if("REFSEQ" %in% ksleft){
     gene2refseql <- NULL
-    gene2refseql <- AnnotationDbi::select(dbleft,keys=keys_left,keytype=keyleft,columns=c("REFSEQ"))
+    gene2refseql <- dbGetQuery(dbleft_name,"SELECT * from refseq")
+    gene2refseql <- merge(dbl,gene2refseql)
+    gene2refseql <- gene2refseql[,2:3]
   }
   if("REFSEQ" %in% ksright){
     gene2refseqr <- NULL
-    gene2refseqr <- AnnotationDbi::select(dbright,keys=keys_right,keytype=keyright,columns=c("REFSEQ"))
+    gene2refseqr <- dbGetQuery(dbright_name,"SELECT * from refseq")
+    gene2refseqr <- merge(dbl,gene2refseqr)
+    gene2refseqr <- gene2refseqr[,2:3]
   }
   gene2refseq<-rbind(gene2refseql,gene2refseqr)
   gene2refseq<-na.omit(gene2refseq)
@@ -139,11 +171,15 @@ mergeDB<-function(dbleft,dbright,keyleft="GID",keyright="GID",keytype=NULL,
   gene2symbolr <- data.frame("GID" = geneinfo$GID[1], "SYMBOL" = "")
   if("SYMBOL" %in% ksleft){
     gene2symboll <- NULL
-    gene2symboll <- AnnotationDbi::select(dbleft,keys=keys_left,keytype=keyleft,columns=c("SYMBOL"))
+    gene2symboll <- dbGetQuery(dbleft_name,"SELECT * from symbol")
+    gene2symboll <- merge(dbl,gene2symboll)
+    gene2symboll <- gene2symboll[,2:3]
   }
   if("SYMBOL" %in% ksright){
     gene2symbolr <- NULL
-    gene2symbolr <- AnnotationDbi::select(dbright,keys=keys_right,keytype=keyright,columns=c("SYMBOL"))
+    gene2symbolr <- dbGetQuery(dbright_name,"SELECT * from symbol")
+    gene2symbolr <- merge(dbl,gene2symbolr)
+    gene2symbolr <- gene2symbolr[,2:3]
   }
   gene2symbol<-rbind(gene2symboll,gene2symbolr)
   gene2symbol<-na.omit(gene2symbol)
@@ -157,11 +193,15 @@ mergeDB<-function(dbleft,dbright,keyleft="GID",keyright="GID",keytype=NULL,
   gene2ensemblr <- data.frame("GID" = geneinfo$GID[1], "ENSEMBL" = "")
   if("ENSEMBL" %in% ksleft){
     gene2ensembll <- NULL
-    gene2ensembll <- AnnotationDbi::select(dbleft,keys=keys_left,keytype=keyleft,columns=c("ENSEMBL"))
+    gene2ensembll <- dbGetQuery(dbleft_name,"SELECT * from ensembl")
+    gene2ensembll <- merge(dbl,gene2ensembll)
+    gene2ensembll <- gene2ensembll[,2:3]
   }
   if("ENSEMBL" %in% ksright){
-    gene2ensemblr <- NULL
-    gene2ensemblr <- AnnotationDbi::select(dbright,keys=keys_right,keytype=keyright,columns=c("ENSEMBL"))
+    gene2symbolr <- NULL
+    gene2symbolr <- dbGetQuery(dbright_name,"SELECT * from ensembl")
+    gene2symbolr <- merge(dbl,gene2symbolr)
+    gene2symbolr <- gene2symbolr[,2:3]
   }
   gene2ensembl<-rbind(gene2ensembll,gene2ensemblr)
   gene2ensembl<-na.omit(gene2ensembl)
@@ -174,12 +214,16 @@ mergeDB<-function(dbleft,dbright,keyleft="GID",keyright="GID",keytype=NULL,
   gene2entrezidl <- data.frame("GID" = geneinfo$GID[1], "ENTREZID" = "")
   gene2entrezidr <- data.frame("GID" = geneinfo$GID[1], "ENTREZID" = "")
   if("ENTREZID" %in% ksleft){
-    gene2entrezidl <-NULL
-    gene2entrezidl <- AnnotationDbi::select(dbleft,keys=keys_left,keytype=keyleft,columns=c("ENTREZID"))
+    gene2entrezidl <- NULL
+    gene2entrezidl <- dbGetQuery(dbleft_name,"SELECT * from entrezid")
+    gene2entrezidl <- merge(dbl,gene2entrezidl)
+    gene2entrezidl <- gene2entrezidl[,2:3]
   }
   if("ENTREZID" %in% ksright){
     gene2entrezidr <- NULL
-    gene2entrezidr <- AnnotationDbi::select(dbright,keys=keys_right,keytype=keyright,columns=c("ENTREZID"))
+    gene2entrezidr <- dbGetQuery(dbright_name,"SELECT * from entrezid")
+    gene2entrezidr <- merge(dbl,gene2entrezidr)
+    gene2entrezidr <- gene2entrezidr[,2:3]
   }
   gene2entrezid<-rbind(gene2entrezidl,gene2entrezidr)
   gene2entrezid<-na.omit(gene2entrezid)
@@ -192,11 +236,15 @@ mergeDB<-function(dbleft,dbright,keyleft="GID",keyright="GID",keytype=NULL,
   gene2pfamr <- data.frame("GID" = geneinfo$GID[1], "PFAM" = "")
   if("PFAM" %in% ksleft){
     gene2pfaml <- NULL
-    gene2pfaml <- AnnotationDbi::select(dbleft,keys=keys_left,keytype=keyleft,columns=c("PFAM"))
+    gene2pfaml <- dbGetQuery(dbleft_name,"SELECT * from pfam")
+    gene2pfaml <- merge(dbl,gene2pfaml)
+    gene2pfaml <- gene2pfaml[,2:3]
   }
   if("PFAM" %in% ksright){
-    gene2pfamr <-NULL
-    gene2pfamr <- AnnotationDbi::select(dbright,keys=keys_right,keytype=keyright,columns=c("PFAM"))
+    gene2pfamr <- NULL
+    gene2pfamr <- dbGetQuery(dbright_name,"SELECT * from pfam")
+    gene2pfamr <- merge(dbl,gene2pfamr)
+    gene2pfamr <- gene2pfamr[,2:3]
   }
   gene2pfam<-rbind(gene2pfaml,gene2pfamr)
   gene2pfam<-na.omit(gene2pfam)
@@ -209,11 +257,15 @@ mergeDB<-function(dbleft,dbright,keyleft="GID",keyright="GID",keytype=NULL,
   gene2interpror <- data.frame("GID" = geneinfo$GID[1], "INTERPRO" = "")
   if("INTERPRO" %in% ksleft){
     gene2interprol <- NULL
-    gene2interprol <- AnnotationDbi::select(dbleft,keys=keys_left,keytype=keyleft,columns=c("INTERPRO"))
+    gene2interprol <- dbGetQuery(dbleft_name,"SELECT * from interpro")
+    gene2interprol <- merge(dbl,gene2interprol)
+    gene2interprol <- gene2interprol[,2:3]
   }
   if("INTERPRO" %in% ksright){
     gene2interpror <- NULL
-    gene2interpror <- AnnotationDbi::select(dbright,keys=keys_right,keytype=keyright,columns=c("INTERPRO"))
+    gene2interpror <- dbGetQuery(dbright_name,"SELECT * from interpro")
+    gene2interpror <- merge(dbl,gene2interpror)
+    gene2interpror <- gene2interpror[,2:3]
   }
   gene2interpro<-rbind(gene2interprol,gene2interpror)
   gene2interpro<-na.omit(gene2interpro)
@@ -227,11 +279,15 @@ mergeDB<-function(dbleft,dbright,keyleft="GID",keyright="GID",keytype=NULL,
   gene2reactr <- data.frame("GID" = geneinfo$GID[1], "REACTOME" = "")
   if("REACTOME" %in% ksleft){
     gene2reactl <- NULL
-    gene2reactl <- AnnotationDbi::select(dbleft,keys=keys_left,keytype=keyleft,columns=c("REACTOME"))
+    gene2reactl <- dbGetQuery(dbleft_name,"SELECT * from reactome")
+    gene2reactl <- merge(dbl,gene2reactl)
+    gene2reactl <- gene2reactl[,2:3]
   }
   if("REACTOME" %in% ksright){
     gene2reactr <- NULL
-    gene2reactr <- AnnotationDbi::select(dbright,keys=keys_right,keytype=keyright,columns=c("REACTOME"))
+    gene2reactr <- dbGetQuery(dbright_name,"SELECT * from reactome")
+    gene2reactr <- merge(dbl,gene2reactr)
+    gene2reactr <- gene2reactr[,2:3]
   }
   gene2react<-rbind(gene2reactl,gene2reactr)
   gene2react<-na.omit(gene2react)
@@ -245,11 +301,15 @@ mergeDB<-function(dbleft,dbright,keyleft="GID",keyright="GID",keytype=NULL,
   gene2biocycr <- data.frame("GID" = geneinfo$GID[1], "BIOCYC" = "")
   if("BIOCYC" %in% ksleft){
     gene2biocycl <- NULL
-    gene2biocycl <- AnnotationDbi::select(dbleft,keys=keys_left,keytype=keyleft,columns=c("BIOCYC"))
+    gene2biocycl <- dbGetQuery(dbleft_name,"SELECT * from biocyc")
+    gene2biocycl <- merge(dbl,gene2biocycl)
+    gene2biocycl <- gene2biocycl[,2:3]
   }
   if("BIOCYC" %in% ksright){
     gene2biocycr <- NULL
-    gene2biocycr <- AnnotationDbi::select(dbright,keys=keys_right,keytype=keyright,columns=c("BIOCYC"))
+    gene2biocycr <- dbGetQuery(dbright_name,"SELECT * from biocyc")
+    gene2biocycr <- merge(dbl,gene2biocycr)
+    gene2biocycr <- gene2biocycr[,2:3]
   }
   gene2biocyc<-rbind(gene2biocycl,gene2biocycr)
   gene2biocyc<-na.omit(gene2biocyc)
@@ -263,11 +323,15 @@ mergeDB<-function(dbleft,dbright,keyleft="GID",keyright="GID",keytype=NULL,
   gene2kdr <- data.frame("GID" = geneinfo$GID[1], "KEGGDISEASE" = "")
   if("KEGGDISEASE" %in% ksleft){
     gene2kdl <- NULL
-    gene2kdl <- AnnotationDbi::select(dbleft,keys=keys_left,keytype=keyleft,columns=c("KEGGDISEASE"))
+    gene2kdl <- dbGetQuery(dbleft_name,"SELECT * from disease")
+    gene2kdl <- merge(dbl,gene2kdl)
+    gene2kdl <- gene2kdl[,2:3]
   }
   if("KEGGDISEASE" %in% ksright){
     gene2kdr <- NULL
-    gene2kdr <- AnnotationDbi::select(dbright,keys=keys_right,keytype=keyright,columns=c("KEGGDISEASE"))
+    gene2kdr <- dbGetQuery(dbright_name,"SELECT * from disease")
+    gene2kdr <- merge(dbl,gene2kdr)
+    gene2kdr <- gene2kdr[,2:3]
   }
   gene2kd<-rbind(gene2kdl,gene2kdr)
   gene2kd<-na.omit(gene2kd)
@@ -281,11 +345,15 @@ mergeDB<-function(dbleft,dbright,keyleft="GID",keyright="GID",keytype=NULL,
   gene2gadr <- data.frame("GID" = geneinfo$GID[1], "GAD" = "")
   if("GAD" %in% ksleft){
     gene2gadl <- NULL
-    gene2gadl <- AnnotationDbi::select(dbleft,keys=keys_left,keytype=keyleft,columns=c("GAD"))
+    gene2gadl <- dbGetQuery(dbleft_name,"SELECT * from gad")
+    gene2gadl <- merge(dbl,gene2gadl)
+    gene2gadl <- gene2gadl[,2:3]
   }
   if("GAD" %in% ksright){
     gene2gadr <- NULL
-    gene2gadr <- AnnotationDbi::select(dbright,keys=keys_right,keytype=keyright,columns=c("GAD"))
+    gene2gadr <- dbGetQuery(dbright_name,"SELECT * from gad")
+    gene2gadr <- merge(dbl,gene2gadr)
+    gene2gadr <- gene2gadr[,2:3]
   }
   gene2gad<-rbind(gene2gadl,gene2gadr)
   gene2gad<-na.omit(gene2gad)
@@ -299,11 +367,15 @@ mergeDB<-function(dbleft,dbright,keyleft="GID",keyright="GID",keytype=NULL,
   gene2fundor <- data.frame("GID" = geneinfo$GID[1], "FUNDO" = "")
   if("FUNDO" %in% ksleft){
     gene2fundol <- NULL
-    gene2fundol <- AnnotationDbi::select(dbleft,keys=keys_left,keytype=keyleft,columns=c("FUNDO"))
+    gene2fundol <- dbGetQuery(dbleft_name,"SELECT * from fundo")
+    gene2fundol <- merge(dbl,gene2fundol)
+    gene2fundol <- gene2fundol[,2:3]
   }
   if("FUNDO" %in% ksright){
     gene2fundor <- NULL
-    gene2fundor <- AnnotationDbi::select(dbright,keys=keys_right,keytype=keyright,columns=c("FUNDO"))
+    gene2fundor <- dbGetQuery(dbright_name,"SELECT * from fundo")
+    gene2fundor <- merge(dbl,gene2fundor)
+    gene2fundor <- gene2fundor[,2:3]
   }
   gene2fundo<-rbind(gene2fundol,gene2fundor)
   gene2fundo<-na.omit(gene2fundo)
