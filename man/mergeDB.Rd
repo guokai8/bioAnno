@@ -22,9 +22,9 @@ mergeDB(
 )
 }
 \arguments{
-\item{dbleft}{the left orgDB}
+\item{dbleft}{a charater indicate the left orgDB}
 
-\item{dbright}{the right orgDB}
+\item{dbright}{a character indicate the right orgDB}
 
 \item{keyleft}{the keytype use for merging in left orgDB}
 
