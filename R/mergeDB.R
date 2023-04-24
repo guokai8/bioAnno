@@ -1,7 +1,7 @@
 #' merge two orgDB with keys
 #' @importFrom dplyr distinct
 #' @importFrom AnnotationDbi keytypes keys 
-#' @importFrom RSQLite dbGetQuery
+#' @importFrom RSQLite dbGetQuery dbListTables
 #' @importFrom AnnotationForge makeOrgPackage
 #' @importFrom utils remove.packages
 #' @importFrom utils install.packages
@@ -46,6 +46,16 @@ mergeDB<-function(dbleft,dbright,keyleft="GID",keyright="GID",keytype=NULL,
   keyrightl<-tolower(keyright)
   dbleft_name <- eval(parse(text=paste0(sub('\\.db','_dbconn()',dbleft))))
   dbright_name <- eval(parse(text=paste0(sub('\\.db','_dbconn()',dbright))))
+  dblall<-dbListTables(dbleft_name)
+  dbrall<-dbListTables(dbright_name)
+  ##
+  if(!keyleftl%in%dblall){
+    keyleftl <-"genes"
+  }
+  if(!keyrightl%in%dbrall){
+    keyrightl <-"genes"
+  }
+  ##
   dbl <-dbGetQuery(dbleft_name,paste0("SELECT * from"," ",keyleftl))
   dbr <-dbGetQuery(dbright_name,paste0("SELECT * from"," ",keyrightl))
   ktleft <- keytypes(eval(parse(text=dbleft)))
@@ -107,13 +117,21 @@ mergeDB<-function(dbleft,dbright,keyleft="GID",keyright="GID",keytype=NULL,
   gene2pathr <- data.frame("GID" = geneinfo$GID[1],"PATH" = "01100")
   if("PATH" %in% ksleft){
     gene2pathl <- NULL
-    gene2pathl <- dbGetQuery(dbleft_name,"SELECT * from path")
+    if("path" %in% dblall){
+      gene2pathl <- dbGetQuery(dbleft_name,"SELECT * from path")
+    }else{
+      gene2pathl <- dbGetQuery(dbleft_name,"SELECT * from kegg")
+    }
     gene2pathl <- merge(dbl,gene2pathl)
     gene2pathl <- gene2pathl[,2:3]
   }
   if("PATH" %in% ksright){
     gene2pathr <- NULL
-    gene2pathr <- dbGetQuery(dbright_name,"SELECT * from path")
+    if("path" %in% dbrall){
+      gene2pathr <- dbGetQuery(dbright_name,"SELECT * from path")
+    }else{
+      gene2pathr <- dbGetQuery(dbright_name,"SELECT * from kegg")
+    }
     gene2pathr <- merge(dbl,gene2pathr)
     gene2pathr <- gene2pathr[,2:3]
     
