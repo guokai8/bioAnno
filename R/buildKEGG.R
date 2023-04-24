@@ -54,9 +54,11 @@ require a KEGG license agreement (details at http://www.kegg.jp/kegg/legal.html)
     gene2ko <- data.frame()
     gene2go <- data.frame()
     tmp <- keggList(species)
+#    geneinfo <- data.frame("GID" = sub(paste0(species,":"), '',
+#        names(tmp)), "GENENAME" = sub(paste0(species,":"), '',
+#                                      names(tmp)))
     geneinfo <- data.frame("GID" = sub(paste0(species,":"), '',
-        names(tmp)), "GENENAME" = sub(paste0(species,":"), '',
-                                      names(tmp)))
+                                       names(tmp)), "GENENAME" = "")
     rownames(geneinfo) <- NULL
     if("GO" %in% anntype){
       gene2go <- .extratGO(taxid = dbinfo["tax.id"])
