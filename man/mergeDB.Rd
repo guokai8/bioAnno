@@ -10,12 +10,14 @@ mergeDB(
   keyleft = "GID",
   keyright = "GID",
   keytype = NULL,
+  keep = NULL,
   species = NULL,
   author = NULL,
   maintainer = NULL,
   tax_id = NULL,
   genus = NULL,
   version = NULL,
+  pkgname = NULL,
   install = TRUE,
   outputDir = NULL,
   rebuild = FALSE
@@ -32,6 +34,8 @@ mergeDB(
 
 \item{keytype}{the keytypes to be included in the merged orgDB ("GID","GENENAME")}
 
+\item{keep}{the name of keytype you used if keyleft and keyright were not same}
+
 \item{species}{the species name}
 
 \item{author}{author for the annotation package}
@@ -43,6 +47,8 @@ mergeDB(
 \item{genus}{genus name for the annotation package}
 
 \item{version}{version number for the annotation package}
+
+\item{pkgname}{package name you want to choose}
 
 \item{install}{install the package or not(default: TRUE)}
 
@@ -56,7 +62,7 @@ merge two orgDB with keys
 \examples{
 fromKEGG(species = "hsa", anntype="KEGG")
 fromAnnHub(species="human")
-mergeDB(org.hsa.eg.db,org.human.eg.db,species="merge")
+mergeDB("org.hsa.eg.db","org.human.eg.db",species="merge")
 }
 \author{
 Kai Guo

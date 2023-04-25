@@ -21,8 +21,8 @@ fromKEGG(
 \arguments{
 \item{species}{species name(common name,kegg.species.code or scientifc name)}
 
-\item{anntype}{the type of function annotation(GO,KEGG,PFAM,InterPro)
-you want get from ensemble}
+\item{anntype}{the type of function annotation(GO,KEGG,)
+you want get from KEGG}
 
 \item{author}{author for the annotation package}
 

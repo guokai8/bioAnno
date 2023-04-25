@@ -6,6 +6,7 @@
 \usage{
 fromOwn(
   geneinfo = geneinfo,
+  keytype = NULL,
   gene2go = NULL,
   gene2path = NULL,
   gene2symbol = NULL,
@@ -35,6 +36,8 @@ fromOwn(
 \arguments{
 \item{geneinfo}{gene information table with two columns
 as default("GID","DESCRIPTION")}
+
+\item{keytype}{key type for building the annotation db}
 
 \item{gene2go}{Gene Onotoly information for  genes}
 
