@@ -7,8 +7,8 @@
 #' @importFrom stats na.omit
 #' @importFrom utils data
 #' @param species species name(common name,kegg.species.code or scientifc name)
-#' @param anntype the type of function annotation(GO,KEGG,PFAM,InterPro)
-#'             you want get from ensemble
+#' @param anntype the type of function annotation(GO,KEGG,)
+#'             you want get from KEGG
 #' @param author author for the annotation package
 #' @param maintainer maintainer for the annotation package
 #' @param tax_id taxonomy id for the species
@@ -30,7 +30,7 @@ fromKEGG <- function(species="ath", anntype=c("KEGG"), author=NULL,
     cat("#########################################################################\n")
     cat("The bioAnno package downloads and uses KEGG data.Non-academic uses may
 require a KEGG license agreement (details at http://www.kegg.jp/kegg/legal.html)\n")
-    cat("The Gene Ontology are downloaded from NCBI.\n")
+    cat("The Gene Ontology are downloaded from NCBI if you choose GO.\n")
     cat("#########################################################################\n")
     dbinfo <- .get.species.info(species)
     species <- dbinfo["kegg.code"]
@@ -60,6 +60,7 @@ require a KEGG license agreement (details at http://www.kegg.jp/kegg/legal.html)
     geneinfo <- data.frame("GID" = sub(paste0(species,":"), '',
                                        names(tmp)), "GENENAME" = "")
     rownames(geneinfo) <- NULL
+    gene2entrezid <- data.frame("GID" = geneinfo$GID, "ENTREZID" = geneinfo$GID )
     if("GO" %in% anntype){
       gene2go <- .extratGO(taxid = dbinfo["tax.id"])
       gene2go <- gene2go[!duplicated(gene2go), ]
@@ -108,6 +109,7 @@ require a KEGG license agreement (details at http://www.kegg.jp/kegg/legal.html)
     package <- suppressWarnings(makeOrgPackage(
     gene_info = geneinfo,
     path = gene2path,
+    entrezid = gene2entrezid,
     ko = gene2ko,
     go = gene2go,
     maintainer = maintainer,

@@ -2,8 +2,10 @@
 #' @importFrom AnnotationForge makeOrgPackage
 #' @importFrom utils install.packages
 #' @importFrom stats na.omit
+#' @importFrom stringr str_trim
 #' @param geneinfo gene information table with two columns
 #'                as default("GID","DESCRIPTION")
+#' @param keytype key type for building the annotation db
 #' @param gene2go Gene Onotoly information for  genes
 #' @param gene2path KEGG Pathway information for genes
 #' @param gene2symbol SYMBOL information for genes
@@ -34,7 +36,7 @@
 #' fromOwn(geneinfo = ath, install = FALSE)
 #' @return annotation package
 #' @author Kai Guo
-fromOwn <- function(geneinfo = geneinfo, gene2go = NULL, gene2path = NULL, 
+fromOwn <- function(geneinfo = geneinfo, keytype = NULL, gene2go = NULL, gene2path = NULL, 
                     gene2symbol = NULL, gene2refseq = NULL,  gene2ensembl = NULL,
                     gene2pfam = NULL, gene2reactome= NULL, gene2ko = NULL,
                     gene2interpro = NULL, gene2entrezid= NULL, gene2biocyc = NULL,
@@ -55,6 +57,9 @@ fromOwn <- function(geneinfo = geneinfo, gene2go = NULL, gene2path = NULL,
     #1
     geneinfo <- geneinfo[!duplicated(geneinfo), ]
     geneinfo <- na.omit(geneinfo)
+    colnames(geneinfo)<-c('GID','GENENAME')
+    geneinfo$GID<-str_trim(geneinfo$GID,side = "both")
+    geneinfo$GENENAME<-str_trim(geneinfo$GENENAME,side = "both")
     #2
     if(!is.null(gene2go)){
         if(ncol(gene2go) == 2){
@@ -79,7 +84,7 @@ fromOwn <- function(geneinfo = geneinfo, gene2go = NULL, gene2path = NULL,
         gene2path <- na.omit(gene2path)
     }else{
         gene2path <- data.frame("GID" = geneinfo$GID,
-                        "PATH" = "01100")
+                        "PATH" = "")
     }
     #4
     if(!is.null(gene2symbol)){
@@ -89,6 +94,9 @@ fromOwn <- function(geneinfo = geneinfo, gene2go = NULL, gene2path = NULL,
       colnames(gene2symbol) <- c("GID", "SYMBOL")
       gene2symbol <- gene2symbol[!duplicated(gene2symbol), ]
       gene2symbol <- na.omit(gene2symbol)
+    }else if(keytype=="SYMBOL"){
+      gene2symbol <- data.frame("GID" = geneinfo$GID,
+                                "SYMBOL" = geneinfo$GID)
     }else{
       gene2symbol <- data.frame("GID" = geneinfo$GID[1],
                               "SYMBOL" = "")
@@ -101,6 +109,9 @@ fromOwn <- function(geneinfo = geneinfo, gene2go = NULL, gene2path = NULL,
       colnames(gene2ensembl) <- c("GID", "ENSEMBL")
       gene2ensembl <- gene2ensembl[!duplicated(gene2ensembl), ]
       gene2ensembl <- na.omit(gene2ensembl)
+    }else if(keytype == "ENSEMBL"){
+      gene2ensembl <- data.frame("GID" = geneinfo$GID,
+                                 "ENSEMBL" = geneinfo$GID)
     }else{
       gene2ensembl <- data.frame("GID" = geneinfo$GID[1],
                                 "ENSEMBL" = "")
@@ -113,9 +124,12 @@ fromOwn <- function(geneinfo = geneinfo, gene2go = NULL, gene2path = NULL,
       colnames(gene2refseq) <- c("GID", "REFSEQ")
       gene2refseq <- gene2refseq[!duplicated(gene2refseq), ]
       gene2refseq <- na.omit(gene2refseq)
+    }else if(keytype == "REFSEQ"){
+      gene2refseq <- data.frame("GID" = geneinfo$GID,
+                                 "REFSEQ" = geneinfo$GID)
     }else{
-      gene2refseq <- data.frame("GID" = geneinfo$GID[1],
-                                 "REFSEQ" = "")
+      gene2refseq <- data.frame("GID" = geneinfo$GID,
+                                "REFSEQ" = "")
     }
     #7
     if(!is.null(gene2pfam)){
@@ -173,6 +187,10 @@ fromOwn <- function(geneinfo = geneinfo, gene2go = NULL, gene2path = NULL,
       colnames(gene2entrezid) <- c("GID", "ENTREZID")
       gene2entrezid <- gene2entrezid[!duplicated(gene2entrezid), ]
       gene2entrezid <- na.omit(gene2entrezid)
+    }else if(keytype == "ENTREZID"){
+      
+      gene2entrezid <- data.frame("GID" = geneinfo$GID,
+                                  "ENTREZID" = geneinfo$GID)
     }else{
       gene2entrezid <- data.frame("GID" = geneinfo$GID[1],
                             "ENTREZID" = "")

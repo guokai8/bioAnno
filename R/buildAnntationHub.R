@@ -78,6 +78,7 @@ fromAnnHub<-function(species, author = NULL,
     geneinfo <- select(res,keys = keys(res), columns = c("GENENAME"))
     geneinfo <- na.omit(geneinfo)
     colnames(geneinfo)[1] <- "GID"
+    gene2entrezid <- data.frame("GID"=geneinfo$GID,"ENTREZID"= geneinfo$GID)
     gene2refseq <- select(res, keys = keys(res), columns = c("REFSEQ"))
     gene2refseq <- na.omit(gene2refseq)
     colnames(gene2refseq)[1] <- "GID"
@@ -131,6 +132,7 @@ fromAnnHub<-function(species, author = NULL,
     if(isTRUE(pathway)){
         package <- suppressWarnings(makeOrgPackage(
             gene_info = geneinfo,
+            entrezid = gene2entrezid,
             refseq = gene2refseq,
             symbol = gene2symbol,
             ensembl = gene2ensembl,
@@ -151,6 +153,7 @@ fromAnnHub<-function(species, author = NULL,
         refseq = gene2refseq,
         symbol = gene2symbol,
         ensembl = gene2ensembl,
+        entrezid = gene2entrezid,
         go = gene2go,
         maintainer = maintainer,
         author = author,

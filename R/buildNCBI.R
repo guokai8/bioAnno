@@ -36,6 +36,7 @@ fromNCBI <- function(species = "ath", author = NULL,
     #    suppressMessages(require(dbname,character.only = T,quietly = T))
     #  }else{
         geneinfo <- .extratGene(taxid = dbinfo['tax.id'])
+        gene2entrezid <- data.frame("GID"=geneinfo$GID,"ENTREZID"= geneinfo$GID)
         gene2symbol<-geneinfo[,c("GID","SYMBOL")]
         gene2symbol[!duplicated(gene2symbol),]
         geneinfo <- geneinfo[,c("GID","DESCRIPTION")]
@@ -73,6 +74,7 @@ fromNCBI <- function(species = "ath", author = NULL,
     package <- suppressWarnings(makeOrgPackage(
     gene_info = geneinfo,
     gene2symbol = gene2symbol,
+    entrezid = gene2entrezid,
     go = gene2go,
     maintainer = maintainer,
     author = author,

@@ -13,37 +13,44 @@
 #' @param keyleft the keytype use for merging in left orgDB
 #' @param keyright the keytype use for merging in the right orgDB 
 #' @param keytype the keytypes to be included in the merged orgDB ("GID","GENENAME")
+#' @param keep the name of keytype you used if keyleft and keyright were not same
 #' @param species the species name
 #' @param author author for the annotation package
 #' @param maintainer maintainer for the annotation package
 #' @param tax_id taxonomy id for the species
 #' @param genus genus name for the annotation package
 #' @param version version number for the annotation package
+#' @param pkgname package name you want to choose
 #' @param install install the package or not(default: TRUE)
 #' @param rebuild rebuild the package or not(default: FALSE)
 #' @param outputDir temporary output path
 #' @examples
 #' fromKEGG(species = "hsa", anntype="KEGG")
 #' fromAnnHub(species="human")
-#' mergeDB(org.hsa.eg.db,org.human.eg.db,species="merge")
+#' mergeDB("org.hsa.eg.db","org.human.eg.db",species="merge")
 #' @export
 #' @author Kai Guo
-mergeDB<-function(dbleft,dbright,keyleft="GID",keyright="GID",keytype=NULL,
-                  species=NULL,author = NULL,
+mergeDB<-function(dbleft,dbright,keyleft="GID",keyright="GID",keytype=NULL,keep = NULL,
+                  species=NULL,author = NULL, 
                   maintainer = NULL, tax_id = NULL, genus = NULL,
-                  version = NULL, 
+                  version = NULL, pkgname=NULL,
                   install = TRUE, outputDir = NULL, rebuild = FALSE){
   ### extract keytype left
-  dbname <- paste0('org.',species,'.eg.db')
+  if(!is.null(pkgname)){
+    dbname <- paste0('org.', pkgname, '.eg.db')
+  }else{
+    dbname <- paste0('org.', species, '.eg.db')
+  }
   if(isTRUE(rebuild)){
     suppressMessages(remove.packages(dbname))
   }
   if(is.null(keytype)){
     keytype=c("GID","GENENAME","SYMBOL")
   }
-  keytype <-setdiff(keytype,c(keyleft,keyright))
-  keyleftl<-tolower(keyleft)
-  keyrightl<-tolower(keyright)
+  #############################################
+  #############################################
+  keyleftl <- tolower(keyleft)
+  keyrightl <- tolower(keyright)
   dbleft_name <- eval(parse(text=paste0(sub('\\.db','_dbconn()',dbleft))))
   dbright_name <- eval(parse(text=paste0(sub('\\.db','_dbconn()',dbright))))
   dblall<-dbListTables(dbleft_name)
@@ -73,17 +80,30 @@ mergeDB<-function(dbleft,dbright,keyleft="GID",keyright="GID",keytype=NULL,
     gene2namel <- dbGetQuery(dbleft_name,"SELECT * from gene_info")
     gene2namel <- merge(dbl,gene2namel)
     gene2namel <- gene2namel[,2:3]
+    colnames(gene2namel)<-c('GID','GENENAME')
   }
   if("GENENAME" %in% ksright){
     gene2namer <- NULL
     gene2namer <- dbGetQuery(dbright_name,"SELECT * from gene_info")
     gene2namer <- merge(dbr,gene2namer)
     gene2namer <- gene2namer[,2:3]
+    colnames(gene2namer)<-c('GID','GENENAME')
+  }
+  if(!is.null(keep)){
+    gene2namel[,keyleft] <- gene2namel[,1]
+    gene2namer[,keyright] <- gene2namer[,1]
+    colnames(gene2namel)[3] <- keep
+    colnames(gene2namer)[3] <- keep
+    ksleft <- setdiff(ksleft,keep)
+    ksright <- setdiff(ksright,keep)
+  }else{
+    gene2namel[,keyleft] <- gene2namel[,1]
+    gene2namer[,keyright] <- gene2namer[,1]
   }
   geneinfo<-rbind(gene2namel,gene2namer)
   geneinfo<-na.omit(geneinfo)
   geneinfo<-distinct(geneinfo)
-  colnames(geneinfo)<-c('GID','GENENAME')
+  colnames(geneinfo)[1:2]<-c('GID','GENENAME')
   geneinfo$GID<-str_trim(geneinfo$GID,side = "both")
   geneinfo$GENENAME<-str_trim(geneinfo$GENENAME,side = "both")
   if(nrow(geneinfo)>1){
@@ -179,12 +199,16 @@ mergeDB<-function(dbleft,dbright,keyleft="GID",keyright="GID",keytype=NULL,
     gene2refseqr <- gene2refseqr[,2:3]
   }
   gene2refseq<-rbind(gene2refseql,gene2refseqr)
-  gene2refseq<-na.omit(gene2refseq)
-  gene2refseq<-distinct(gene2refseq)
   colnames(gene2refseq)<-c('GID','REFSEQ')
   if(nrow(gene2refseq)>1){
     gene2refseq<-gene2refseq[gene2refseq$REFSEQ!="",]
   }
+  if(keep == "REFSEQ"){
+    gene2refseq <- geneinfo[,c(1,3)]
+    geneinfo <- geneinfo[,1:2]
+  }
+  gene2refseq<-na.omit(gene2refseq)
+  gene2refseq<-distinct(gene2refseq)
   gene2symboll <- data.frame("GID" = geneinfo$GID[1], "SYMBOL" = "")
   gene2symbolr <- data.frame("GID" = geneinfo$GID[1], "SYMBOL" = "")
   if("SYMBOL" %in% ksleft){
@@ -200,12 +224,16 @@ mergeDB<-function(dbleft,dbright,keyleft="GID",keyright="GID",keytype=NULL,
     gene2symbolr <- gene2symbolr[,2:3]
   }
   gene2symbol<-rbind(gene2symboll,gene2symbolr)
-  gene2symbol<-na.omit(gene2symbol)
-  gene2symbol<-distinct(gene2symbol)
   colnames(gene2symbol)<-c('GID','SYMBOL')
   if(nrow(gene2symbol)>1){
     gene2symbol<-gene2symbol[gene2symbol$SYMBOL!="",]
   }
+  if(keep == "SYMBOL"){
+    gene2symbol <- geneinfo[,c(1,3)]
+    geneinfo <- geneinfo[,1:2]
+  }
+  gene2symbol<-na.omit(gene2symbol)
+  gene2symbol<-distinct(gene2symbol)
   #
   gene2ensembll <- data.frame("GID" = geneinfo$GID[1], "ENSEMBL" = "")
   gene2ensemblr <- data.frame("GID" = geneinfo$GID[1], "ENSEMBL" = "")
@@ -222,12 +250,17 @@ mergeDB<-function(dbleft,dbright,keyleft="GID",keyright="GID",keytype=NULL,
     gene2symbolr <- gene2symbolr[,2:3]
   }
   gene2ensembl<-rbind(gene2ensembll,gene2ensemblr)
-  gene2ensembl<-na.omit(gene2ensembl)
-  gene2ensembl<-distinct(gene2ensembl)
   colnames(gene2ensembl)<-c('GID','ENSEMBL')
   if(nrow(gene2ensembl)>1){
     gene2ensembl<-gene2ensembl[gene2ensembl$ENSEMBL!="",]
   }
+  #
+  if(keep == "ENSEMBL"){
+    gene2ensembl <- geneinfo[,c(1,3)]
+    geneinfo <- geneinfo[,1:2]
+  }
+  gene2ensembl<-na.omit(gene2ensembl)
+  gene2ensembl<-distinct(gene2ensembl)
   #
   gene2entrezidl <- data.frame("GID" = geneinfo$GID[1], "ENTREZID" = "")
   gene2entrezidr <- data.frame("GID" = geneinfo$GID[1], "ENTREZID" = "")
@@ -244,12 +277,17 @@ mergeDB<-function(dbleft,dbright,keyleft="GID",keyright="GID",keytype=NULL,
     gene2entrezidr <- gene2entrezidr[,2:3]
   }
   gene2entrezid<-rbind(gene2entrezidl,gene2entrezidr)
-  gene2entrezid<-na.omit(gene2entrezid)
-  gene2entrezid<-distinct(gene2entrezid)
   colnames(gene2entrezid)<-c('GID','ENTREZID')
   if(nrow(gene2entrezid)>1){
     gene2entrezid<-gene2entrezid[gene2entrezid$ENTREZID!="",]
   }
+  #
+  if(keep == "ENTREZID"){
+    gene2entrezid <- geneinfo[,c(1,3)]
+    geneinfo <- geneinfo[,1:2]
+  }
+  gene2entrezid<-na.omit(gene2entrezid)
+  gene2entrezid<-distinct(gene2entrezid)
   gene2pfaml <- data.frame("GID" = geneinfo$GID[1], "PFAM" = "")
   gene2pfamr <- data.frame("GID" = geneinfo$GID[1], "PFAM" = "")
   if("PFAM" %in% ksleft){
@@ -412,6 +450,12 @@ mergeDB<-function(dbleft,dbright,keyleft="GID",keyright="GID",keytype=NULL,
   if(is.null(tax_id)){
     tax_id <- "123"
   }
+  if(is.null(species)){
+    species <- species
+  }
+  if(!is.null(pkgname)){
+    species <- pkgname
+  }
   if(is.null(version)){
     version <- "0.0.1"
   }
@@ -422,10 +466,13 @@ mergeDB<-function(dbleft,dbright,keyleft="GID",keyright="GID",keytype=NULL,
     outputDir <- tempdir()
   }
   species <- gsub(' .*', '', species)
+  geneinfo<-na.omit(geneinfo)
+  geneinfo<-distinct(geneinfo)
   package <- suppressWarnings(makeOrgPackage(gene_info = geneinfo,
                                              symbol = gene2symbol,
                                              entrezid = gene2entrezid,
                                              refseq = gene2refseq,
+                                             ensembl = gene2ensembl,
                                              go = gene2go,
                                              path = gene2path,
                                              ko = gene2ko,
@@ -436,7 +483,6 @@ mergeDB<-function(dbleft,dbright,keyleft="GID",keyright="GID",keytype=NULL,
                                              disease = gene2kd,
                                              gad = gene2gad,
                                              fundo = gene2fundo,
-                                             ensembl = gene2ensembl,
                                              version = version,
                                              maintainer = maintainer,
                                              author = author,

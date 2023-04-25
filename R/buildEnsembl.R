@@ -72,7 +72,9 @@ fromEnsembl <- function(species = "Caenorhabditis elegans",
                     filters ="chromosome_name", values = chr_values, dataset)
     # geneinfo<-geneinfo[nchar(geneinfo[,2])>1,]
     colnames(geneinfo) <- c("GID", "GENENAME")
+    
     geneinfo <- na.omit(geneinfo)
+    gene2ensembl <- data.frame("GID"=geneinfo$GID,"ENSEMBL"= geneinfo$GID)
     gene2symbol <- getBM(attributes = c("ensembl_gene_id","external_gene_name"),
             filters = "chromosome_name", values = chr_values, dataset)
     gene2symbol <- gene2symbol[nchar(gene2symbol[,2])>1,]
@@ -171,6 +173,7 @@ fromEnsembl <- function(species = "Caenorhabditis elegans",
     package <- suppressWarnings(makeOrgPackage(gene_info = geneinfo,
         symbol = gene2symbol,
         entrezid = gene2entrezid,
+        ensembl = gene2ensembl,
         go = gene2go,
         path = gene2path,
         pfam = gene2pfam,
