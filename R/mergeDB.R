@@ -206,7 +206,7 @@ mergeDB<-function(dbleft,dbright,keyleft="GID",keyright="GID",keytype=NULL,keep 
   }
   #if(keep == "REFSEQ"){
   if("REFSEQ" %in% keep){
-    gene2refseq <- geneinfo[,c(1,3)]
+    gene2refseq <- geneinfo[,c('GID','REFSEQ')]
     geneinfo <- geneinfo[,1:2]
   }
   gene2refseq<-na.omit(gene2refseq)
@@ -232,7 +232,7 @@ mergeDB<-function(dbleft,dbright,keyleft="GID",keyright="GID",keytype=NULL,keep 
   }
   #if(keep == "SYMBOL"){
   if("SYMBOL" %in% keep){
-    gene2symbol <- geneinfo[,c(1,3)]
+    gene2symbol <- geneinfo[,c('GID','SYMBOL')]
     geneinfo <- geneinfo[,1:2]
   }
   gene2symbol<-na.omit(gene2symbol)
@@ -260,7 +260,7 @@ mergeDB<-function(dbleft,dbright,keyleft="GID",keyright="GID",keytype=NULL,keep 
   #
  # if(keep == "ENSEMBL"){
  if("ENSEMBL" %in% keep){
-    gene2ensembl <- geneinfo[,c(1,3)]
+    gene2ensembl <- geneinfo[,c('GID','ENSEMBL')]
     geneinfo <- geneinfo[,1:2]
   }
   gene2ensembl<-na.omit(gene2ensembl)
@@ -288,7 +288,7 @@ mergeDB<-function(dbleft,dbright,keyleft="GID",keyright="GID",keytype=NULL,keep 
   #
  # if(keep == "ENTREZID"){
   if("ENTREZID" %in% keep){
-    gene2entrezid <- geneinfo[,c(1,3)]
+    gene2entrezid <- geneinfo[,c('GID','ENTREZID')]
     geneinfo <- geneinfo[,1:2]
   }
   gene2entrezid<-na.omit(gene2entrezid)
