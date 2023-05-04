@@ -90,12 +90,9 @@ mergeDB<-function(dbleft,dbright,keyleft="GID",keyright="GID",keytype=NULL,keep 
     colnames(gene2namer)<-c('GID','GENENAME')
   }
   if(!is.null(keep)){
-#    nch = length(keep)
     gene2namel[,keyleft] <- gene2namel[,1]
     gene2namer[,keyright] <- gene2namer[,1]
     colnames(gene2namel)[3] <- keep
-   # colnames(gene2namel)[3:(2+nch)] <- keep
-  #  colnames(gene2namer)[3:(2+nch)] <- keep
     colnames(gene2namer)[3] <- keep
     ksleft <- setdiff(ksleft,keep)
     ksright <- setdiff(ksright,keep)
@@ -206,9 +203,8 @@ mergeDB<-function(dbleft,dbright,keyleft="GID",keyright="GID",keytype=NULL,keep 
   if(nrow(gene2refseq)>1){
     gene2refseq<-gene2refseq[gene2refseq$REFSEQ!="",]
   }
-  #if(keep == "REFSEQ"){
-  if("REFSEQ" %in% keep){
-    gene2refseq <- geneinfo[,c('GID','REFSEQ')]
+  if(keep == "REFSEQ"){
+    gene2refseq <- geneinfo[,c(1,3)]
     geneinfo <- geneinfo[,1:2]
   }
   gene2refseq<-na.omit(gene2refseq)
@@ -232,9 +228,8 @@ mergeDB<-function(dbleft,dbright,keyleft="GID",keyright="GID",keytype=NULL,keep 
   if(nrow(gene2symbol)>1){
     gene2symbol<-gene2symbol[gene2symbol$SYMBOL!="",]
   }
-  #if(keep == "SYMBOL"){
-  if("SYMBOL" %in% keep){
-    gene2symbol <- geneinfo[,c('GID','SYMBOL')]
+  if(keep == "SYMBOL"){
+    gene2symbol <- geneinfo[,c(1,3)]
     geneinfo <- geneinfo[,1:2]
   }
   gene2symbol<-na.omit(gene2symbol)
@@ -249,10 +244,10 @@ mergeDB<-function(dbleft,dbright,keyleft="GID",keyright="GID",keytype=NULL,keep 
     gene2ensembll <- gene2ensembll[,2:3]
   }
   if("ENSEMBL" %in% ksright){
-    gene2symbolr <- NULL
-    gene2symbolr <- dbGetQuery(dbright_name,"SELECT * from ensembl")
-    gene2symbolr <- merge(dbl,gene2symbolr)
-    gene2symbolr <- gene2symbolr[,2:3]
+    gene2ensemblr <- NULL
+    gene2ensemblr <- dbGetQuery(dbright_name,"SELECT * from ensembl")
+    gene2ensemblr <- merge(dbl,gene2ensemblr)
+    gene2ensemblr <- gene2ensemblr[,2:3]
   }
   gene2ensembl<-rbind(gene2ensembll,gene2ensemblr)
   colnames(gene2ensembl)<-c('GID','ENSEMBL')
@@ -260,9 +255,8 @@ mergeDB<-function(dbleft,dbright,keyleft="GID",keyright="GID",keytype=NULL,keep 
     gene2ensembl<-gene2ensembl[gene2ensembl$ENSEMBL!="",]
   }
   #
- # if(keep == "ENSEMBL"){
- if("ENSEMBL" %in% keep){
-    gene2ensembl <- geneinfo[,c('GID','ENSEMBL')]
+  if(keep == "ENSEMBL"){
+    gene2ensembl <- geneinfo[,c(1,3)]
     geneinfo <- geneinfo[,1:2]
   }
   gene2ensembl<-na.omit(gene2ensembl)
@@ -288,9 +282,8 @@ mergeDB<-function(dbleft,dbright,keyleft="GID",keyright="GID",keytype=NULL,keep 
     gene2entrezid<-gene2entrezid[gene2entrezid$ENTREZID!="",]
   }
   #
- # if(keep == "ENTREZID"){
-  if("ENTREZID" %in% keep){
-    gene2entrezid <- geneinfo[,c('GID','ENTREZID')]
+  if(keep == "ENTREZID"){
+    gene2entrezid <- geneinfo[,c(1,3)]
     geneinfo <- geneinfo[,1:2]
   }
   gene2entrezid<-na.omit(gene2entrezid)
