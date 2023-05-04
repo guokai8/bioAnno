@@ -90,11 +90,13 @@ mergeDB<-function(dbleft,dbright,keyleft="GID",keyright="GID",keytype=NULL,keep 
     colnames(gene2namer)<-c('GID','GENENAME')
   }
   if(!is.null(keep)){
-    nch = length(keep)
+#    nch = length(keep)
     gene2namel[,keyleft] <- gene2namel[,1]
     gene2namer[,keyright] <- gene2namer[,1]
-    colnames(gene2namel)[3:(2+nch)] <- keep
-    colnames(gene2namer)[3:(2+nch)] <- keep
+    colnames(gene2namel)[3] <- keep
+   # colnames(gene2namel)[3:(2+nch)] <- keep
+  #  colnames(gene2namer)[3:(2+nch)] <- keep
+    colnames(gene2namer)[3] <- keep
     ksleft <- setdiff(ksleft,keep)
     ksright <- setdiff(ksright,keep)
   }else{
