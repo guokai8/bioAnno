@@ -203,7 +203,8 @@ mergeDB<-function(dbleft,dbright,keyleft="GID",keyright="GID",keytype=NULL,keep 
   if(nrow(gene2refseq)>1){
     gene2refseq<-gene2refseq[gene2refseq$REFSEQ!="",]
   }
-  if(keep == "REFSEQ"){
+  #if(keep == "REFSEQ"){
+  if("REFSEQ" %in% keep){
     gene2refseq <- geneinfo[,c(1,3)]
     geneinfo <- geneinfo[,1:2]
   }
@@ -228,7 +229,8 @@ mergeDB<-function(dbleft,dbright,keyleft="GID",keyright="GID",keytype=NULL,keep 
   if(nrow(gene2symbol)>1){
     gene2symbol<-gene2symbol[gene2symbol$SYMBOL!="",]
   }
-  if(keep == "SYMBOL"){
+  #if(keep == "SYMBOL"){
+  if("SYMBOL" %in% keep){
     gene2symbol <- geneinfo[,c(1,3)]
     geneinfo <- geneinfo[,1:2]
   }
@@ -255,7 +257,8 @@ mergeDB<-function(dbleft,dbright,keyleft="GID",keyright="GID",keytype=NULL,keep 
     gene2ensembl<-gene2ensembl[gene2ensembl$ENSEMBL!="",]
   }
   #
-  if(keep == "ENSEMBL"){
+ # if(keep == "ENSEMBL"){
+ if("ENSEMBL" %in% keep){
     gene2ensembl <- geneinfo[,c(1,3)]
     geneinfo <- geneinfo[,1:2]
   }
@@ -282,7 +285,8 @@ mergeDB<-function(dbleft,dbright,keyleft="GID",keyright="GID",keytype=NULL,keep 
     gene2entrezid<-gene2entrezid[gene2entrezid$ENTREZID!="",]
   }
   #
-  if(keep == "ENTREZID"){
+ # if(keep == "ENTREZID"){
+  if("ENTREZID" %in% keep)
     gene2entrezid <- geneinfo[,c(1,3)]
     geneinfo <- geneinfo[,1:2]
   }
